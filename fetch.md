@@ -2,38 +2,40 @@
 
 ### *How to structure a Pages REST-API request url*
 ```js
-fetch("https://core.helloretail.com/serve/pages/{key}", {
-  "method": "POST",
-  "mode": "cors",
-  "credentials": "include",
-    "headers":{
-       'Content-Type':'application/json'
+fetch('https://core.helloretail.com/serve/pages/62b434f72e59c03e6cd41206', {
+"method": 'POST',
+"mode": 'cors',
+"credentials": 'include',
+"headers": {
+    'Content-Type': 'application/json'
+},
+"body": JSON.stringify({
+    "id": 2,
+    "url": 'https://example-shoe-shop-url.com/women/shoes',
+    "layout": true,
+    "firstLoad": true,
+    "trackingUserId": '62a0317d17698aa57d369db9',
+    "format": 'json',
+    "params": {
+        "filters": '{"hierarchies":["Women", "Shoes"]}'
     },
-    "body":JSON.stringify({
-        "id":"{pages id}",
-        "url":"{url to category page}",
-        "layout":"true",
-        "firstLoad":"true",
-	"format":'json',
-        "products":{
-            "start":0,
-            "count":4000,
-            "filters":[
-                "extraDataList.colorFilter:Silver",
-                "price":"100,500",
-                "brand":"nike"
-                
-            ],
-        },
-	"sorting":[
-		"title desc"
-   	 ],
-    	"params":{
-		"filters":"{'hierarchies':['Strömbrytare och vägguttag']}"
-    	},
-    	"trackingUserId":"{hello_retail_id cookie}"
-    })
-}).then((res)=>{ return res.json() }).then((data)=>{ console.log(data) });
+    "products": {
+        "start": 0,
+        "count": 50,
+        "fields": ["id", "title", "price"],
+        "filters": [
+            "brand:New\\ Balance",
+        ],
+        "sorting": [
+            "title desc"
+        ],
+    },
+})
+}).then((res) => {
+    return res.json();
+}).then((data) => {
+    console.log(data)
+});
 ```
 ### *How to structure a TrackingUserId REST-API request url*
 ```js
