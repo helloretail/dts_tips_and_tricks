@@ -50,17 +50,17 @@ function transform(product:any): TransformationResult {
 In this example data, the product prices are delivered to us in an object that exists at the root of the product data. The feed v2 auto mapper won't be able to read these prices due to the data structure. Furthermore, the feed v2 auto mapper most likely would not understand that *defaultPrice* should be mapped to our price variable, because the name is not similar enough to "price".
 
 ```js
-    {
-        "type": "product_page",
-        "id": "109560",
-        "sku": "700179392",
-        "productLink": "https://bolist-shop.5dev.se/produkt/snabbmaskering",
+	{
+		"type": "product_page",
+		"id": "109560",
+		"sku": "700179392",
+		"productLink": "https://bolist-shop.5dev.se/produkt/snabbmaskering",
 		"prices":{
 			"defaultPrice": 200,
 			"originalPrice": 180,
 		}
 
-    }
+	}
 ```
 Mapping *defaultPrice* to price, from product data.
 
