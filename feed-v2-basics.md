@@ -22,10 +22,30 @@ In this guide we will focus on mapping the properties that the Hello Retail feed
 
 This concludes the Introduction and Explanation segment.
 
-## *Recognizing the data type of a property and understanding how to map it*
+## *Mapping properties in Feed v2*
 
-### *Recognizing the data type*
-The values that the Hello Retail feed reader version 2 is able to
+### *Mapping a direct child property*
+JSON source data from customer product feed (product data). 
+
+In this example data, the product url is delivered to us as *productLink*. Feed v2 might not recognize that *productLink* is in fact the url, and so it might not automatically map this property to our system. We are therefore going to manually map this property to url in our system.
+```js
+    {
+        "type": "product_page",
+        "id": "109560",
+        "sku": "700179392",
+        "productLink": "https://bolist-shop.5dev.se/produkt/snabbmaskering",
+
+    }
+```
+mapping url from product data.
+```js
+function transform(product:any): TransformationResult {
+	return {
+		...product, /* feed v2 auto mapper.*/
+        url: product.productLink /* manually mapped url. */
+	};
+}
+```
 
 
 
