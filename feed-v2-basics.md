@@ -25,7 +25,6 @@ This concludes the Introduction and Explanation segment.
 ## *Mapping properties in Feed v2*
 
 ### *Mapping a direct child property*
-JSON source data from customer product feed (product data). 
 
 In this example data, the product url is delivered to us as *productLink*. Feed v2 might not recognize that *productLink* is in fact the url, and so it might not automatically map this property to our system. We are therefore going to manually map this property to url in our system.
 ```js
@@ -37,12 +36,41 @@ In this example data, the product url is delivered to us as *productLink*. Feed 
 
     }
 ```
-mapping *productLink* to url, from product data.
+Mapping *productLink* to url, from product data.
 ```js
 function transform(product:any): TransformationResult {
 	return {
 		...product, /* feed v2 auto mapper.*/
 		url: product.productLink /* manually mapped url. */
+	};
+}
+```
+
+### *Mapping a property that is nested within an object*
+In this example data, the product prices are delivered to us in an object that exists at the root of the product data. The feed v2 auto mapper won't be able to read these prices due to the data structure. Furthermore, the feed v2 auto mapper most likely would not understand that *defaultPrice* should be mapped to our price variable, because the name is not similar enough to "price".
+
+```js
+    {
+        "type": "product_page",
+        "id": "109560",
+        "sku": "700179392",
+        "productLink": "https://bolist-shop.5dev.se/produkt/snabbmaskering",
+		"prices":{
+			"defaultPrice": 200,
+			"originalPrice": 180,
+		}
+
+    }
+```
+Mapping *defaultPrice* to price, from product data.
+
+Mapping *originalPrice* to oldPrice, from product data.
+```js
+function transform(product:any): TransformationResult {
+	return {
+		...product, /* feed v2 auto mapper.*/
+		price: product.prices.defaultPrice, /* we mention "prices" before defaultPrice, because defaultPrice exists within the "prices" object in the product data. */
+		oldPrice: product.prices.originalPrice
 	};
 }
 ```
