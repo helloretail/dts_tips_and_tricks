@@ -37,12 +37,12 @@ In this example data, the product url is delivered to us as *productLink*. Feed 
 
     }
 ```
-mapping url from product data.
+mapping *productLink* to url, from product data.
 ```js
 function transform(product:any): TransformationResult {
 	return {
 		...product, /* feed v2 auto mapper.*/
-        url: product.productLink /* manually mapped url. */
+		url: product.productLink /* manually mapped url. */
 	};
 }
 ```
