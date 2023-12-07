@@ -75,6 +75,37 @@ function transform(product:any): TransformationResult {
 }
 ```
 
+### *Mapping a property as an extraData*
+In this example data, the customer has provided us with a SKU value. SKU exists at the *root* of the product object, and so we can map it like we did with the *direct child property* in the very first example.
+
+```js
+	{
+		"type": "product_page",
+		"id": "109560",
+		"sku": "700179392", /* String */
+		"productLink": "https://bolist-shop.5dev.se/produkt/snabbmaskering",
+		"prices":{
+			"defaultPrice": 200,
+			"originalPrice": 180,
+		}
+	}
+```
+SKU is not a native variable to Hello Retail, and so we cannot map it directly in the *return object* in the feed.
+
+In order to map non-native variables to our database, we define a "container" named extraData to contain the mapped non-native variables.
+
+Note that the value of SKU is a string. This will become important in the next example.
+```js
+function transform(product:any): TransformationResult {
+	return {
+		...product, /* feed v2 auto mapper.*/
+		extraData:{
+			sku: product.sku
+		}
+	};
+}
+```
+
 
 
 
