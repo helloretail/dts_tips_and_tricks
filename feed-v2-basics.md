@@ -28,13 +28,13 @@ This concludes the Introduction and Explanation segment.
 
 In this example data, the product url is delivered to us as *productLink*. Feed v2 might not recognize that *productLink* is in fact the url, and so it might not automatically map this property to our system. We are therefore going to manually map this property to url in our system.
 ```js
-    {
-        "type": "product_page",
-        "id": "109560",
-        "sku": "700179392",
-        "productLink": "https://bolist-shop.5dev.se/produkt/snabbmaskering",
+	{
+		"type": "product_page",
+		"id": "109560",
+		"sku": "700179392",
+		"productLink": "https://bolist-shop.5dev.se/produkt/snabbmaskering",
 
-    }
+	}
 ```
 Mapping *productLink* to url, from product data.
 ```js
