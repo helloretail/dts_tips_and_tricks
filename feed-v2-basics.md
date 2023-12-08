@@ -176,6 +176,45 @@ function transform(product:any): TransformationResult {
 }
 ```
 
+### *Mapping a property from an array of objects (such as product variants)*
+In this example data, the customer has provided us with an array of product variants, named *productVariants*.
+
+*productVariants* contain 2 comma separated objects (product variants), meaning that this array has 2 "position numbers", starting from 0.
+
+Furthermore, each of the objects contain a title and a size of the respective product variant.
+
+The customer has asked us to make an extraData that contain the title of the last product variant.
+
+```js
+	{
+		/* data from previous examples... */
+		"productVariants": [
+			{
+				"title":"Green shoes",
+				"size": 34
+			},
+			{
+				"title":"Red shoes",
+				"size": 42
+			}
+		]
+	}
+```
+Selecting the title "Red shoes" from the last product variant in the array.
+
+Note that position numbers (Array indexes) are zero based.
+```js
+function transform(product:any): TransformationResult {
+	return {
+		...product, /* feed v2 auto mapper.*/
+		extraData: {
+			variantTitle: product.productVariants[1].title
+		}
+		
+	};
+}
+```
+
 
 
 
