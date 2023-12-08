@@ -139,6 +139,43 @@ function transform(product:any): TransformationResult {
 }
 ```
 
+### *Mapping a property from an array*
+In this example data, the customer has provided us with an array of product sizes, named *productSizes*.
+
+The customer has told us that the first value of the array will always contain the smallest product size.
+
+The customer has asked us to make an extraData that contains only the smallest size that a product is available in.
+
+```js
+	{
+		"type": "product_page",
+		"id": "109560",
+		"sku": ["700179392"],
+		"productLink": "https://bolist-shop.5dev.se/produkt/snabbmaskering",
+		"prices":{
+			"defaultPrice": 200,
+			"originalPrice": 180,
+		},
+		"productSizes": [34,36,38,40,42,44]
+	}
+```
+JavaScript arrays consist of values that are comma separated within the array. Each comma separated value represents an individual position in the array.
+
+We are able to select a specific position of the array by the infering the "position number" of the value we want to extract.
+
+Note that position numbers (Array indexes) are zero based.
+```js
+function transform(product:any): TransformationResult {
+	return {
+		...product, /* feed v2 auto mapper.*/
+		extraData: {
+			productSizes: product.productSizes[0] /* selecting 34 from the productSizes array. */
+		}
+		
+	};
+}
+```
+
 
 
 
