@@ -210,7 +210,32 @@ function transform(product:any): TransformationResult {
 		extraData: {
 			variantTitle: product.productVariants[1].title
 		}
-		
+	};
+}
+```
+
+### *Mapping a property that has special characters or spaces*
+In this example data, the customer has provided us with an attributes object containing properties with spaces and language specific letters.
+
+This requires a specific approach when attempting to map.
+```js
+	{
+		/* data from previous examples... */
+		"attributes":{
+			"sko mærke": "Adidas",
+		}
+	}
+```
+Selecting "sko mærke" so that the spaces and language specific letters are not causing issues.
+
+This can look very similar to selecting values from an array, but should not be confused.
+```js
+function transform(product:any): TransformationResult {
+	return {
+		...product, /* feed v2 auto mapper.*/
+		extraData: {
+			shoeBrand: product.attributes["sko mærke"] /* square bracket notation is an alternative way of traversing objects. */
+		}
 	};
 }
 ```
