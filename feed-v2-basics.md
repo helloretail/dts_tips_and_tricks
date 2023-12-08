@@ -106,6 +106,39 @@ function transform(product:any): TransformationResult {
 }
 ```
 
+### *Mapping a property as an extraDataList*
+In this example data, the customer has provided us with a SKU value, just like in the previous example. This time, however, the SKU is provided as an Array containing a String.
+
+```js
+	{
+		"type": "product_page",
+		"id": "109560",
+		"sku": ["700179392"], /* Array */
+		"productLink": "https://bolist-shop.5dev.se/produkt/snabbmaskering",
+		"prices":{
+			"defaultPrice": 200,
+			"originalPrice": 180,
+		}
+	}
+```
+This is where the importance of data types in JavaScript, and how our system handles data types, become relevant.
+
+Because the SKU that the customer provided is an Array, it is no longer possible for us to assign it to ***extraData***. We must instead assign it to an ***extraDataList***.
+
+Properties that contain Strings, Numbers, or Booleans, must be assigned as ***extraData***.
+
+Properties that contain Arrays must be assigned as ***extraDataList***.
+```js
+function transform(product:any): TransformationResult {
+	return {
+		...product, /* feed v2 auto mapper.*/
+		extraDataList:{
+			sku: product.sku
+		}
+	};
+}
+```
+
 
 
 
