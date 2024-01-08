@@ -139,26 +139,36 @@ function transform(product:any): TransformationResult {
 }
 ```
 
-### *Extract specific filter value based on filter name, from array of anonymous filters (mostly applicable to XML feeds)*
+### *Extract specific filter value based on filter name, from array of anonymous filters (WOOCOMMERCE)*
 
 ```js
-function specificAttributesHandler(attribute,name){
-	let value = [];
-	if(Array.isArray(attribute)){
-		attribute.forEach((attr)=>{
-			if(attr.name === name){
-				if(Array.isArray(attr.options.option)) {
-					value = attr.options.option;
+// Helper function
+function specificAttributesHandler(attribute, name) {
+	const value = [];
+	if (Array.isArray(attribute)) {
+		attribute.forEach((attr) => {
+			if (attr._xmlAttributes.name === name) {
+				if (Array.isArray(attr.attributeValue)) {
+					value.push(...attr.attributeValue);
 				} else {
-					value.push(attr.options.option);
+					value.push(attr.attributeValue);
 				}
 			}
 		})
 	}
+	else {
+		if (attribute?._xmlAttributes.name === name) {
+			if (Array.isArray(attribute.attributeValue)) {
+				value.push(...attribute.attributeValue);
+			} else {
+				value.push(attribute.attributeValue);
+			}
+		}
+	}
 	return value;
 }
 
-
+// Transform code
 function transform(product:any): TransformationResult {
 	return {
 		extraDataList: {
@@ -169,7 +179,6 @@ function transform(product:any): TransformationResult {
 		}
 	};
 }
-
 ```
 
 ### *Check if specific filter value, based on filter name, exists within an anonymous array of filters, and return a boolean value (mostly applicable to XML feeds)*
