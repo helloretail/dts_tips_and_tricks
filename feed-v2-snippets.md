@@ -172,10 +172,10 @@ function specificAttributesHandler(attribute, name) {
 function transform(product:any): TransformationResult {
 	return {
 		extraDataList: {
-			colors: specificAttributesHandler(product.PATH_TO_ARRAY_OF_ANONYMOUS_FILTERS,"Kleur"),
-			material: specificAttributesHandler(product.PATH_TO_ARRAY_OF_ANONYMOUS_FILTERS,"Materiaal"),
-			sizes: specificAttributesHandler(product.PATH_TO_ARRAY_OF_ANONYMOUS_FILTERS,"Maat"),
-			width: specificAttributesHandler(product.PATH_TO_ARRAY_OF_ANONYMOUS_FILTERS,"Breedte/wijdte")
+			colors: specificAttributesHandler(product.attributes[0]?.attribute,"Kleur"),
+			material: specificAttributesHandler(product.attributes[0]?.attribute,"Materiaal"),
+			sizes: specificAttributesHandler(product.attributes[0]?.attribute,"Maat"),
+			width: specificAttributesHandler(product.attributes[0]?.attribute,"Breedte/wijdte")
 		}
 	};
 }
