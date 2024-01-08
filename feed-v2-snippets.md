@@ -49,33 +49,6 @@ function transform(item: any): TransformationResult {
 };
 ```
 
-### *How to handle extraDataList array data.*
-```js
-// Declare function that accepts an item parameter.
-function arrayPusher(item){
-    // Define an empty array.
-    const pushedArray = [];
-    // Push different values from the item parameter to the defined array.
-    pushedArray.push(item.id + item.albumId);
-    pushedArray.push(item.id);
-    pushedArray.push(item.albumId);
-    // Return the populated array to the property where it was invoked.
-    return pushedArray;
-}
-
-function transform(item: any): TransformationResult {
-    return {
-        ...item,
-        imgUrl: item.thumbnailUrl,
-		price: item.id,
-        extraDataList:{
-            pushedArrayData: arrayPusher(item),
-            simpleArrayData: [item.id,item.albumId]
-        }
-    };
-};
-
-```
 ### *Group values*
 ```js
 function coverageChecker(percentage) {
@@ -197,36 +170,6 @@ function transform(product:any): TransformationResult {
 	return {
 		extraData: {
 			removeableSole: attributeExistsCheck(product.PATH_TO_ARRAY_OF_ANONYMOUS_FILTERS, "Uitneembaar voetbed")
-		}
-	};
-}
-```
-
-### *Woocommerce attributes helper function*
-
-```js
-function specificAttributesHandler(attribute,name){
-	let value = [];
-	if(Array.isArray(attribute)){
-		attribute.forEach((attr)=>{
-			if(attr._xmlAttributes.name === name){
-				if(Array.isArray(attr.attributeValue)) {
-					value.push(...attr.attributeValue);
-				} else {
-					value.push(attr.attributeValue);
-				}
-			}
-		})
-	}
-	return new Set(value);
-}
-
-function transform(product:any): TransformationResult {
-	return {
-		...product,
-		extraDataList: {
-			pa_modell: specificAttributesHandler(product.attributes[0]?.attribute,"pa_modell"),
-			pa_modeller: specificAttributesHandler(product.attributes[0]?.attribute,"pa_modeller"),
 		}
 	};
 }
