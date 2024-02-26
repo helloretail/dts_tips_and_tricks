@@ -203,3 +203,18 @@ function transform(product:any): TransformationResult {
 	};
 }
 ```
+
+### *Rename root level object keys*
+
+```js
+function transform(product: any): TransformationResult {
+
+	const sanitizedKeys = Object.fromEntries(
+		Object.entries(product).map(([k, v]) => [k.replace(/\-/g, "_").replace(/å/g, "aa").replace(/æ/g, "ae").replace(/ø/g, "oe").replace("type","thisIsNowType"), v])
+	);
+
+	return {
+		...sanitizedKeys,
+	};
+}
+```
