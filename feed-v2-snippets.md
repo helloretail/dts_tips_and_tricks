@@ -218,3 +218,47 @@ function transform(product: any): TransformationResult {
 	};
 }
 ```
+
+```js
+function transform(product: any): TransformationResult {
+
+	// define parent object with nested object objects to later spread on.
+    let attributesObject = {
+        extraData: {},
+        extraDataNumber: {},
+        extraDataList: {}
+    };
+    
+	// loop through every key value pair of the product object.
+    for (const [key, value] of Object.entries(product)) {
+		// if a given iteration within the loop has a key that ends on -ti, add this key value pair to the extraData object defined above.
+        if (key.endsWith("-ti")) {
+             attributesObject.extraData[key] = value;
+        }
+		// if a given iteration within the loop has a key that ends on -ti, add this key value pair to the extraDataNumber object defined above.
+        if(key.endsWith("-number")){
+            attributesObject.extraDataNumber[key] = value;
+        }
+		// if a given iteration within the loop has a key that ends on -ti, add this key value pair to the extraDataList object defined above.
+        if(key.endsWith("-til")){
+            attributesObject.extraDataList[key] = value;
+        }
+    }
+
+    return {
+        url: product["g:link"],
+        extraData: {
+			// automatically assign the extraData values that was added to the extraData object nested within attributesObject.
+            ...attributesObject.extraData
+        },
+        extraDataNumber: {
+			// automatically assign the extraDataNumber values that was added to the extraData object nested within attributesObject.
+            ...attributesObject.extraDataNumber
+        },
+        extraDataList: {
+			// automatically assign the extraDataList values that was added to the extraData object nested within attributesObject.
+            ...attributesObject.extraDataList
+        }
+    };
+}
+```
