@@ -219,9 +219,15 @@ function transform(product: any): TransformationResult {
 }
 ```
 
-```js
-function transform(product: any): TransformationResult {
+### *Select specific key value pairs based on parts of the key name (Used for pattern matching)*
 
+```js
+function attributesObjectKeySanitizer(key){
+	// Sanitize keys to remove spaces, dashes, underscores.
+	return key.replace(/\-([a-z]|\s([a-z]|\_([a-z])))/g,function(v) { return v.toUpperCase(); }).replace(/-/g,"");
+}
+
+function transform(product: any): TransformationResult {
 	// define parent object with nested object objects to later spread on.
     let attributesObject = {
         extraData: {},
@@ -233,20 +239,20 @@ function transform(product: any): TransformationResult {
     for (const [key, value] of Object.entries(product)) {
 		// if a given iteration within the loop has a key that ends on -ti, add this key value pair to the extraData object defined above.
         if (key.endsWith("-ti")) {
-             attributesObject.extraData[key] = value;
+             attributesObject.extraData[attributesObjectKeySanitizer(key)] = value;
         }
-		// if a given iteration within the loop has a key that ends on -ti, add this key value pair to the extraDataNumber object defined above.
+		// if a given iteration within the loop has a key that ends on -number, add this key value pair to the extraDataNumber object defined above.
         if(key.endsWith("-number")){
-            attributesObject.extraDataNumber[key] = value;
+            attributesObject.extraDataNumber[attributesObjectKeySanitizer(key)] = value;
         }
-		// if a given iteration within the loop has a key that ends on -ti, add this key value pair to the extraDataList object defined above.
+		// if a given iteration within the loop has a key that ends on -til, add this key value pair to the extraDataList object defined above.
         if(key.endsWith("-til")){
-            attributesObject.extraDataList[key] = value;
+            attributesObject.extraDataList[attributesObjectKeySanitizer(key)] = value;
         }
     }
 
     return {
-        url: product["g:link"],
+        url: product.url,
         extraData: {
 			// automatically assign the extraData values that was added to the extraData object nested within attributesObject.
             ...attributesObject.extraData
