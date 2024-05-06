@@ -1,6 +1,65 @@
 # **Fetch snippets**
 
-### *How to structure a Pages REST-API request url*
+### *How to structure a Search REST-API request body*
+```js
+fetch('https://core.helloretail.com/serve/search/', {
+"method": 'POST',
+"mode": 'cors',
+"credentials": 'include',
+"headers": {
+    'Content-Type': 'application/json'
+},
+"body": JSON.stringify({
+    "query": "*",
+    "key": "feebe40d-d2f7-47d3-a3da-195e58c8042b",
+    "trackingUserId":"6638c86eb3a70b42929b6396",
+    "products": {
+        "returnFilters": true,
+        "start":0,
+        "count":200,
+        "returnInitialContent":true, // returns initial content when no search query is provided. Default is false
+        "fields":["title","price", "url", "extraData.size", "extraDataNumber.rating"],
+        //"filters": ["brand:Nike"],
+        "sorting": ["price desc"]
+    },
+    "categories": {
+        "start":0,
+        "count":500,
+        "fields":["title", "url"],
+        "sorting":["title asc"]
+    },
+    "brands": {
+        "start":0,
+        "count":500,
+        "fields":["title", "url"],
+        "sorting":["title asc"]
+    },
+    "sitePages": {
+        "start":0,
+        "count":500,
+        "fields":["title", "url"],
+        "sorting":["title asc"]
+    },
+    "blogPosts": {
+        "start":0,
+        "count":500,
+        "fields":["title", "url"],
+        "sorting":["title asc"]
+    },
+    "redirects": {
+        "start": 0,
+        "count": 1
+    },
+    "format": "json"
+})
+}).then((res) => {
+    return res.json();
+}).then((data) => {
+    console.log(data)
+});
+```
+
+### *How to structure a Pages REST-API request body*
 ```js
 fetch('https://core.helloretail.com/serve/pages/62b434f72e59c03e6cd41206', {
 "method": 'POST',
