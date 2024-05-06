@@ -17,16 +17,17 @@ fetch('https://core.helloretail.com/serve/search/', {
         "returnFilters": true,
         "start":0,
         "count":200,
-        "returnInitialContent":true, // returns initial content when no search query is provided. Default is false
+        "returnInitialContent":false,
         "fields":["title","price", "url", "extraData.size", "extraDataNumber.rating"],
-        //"filters": ["brand:Nike"],
+        "filters": ["brand:Nike"],
         "sorting": ["price desc"]
     },
     "categories": {
         "start":0,
         "count":500,
         "fields":["title", "url"],
-        "sorting":["title asc"]
+        "sorting":["title asc"],
+        "filters":["extraDataList.inAssortments:WEB"]
     },
     "brands": {
         "start":0,
