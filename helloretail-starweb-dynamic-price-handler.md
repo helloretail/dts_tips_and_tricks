@@ -2,7 +2,7 @@
 
 Link to Starweb produced documentation: https://starwebab.notion.site/DynamicPriceHandler-98c6dbd5b444448c926f771ff9bf8a93#c607116d2d2842d183b50f768aeee231
 
-### HTML structure that must be adhered to by Hello Retail;
+## HTML structure that must be adhered to by Hello Retail in **all** Hello Retail frontend solutions;
 ```html
 <div class="product-price hr-starweb-prices" data-sku="{{ product.productNumber }}">
   <div class="selling-price">
@@ -16,31 +16,97 @@ Link to Starweb produced documentation: https://starwebab.notion.site/DynamicPri
   </div>
 </div>
 ```
-### JavaScript snippet that must be present within Hello Retail solutions that should have dynamic prices;
+## JavaScript snippets that must be present within Hello Retail Recommendations that should have dynamic prices;
+Function declaration & invocation: https://explain.helloretail.com/OAuZD9Bd
 ```js
-if (typeof dynamicPriceHandler === 'object') {
-    console.log("starwebSearchPriceHandler invoked");
-    dynamicPriceHandler.setSeparators(" ", ",");
-    dynamicPriceHandler.render(priceList, false).then(() => {
-        priceList.forEach((starwebSelector) => {
-            starwebSelector.classList.remove("hr-starweb-prices"); // remove hr-starweb-prices selector from elements that have already had their prices adjusted by the starweb endpoint. This is done in order to spare the starweb endpoint, as more and more products are lazyloaded into the search.
-            starwebSelector.removeAttribute('data-sku');
-        });
-    }).catch((err) => {
-        console.log("something went wrong: ", err);
-    });
-} else {
-    console.log("dynamicPriceHandler is not defined.");
+function starwebHelloRetailPriceHandler_{{ key }}(selector){
+		let priceList = document.querySelectorAll(selector);
+		if(priceList.length > 0){
+			if(typeof dynamicPriceHandler === 'object'){
+				console.log("starwebSearchPriceHandler invoked");
+				dynamicPriceHandler.setSeparators(" ",",");
+				dynamicPriceHandler.render(priceList,false).then(()=>{
+					console.log("successfully injected Starweb prices");
+				}).catch((err)=>{
+					console.log("something went wrong: ",err);
+				});
+			}
+			else{
+				console.log("dynamicPriceHandler is not defined.");
+			}
+		}
+		else{
+			console.log("no products to invoke starweb price method on.");
+		}
+	}
+```
+```js
+on: {
+      slideChange: function (e) {
+        setTimeout(function(){
+          starwebHelloRetailPriceHandler_{{ key }}("#{{ key }} .hr-starweb-prices");
+        },200);
+      },
+    },
+```
+
+## JavaScript snippet that must be present within Hello Retail Search that should have dynamic prices;
+Function declaration Desktop search, Embedded search, Pages: https://explain.helloretail.com/Bluv87xn
+```js
+function starwebHelloRetailPriceHandler_search(selector){
+	let priceList = document.querySelectorAll(selector);
+	if(priceList.length > 0){
+		if(typeof dynamicPriceHandler === 'object'){
+			console.log("starwebHelloRetailPriceHandler_search invoked");
+			dynamicPriceHandler.setSeparators(" ",",");
+			dynamicPriceHandler.render(priceList,false).then(()=>{
+				priceList.forEach((starwebSelector)=>{
+					starwebSelector.classList.remove("hr-starweb-prices"); // remove hr-starweb-prices selector from elements that have already had their prices adjusted by the starweb endpoint. This is done in order to spare the starweb endpoint, as more and more products are lazyloaded into the search.
+					starwebSelector.removeAttribute('data-sku');
+				});
+			}).catch((err)=>{
+				console.log("something went wrong: ",err);
+			});
+		}
+		else{
+			console.log("dynamicPriceHandler is not defined.");
+		}
+	}
+	else{
+		console.log("no products to invoke starweb price method on.");
+	}
 }
+```
+Function invocation Desktop search & Embedded search 1 (Initial content): https://explain.helloretail.com/2Nu8LYzv <br>
+Function invocation Desktop search & Embedded search 2 (Initial content): https://explain.helloretail.com/NQuAPk5q
+```js
+starwebHelloRetailPriceHandler_search(".hr-overlay-search .hr-products.initialcontent .hr-starweb-prices");
+```
+Function invocation Desktop Search & Embedded search 1: https://explain.helloretail.com/p9u2Dgop <br>
+
+```js
+starwebHelloRetailPriceHandler_search(".hr-overlay-search .hr-search-overlay-product .hr-starweb-prices");
 ```
 
 ## How to configure price formatting and handling through the dynamicPriceHandler method;
 The parent elements (first mutual container of both hr-starweb-oldPrice and hr-starweb-currentPrice) should **always** have the class hr-starweb-prices.
 
-The parent element should always have the data-attribute called sku, containing the products sku.
-- extraData.sku: $("mainVariant sku").text()
+The parent element should always have the data-attribute called sku, containing the products sku. The SKU value is sometimes stored as productNumber in our system. If this is the case, you can simply add {{ product.productNumber }} in the data attribute on the product HTML shown in the very beginning of this documentation.
 
+If SKU is not indexed in productNumber in our product lookup, you can create an extraData.sku in in the feed, and ensure that the data attribute on the HTML now contains {{ product.extraData.sku }}.
 
+Indexing the SKU value in Feed v1; <br>
+https://explain.helloretail.com/OAuZDKzG
+```
+$("mainVariant sku").text()
+```
+
+Indexing the SKU value in Feed v2; <br>
+https://explain.helloretail.com/X6uvPkJB
+```
+product.mainVariant.sku ? product.mainVariant.sku : Array.isArray(product.mainVariant.data) && product.mainVariant.data.length && product.mainVariant.data[0]?.sku ? product.mainVariant.data[0]?.sku : null
+```
+<br>
 The direct elements containing the oldPrice and currentPrice should always have the classes hr-starweb-oldPrice and hr-starweb-currentPrice.
 
 The priceList variable should **always** select all of the hr-starweb-prices elements (The mutual parent element of current and old price).
