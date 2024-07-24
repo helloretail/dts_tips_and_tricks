@@ -1,6 +1,6 @@
 # Starweb documentation of dynamicPriceHandler
 
-Link to Starweb produced documentation: https://starwebab.notion.site/DynamicPriceHandler-98c6dbd5b444448c926f771ff9bf8a93#c607116d2d2842d183b50f768aeee231
+<a href="https://starwebab.notion.site/DynamicPriceHandler-98c6dbd5b444448c926f771ff9bf8a93#c607116d2d2842d183b50f768aeee231" target="_blank">Link to Starweb produced documentation</a>
 
 ## HTML structure that must be adhered to by Hello Retail in **all** Hello Retail frontend solutions;
 ```html
@@ -17,7 +17,7 @@ Link to Starweb produced documentation: https://starwebab.notion.site/DynamicPri
 </div>
 ```
 ## JavaScript snippets that must be present within Hello Retail Recommendations that should have dynamic prices;
-Function declaration & invocation: https://explain.helloretail.com/OAuZD9Bd
+<a href="https://explain.helloretail.com/OAuZD9Bd" target="_blank">Function declaration & invocation</a>
 ```js
 function starwebHelloRetailPriceHandler_{{ key }}(selector){
 		let priceList = document.querySelectorAll(selector);
@@ -51,7 +51,7 @@ on: {
 ```
 
 ## JavaScript snippet that must be present within Hello Retail Search that should have dynamic prices;
-Function declaration Desktop search, Embedded search, Pages: https://explain.helloretail.com/Bluv87xn
+<a href="https://explain.helloretail.com/Bluv87xn" target="_blank">Function declaration Desktop search, Embedded search, Pages</a>
 ```js
 function starwebHelloRetailPriceHandler_search(selector){
 	let priceList = document.querySelectorAll(selector);
@@ -77,12 +77,13 @@ function starwebHelloRetailPriceHandler_search(selector){
 	}
 }
 ```
-Function invocation Desktop search & Embedded search 1 (Initial content): https://explain.helloretail.com/2Nu8LYzv <br>
-Function invocation Desktop search & Embedded search 2 (Initial content): https://explain.helloretail.com/NQuAPk5q
+
+<a href="https://explain.helloretail.com/2Nu8LYzv" target="_blank">Function invocation Desktop search & Embedded search 1 (Initial content)</a> <br>
+<a href="https://explain.helloretail.com/NQuAPk5q" target="_blank">Function invocation Desktop search & Embedded search 2 (Initial content)</a>
 ```js
 starwebHelloRetailPriceHandler_search(".hr-overlay-search .hr-products.initialcontent .hr-starweb-prices");
 ```
-Function invocation Desktop Search & Embedded search 1: https://explain.helloretail.com/p9u2Dgop <br>
+<a href="https://explain.helloretail.com/p9u2Dgop" target="_blank">Function invocation Desktop Search & Embedded search</a>
 
 ```js
 starwebHelloRetailPriceHandler_search(".hr-overlay-search .hr-search-overlay-product .hr-starweb-prices");
@@ -95,14 +96,11 @@ The parent element should always have the data-attribute called sku, containing 
 
 If SKU is not indexed in productNumber in our product lookup, you can create an extraData.sku in in the feed, and ensure that the data attribute on the HTML now contains {{ product.extraData.sku }}.
 
-Indexing the SKU value in Feed v1; <br>
-https://explain.helloretail.com/OAuZDKzG
+<a href="https://explain.helloretail.com/OAuZDKzG" target="_blank">Indexing the SKU value in Feed v1;</a>
 ```
 $("mainVariant sku").text()
 ```
-
-Indexing the SKU value in Feed v2; <br>
-https://explain.helloretail.com/X6uvPkJB
+<a href="https://explain.helloretail.com/X6uvPkJB" target="_blank">Indexing the SKU value in Feed v2;</a>
 ```
 product.mainVariant.sku ? product.mainVariant.sku : Array.isArray(product.mainVariant.data) && product.mainVariant.data.length && product.mainVariant.data[0]?.sku ? product.mainVariant.data[0]?.sku : null
 ```
