@@ -268,3 +268,8 @@ function transform(product: any): TransformationResult {
     };
 }
 ```
+
+### *How to extra extraattributes from a Magento 2 feed through Feed v2*
+- Create a temporary XML feed: https://explain.helloretail.com/Wnu8gqjk
+- Rewrite the request url to fetch extra data, and add authorization header: https://explain.helloretail.com/v1u9pLXJ.
+- Rewrite the selector path and remove all filter options: https://explain.helloretail.com/Qwuom4Oj.
