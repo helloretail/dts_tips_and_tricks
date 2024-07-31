@@ -62,7 +62,6 @@ function starwebHelloRetailPriceHandler_search(selector){
 			dynamicPriceHandler.render(priceList,false).then(()=>{
 				priceList.forEach((starwebSelector)=>{
 					starwebSelector.classList.remove("hr-starweb-prices"); // remove hr-starweb-prices selector from elements that have already had their prices adjusted by the starweb endpoint. This is done in order to spare the starweb endpoint, as more and more products are lazyloaded into the search.
-					starwebSelector.removeAttribute('data-sku');
 				});
 			}).catch((err)=>{
 				console.log("something went wrong: ",err);
@@ -80,10 +79,22 @@ function starwebHelloRetailPriceHandler_search(selector){
 
 <a href="https://explain.helloretail.com/2Nu8LYzv" target="_blank">Function invocation Desktop search & Embedded search 1 (Initial content)</a> <br>
 <a href="https://explain.helloretail.com/NQuAPk5q" target="_blank">Function invocation Desktop search & Embedded search 2 (Initial content)</a>
+
 ```js
 starwebHelloRetailPriceHandler_search(".hr-overlay-search .hr-products.initialcontent .hr-starweb-prices");
 ```
 <a href="https://explain.helloretail.com/p9u2Dgop" target="_blank">Function invocation Desktop Search & Embedded search</a>
+
+```js
+starwebHelloRetailPriceHandler_search(".hr-overlay-search .hr-search-overlay-product .hr-starweb-prices");
+```
+
+<a href="https://explain.helloretail.com/kpuZ0yLz" target="_blank">Function invocation Mobile search (Initial content)</a>
+
+```js
+starwebHelloRetailPriceHandler_search(".hr-overlay-search .hr-search-overlay-product .hr-starweb-prices");
+```
+<a href="https://explain.helloretail.com/5zuKQDXj" target="_blank">Function invocation Mobile search</a>
 
 ```js
 starwebHelloRetailPriceHandler_search(".hr-overlay-search .hr-search-overlay-product .hr-starweb-prices");
