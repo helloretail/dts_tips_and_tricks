@@ -30,3 +30,19 @@ if (storage.keys().length > 0 && storage.get("last_url") == window.location.href
 	activate();
 }
 ```
+
+### Find the *trigger.addEventListener("click", activate);* line and replace it with the following code snippet
+```js
+trigger.addEventListener("click", (e) => {
+    storage.clear();
+    activate();
+});
+```
+
+### Find the *trigger.addEventListener("focus", activate);* line and replace it with the following code snippet
+```js
+trigger.addEventListener("focus", (e) => {
+    storage.clear();
+    activate();
+});
+```
