@@ -7,11 +7,11 @@
 <div class="product-price hr-starweb-prices" data-sku="{{ product.productNumber }}">
   <div class="selling-price">
     <span class="price">
-      <span class="amount hr-price hr-starweb-currentPrice">current price</span>
+      <span class="hr-price hr-starweb-currentPrice">current price</span>
     </span></div>
   <div class="original-price">
     <span class="price">
-      <span class="amount hr-oldPrice hr-starweb-oldPrice">old price</span>
+      <span class="hr-oldPrice hr-starweb-oldPrice">old price</span>
     </span>
   </div>
 </div>
@@ -141,17 +141,17 @@ Example of prepared Hello Retail HTML structure, with injected Starweb span elem
 <div class="product-price">
   <div class="selling-price">
     <span class="price">
-      <span class="amount hr-price hr-starweb-currentPrice">
-        <span class="hr-starweb-currentPrice-price-span">2 187,50</span> <!-- Price span injected by Starweb -->
-        <span class="hr-starweb-currentPrice-unit-span">kr</span> <!-- Currency span injected by Starweb -->
+      <span class="hr-price hr-starweb-currentPrice">
+        <span class="hr-starweb-currentPrice-price-span amount">2 187,50</span> <!-- Price span injected by Starweb -->
+        <span class="hr-starweb-currentPrice-unit-span currency">kr</span> <!-- Currency span injected by Starweb -->
       </span>
     </span>
   </div>
   <div class="original-price">
     <span class="price">
-      <span class="amount hr-oldPrice hr-starweb-oldPrice">
-        <span class="hr-starweb-oldPrice-price-span">2 905,63</span> <!-- Price span injected by Starweb -->
-        <span class="hr-starweb-oldPrice-unit-span">kr</span> <!-- Currency span injected by Starweb -->
+      <span class="hr-oldPrice hr-starweb-oldPrice">
+        <span class="hr-starweb-oldPrice-price-span amount">2 905,63</span> <!-- Price span injected by Starweb -->
+        <span class="hr-starweb-oldPrice-unit-span currency">kr</span> <!-- Currency span injected by Starweb -->
       </span>
     </span>
   </div>
