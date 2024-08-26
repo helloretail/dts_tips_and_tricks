@@ -1,9 +1,1267 @@
 {
     "_type": "export",
     "__export_format": 4,
-    "__export_date": "2024-08-26T08:35:20.586Z",
+    "__export_date": "2024-08-26T14:22:57.001Z",
     "__export_source": "insomnia.desktop.app:v2021.7.2",
     "resources": [
+        {
+            "_id": "req_b1f312e5911e4d429c70be5226ce7305",
+            "parentId": "fld_98e4ad61866a4a9b80712fd0b0deaedb",
+            "modified": 1724682065983,
+            "created": 1724680393814,
+            "url": "https://core.helloretail.com/serve/search/",
+            "name": "Search: products",
+            "description": "",
+            "method": "POST",
+            "body": {
+                "mimeType": "application/json",
+                "text": "{\n    \"query\": \"*\",\n    \"key\": \"74b19399-447e-4ea7-8550-3fcdba1fb4bd\",\n    \"trackingUserId\":\"\",\n\t\t\"format\": \"json\",\n    \"products\": {\n        \"returnFilters\": false,\n        \"start\":0,\n        \"count\":10,\n        \"fields\":[\"title\",\"originalUrl\",\"trackingCode\"]\n    }\n}"
+            },
+            "parameters": [],
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json",
+                    "id": "pair_ac07af9c81614844b84f467027e5ded8"
+                }
+            ],
+            "authentication": {},
+            "metaSortKey": -1724680253307,
+            "isPrivate": false,
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+        {
+            "_id": "fld_98e4ad61866a4a9b80712fd0b0deaedb",
+            "parentId": "fld_e3dcf2518eed408da1b026b072a426c9",
+            "modified": 1724681695844,
+            "created": 1724680741397,
+            "name": "Without filters & sorting",
+            "description": "",
+            "environment": {},
+            "environmentPropertyOrder": null,
+            "metaSortKey": -1724680741397,
+            "_type": "request_group"
+        },
+        {
+            "_id": "fld_e3dcf2518eed408da1b026b072a426c9",
+            "parentId": "fld_681a3deed0af4d74aef296622f2903fb",
+            "modified": 1724660832487,
+            "created": 1724660832487,
+            "name": "Search",
+            "description": "",
+            "environment": {},
+            "environmentPropertyOrder": null,
+            "metaSortKey": -1724318260166,
+            "_type": "request_group"
+        },
+        {
+            "_id": "fld_681a3deed0af4d74aef296622f2903fb",
+            "parentId": "wrk_c12e4273d912476487c814da84b07920",
+            "modified": 1724660832472,
+            "created": 1724660832472,
+            "name": "REST API examples",
+            "description": "",
+            "environment": {},
+            "environmentPropertyOrder": {},
+            "metaSortKey": -1000000000,
+            "_type": "request_group"
+        },
+        {
+            "_id": "wrk_c12e4273d912476487c814da84b07920",
+            "parentId": null,
+            "modified": 1724660780727,
+            "created": 1724660780727,
+            "name": "Hello Retail example endpoints",
+            "description": "",
+            "scope": "collection",
+            "_type": "workspace"
+        },
+        {
+            "_id": "req_05232928e94348fea56c9449dddd5e8f",
+            "parentId": "fld_98e4ad61866a4a9b80712fd0b0deaedb",
+            "modified": 1724680761143,
+            "created": 1724680418220,
+            "url": "https://core.helloretail.com/serve/search/",
+            "name": "Search: products, categories",
+            "description": "",
+            "method": "POST",
+            "body": {
+                "mimeType": "application/json",
+                "text": "{\n    \"query\": \"*\",\n    \"key\": \"74b19399-447e-4ea7-8550-3fcdba1fb4bd\",\n    \"trackingUserId\":\"\",\n\t\t\"format\": \"json\",\n    \"products\": {\n        \"returnFilters\": false,\n        \"start\":0,\n        \"count\":10,\n        \"fields\":[\"title\",\"originalUrl\",\"trackingCode\"]\n    },\n    \"categories\": {\n        \"start\":0,\n        \"count\":10,\n        \"fields\":[\"title\", \"originalUrl\",\"trackingCode\"]\n    }\n}"
+            },
+            "parameters": [],
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json",
+                    "id": "pair_ac07af9c81614844b84f467027e5ded8"
+                }
+            ],
+            "authentication": {},
+            "metaSortKey": -1724680253257,
+            "isPrivate": false,
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+        {
+            "_id": "req_245daba6406a40c585cb35a58237713c",
+            "parentId": "fld_98e4ad61866a4a9b80712fd0b0deaedb",
+            "modified": 1724680769649,
+            "created": 1724680484779,
+            "url": "https://core.helloretail.com/serve/search/",
+            "name": "Search: products, categories, brands",
+            "description": "",
+            "method": "POST",
+            "body": {
+                "mimeType": "application/json",
+                "text": "{\n    \"query\": \"*\",\n    \"key\": \"74b19399-447e-4ea7-8550-3fcdba1fb4bd\",\n    \"trackingUserId\":\"\",\n\t\t\"format\": \"json\",\n    \"products\": {\n        \"returnFilters\": false,\n        \"start\":0,\n        \"count\":10,\n        \"fields\":[\"title\",\"originalUrl\",\"trackingCode\"]\n    },\n    \"categories\": {\n        \"start\":0,\n        \"count\":10,\n        \"fields\":[\"title\", \"originalUrl\",\"trackingCode\"]\n    },\n    \"brands\": {\n        \"start\":0,\n        \"count\":10,\n        \"fields\":[\"title\", \"originalUrl\",\"trackingCode\"]\n    }\n}"
+            },
+            "parameters": [],
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json",
+                    "id": "pair_ac07af9c81614844b84f467027e5ded8"
+                }
+            ],
+            "authentication": {},
+            "metaSortKey": -1724680253207,
+            "isPrivate": false,
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+        {
+            "_id": "req_aff90b4056d24a0fb010aa4a695505fd",
+            "parentId": "fld_98e4ad61866a4a9b80712fd0b0deaedb",
+            "modified": 1724680766126,
+            "created": 1724680579296,
+            "url": "https://core.helloretail.com/serve/search/",
+            "name": "Search: products, categories, brands, sitePages",
+            "description": "",
+            "method": "POST",
+            "body": {
+                "mimeType": "application/json",
+                "text": "{\n    \"query\": \"*\",\n    \"key\": \"74b19399-447e-4ea7-8550-3fcdba1fb4bd\",\n    \"trackingUserId\":\"\",\n\t\t\"format\": \"json\",\n    \"products\": {\n        \"returnFilters\": false,\n        \"start\":0,\n        \"count\":10,\n        \"fields\":[\"title\",\"originalUrl\",\"trackingCode\"]\n    },\n    \"categories\": {\n        \"start\":0,\n        \"count\":10,\n        \"fields\":[\"title\", \"originalUrl\",\"trackingCode\"]\n    },\n    \"brands\": {\n        \"start\":0,\n        \"count\":10,\n        \"fields\":[\"title\", \"originalUrl\",\"trackingCode\"]\n    },\n    \"sitePages\": {\n        \"start\":0,\n        \"count\":10,\n        \"fields\":[\"title\", \"originalUrl\",\"trackingCode\"]\n    }\n}"
+            },
+            "parameters": [],
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json",
+                    "id": "pair_ac07af9c81614844b84f467027e5ded8"
+                }
+            ],
+            "authentication": {},
+            "metaSortKey": -1724680253157,
+            "isPrivate": false,
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+        {
+            "_id": "req_7efb6114dfd04c4ab1551be459884654",
+            "parentId": "fld_98e4ad61866a4a9b80712fd0b0deaedb",
+            "modified": 1724680769125,
+            "created": 1724680611097,
+            "url": "https://core.helloretail.com/serve/search/",
+            "name": "Search: products, categories, brands, sitePages, blogPosts",
+            "description": "",
+            "method": "POST",
+            "body": {
+                "mimeType": "application/json",
+                "text": "{\n    \"query\": \"*\",\n    \"key\": \"74b19399-447e-4ea7-8550-3fcdba1fb4bd\",\n    \"trackingUserId\":\"\",\n\t\t\"format\": \"json\",\n    \"products\": {\n        \"returnFilters\": false,\n        \"start\":0,\n        \"count\":10,\n        \"fields\":[\"title\",\"originalUrl\",\"trackingCode\"]\n    },\n    \"categories\": {\n        \"start\":0,\n        \"count\":10,\n        \"fields\":[\"title\", \"originalUrl\",\"trackingCode\"]\n    },\n    \"brands\": {\n        \"start\":0,\n        \"count\":10,\n        \"fields\":[\"title\", \"originalUrl\",\"trackingCode\"]\n    },\n    \"sitePages\": {\n        \"start\":0,\n        \"count\":10,\n        \"fields\":[\"title\", \"originalUrl\",\"trackingCode\"]\n    },\n    \"blogPosts\": {\n        \"start\":0,\n        \"count\":10,\n        \"fields\":[\"title\", \"originalUrl\",\"trackingCode\"]\n    }\n}"
+            },
+            "parameters": [],
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json",
+                    "id": "pair_ac07af9c81614844b84f467027e5ded8"
+                }
+            ],
+            "authentication": {},
+            "metaSortKey": -1724680253107,
+            "isPrivate": false,
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+        {
+            "_id": "req_e9ebe8b78f2f42f49216e5fc9ef4619f",
+            "parentId": "fld_e08b6dd5353649608fc38ca17e34ced6",
+            "modified": 1724682063819,
+            "created": 1724680854546,
+            "url": "https://core.helloretail.com/serve/search/",
+            "name": "Search: products",
+            "description": "",
+            "method": "POST",
+            "body": {
+                "mimeType": "application/json",
+                "text": "{\n    \"query\": \"*\",\n    \"key\": \"74b19399-447e-4ea7-8550-3fcdba1fb4bd\",\n    \"trackingUserId\":\"\",\n\t\t\"format\": \"json\",\n    \"products\": {\n        \"returnFilters\": false,\n        \"start\":0,\n        \"count\":10,\n        \"fields\":[\"title\",\"originalUrl\",\"trackingCode\"],\n\t\t\t\t\"filters\": [\"brand:ID Denim\"]\n    }\n}"
+            },
+            "parameters": [],
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json",
+                    "id": "pair_ac07af9c81614844b84f467027e5ded8"
+                }
+            ],
+            "authentication": {},
+            "metaSortKey": -1724680253307,
+            "isPrivate": false,
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+        {
+            "_id": "fld_e08b6dd5353649608fc38ca17e34ced6",
+            "parentId": "fld_e3dcf2518eed408da1b026b072a426c9",
+            "modified": 1724680854545,
+            "created": 1724680854545,
+            "name": "With filters",
+            "description": "",
+            "environment": {},
+            "environmentPropertyOrder": null,
+            "metaSortKey": -1724677621836,
+            "_type": "request_group"
+        },
+        {
+            "_id": "req_af099fcab38d420086bd5b27221ed266",
+            "parentId": "fld_e08b6dd5353649608fc38ca17e34ced6",
+            "modified": 1724681652696,
+            "created": 1724680854548,
+            "url": "https://core.helloretail.com/serve/search/",
+            "name": "Search: products, categories",
+            "description": "",
+            "method": "POST",
+            "body": {
+                "mimeType": "application/json",
+                "text": "{\n    \"query\": \"*\",\n    \"key\": \"74b19399-447e-4ea7-8550-3fcdba1fb4bd\",\n    \"trackingUserId\":\"\",\n\t\t\"format\": \"json\",\n    \"products\": {\n        \"returnFilters\": false,\n        \"start\":0,\n        \"count\":10,\n        \"fields\":[\"title\",\"originalUrl\",\"trackingCode\"],\n\t\t\t\t\"filters\": [\"brand:ID Denim\"]\n    },\n    \"categories\": {\n        \"start\":0,\n        \"count\":10,\n        \"fields\":[\"title\", \"originalUrl\",\"trackingCode\",\"hierarchy\"],\n\t\t\t\t\"filters\":[\"extraDataList.inAssortments:WEB\"]\n    }\n}"
+            },
+            "parameters": [],
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json",
+                    "id": "pair_ac07af9c81614844b84f467027e5ded8"
+                }
+            ],
+            "authentication": {},
+            "metaSortKey": -1724680253257,
+            "isPrivate": false,
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+        {
+            "_id": "req_6f59c3a871b34c2b8978876006fe6cef",
+            "parentId": "fld_e08b6dd5353649608fc38ca17e34ced6",
+            "modified": 1724681651920,
+            "created": 1724680854549,
+            "url": "https://core.helloretail.com/serve/search/",
+            "name": "Search: products, categories, brands",
+            "description": "",
+            "method": "POST",
+            "body": {
+                "mimeType": "application/json",
+                "text": "{\n    \"query\": \"*\",\n    \"key\": \"74b19399-447e-4ea7-8550-3fcdba1fb4bd\",\n    \"trackingUserId\":\"\",\n\t\t\"format\": \"json\",\n    \"products\": {\n        \"returnFilters\": false,\n        \"start\":0,\n        \"count\":10,\n        \"fields\":[\"title\",\"originalUrl\",\"trackingCode\"],\n\t\t\t\t\"filters\": [\"brand:ID Denim\"]\n    },\n    \"categories\": {\n        \"start\":0,\n        \"count\":10,\n        \"fields\":[\"title\", \"originalUrl\",\"trackingCode\"],\n\t\t\t\t\"filters\":[\"extraDataList.inAssortments:WEB\"]\n    },\n    \"brands\": {\n        \"start\":0,\n        \"count\":10,\n        \"fields\":[\"title\", \"originalUrl\",\"trackingCode\"],\n\t\t\t\t\"filters\":[\"extraDataList.inAssortments:WEB\"]\n    }\n}"
+            },
+            "parameters": [],
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json",
+                    "id": "pair_ac07af9c81614844b84f467027e5ded8"
+                }
+            ],
+            "authentication": {},
+            "metaSortKey": -1724680253207,
+            "isPrivate": false,
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+        {
+            "_id": "req_4dc635a29e3e481c9a2518211217fdca",
+            "parentId": "fld_e08b6dd5353649608fc38ca17e34ced6",
+            "modified": 1724681651268,
+            "created": 1724680854551,
+            "url": "https://core.helloretail.com/serve/search/",
+            "name": "Search: products, categories, brands, sitePages",
+            "description": "",
+            "method": "POST",
+            "body": {
+                "mimeType": "application/json",
+                "text": "{\n    \"query\": \"*\",\n    \"key\": \"74b19399-447e-4ea7-8550-3fcdba1fb4bd\",\n    \"trackingUserId\":\"\",\n\t\t\"format\": \"json\",\n    \"products\": {\n        \"returnFilters\": false,\n        \"start\":0,\n        \"count\":10,\n        \"fields\":[\"title\",\"originalUrl\",\"trackingCode\"],\n\t\t\t\t\"filters\": [\"brand:ID Denim\"]\n    },\n    \"categories\": {\n        \"start\":0,\n        \"count\":10,\n        \"fields\":[\"title\", \"originalUrl\",\"trackingCode\"],\n\t\t\t\t\"filters\":[\"extraDataList.inAssortments:WEB\"]\n    },\n    \"brands\": {\n        \"start\":0,\n        \"count\":10,\n        \"fields\":[\"title\", \"originalUrl\",\"trackingCode\"],\n\t\t\t\t\"filters\":[\"extraDataList.inAssortments:WEB\"]\n    },\n    \"sitePages\": {\n        \"start\":0,\n        \"count\":10,\n        \"fields\":[\"title\", \"originalUrl\",\"trackingCode\"],\n\t\t\t\t\"filters\":[\"extraDataList.inAssortments:WEB\"]\n    }\n}"
+            },
+            "parameters": [],
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json",
+                    "id": "pair_ac07af9c81614844b84f467027e5ded8"
+                }
+            ],
+            "authentication": {},
+            "metaSortKey": -1724680253157,
+            "isPrivate": false,
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+        {
+            "_id": "req_2a6ebcad64fd46f4bb5a392c4eafa17b",
+            "parentId": "fld_e08b6dd5353649608fc38ca17e34ced6",
+            "modified": 1724681633936,
+            "created": 1724680854552,
+            "url": "https://core.helloretail.com/serve/search/",
+            "name": "Search: products, categories, brands, sitePages, blogPosts",
+            "description": "",
+            "method": "POST",
+            "body": {
+                "mimeType": "application/json",
+                "text": "{\n    \"query\": \"*\",\n    \"key\": \"74b19399-447e-4ea7-8550-3fcdba1fb4bd\",\n    \"trackingUserId\":\"\",\n\t\t\"format\": \"json\",\n    \"products\": {\n        \"returnFilters\": false,\n        \"start\":0,\n        \"count\":10,\n        \"fields\":[\"title\",\"originalUrl\",\"trackingCode\"],\n\t\t\t\t\"filters\": [\"brand:ID Denim\"]\n    },\n    \"categories\": {\n        \"start\":0,\n        \"count\":10,\n        \"fields\":[\"title\", \"originalUrl\",\"trackingCode\"],\n\t\t\t\t\"filters\":[\"extraDataList.inAssortments:WEB\"]\n    },\n    \"brands\": {\n        \"start\":0,\n        \"count\":10,\n        \"fields\":[\"title\", \"originalUrl\",\"trackingCode\"],\n\t\t\t\t\"filters\":[\"extraDataList.inAssortments:WEB\"]\n    },\n    \"sitePages\": {\n        \"start\":0,\n        \"count\":10,\n        \"fields\":[\"title\", \"originalUrl\",\"trackingCode\"],\n\t\t\t\t\"filters\":[\"extraDataList.inAssortments:WEB\"]\n    },\n    \"blogPosts\": {\n        \"start\":0,\n        \"count\":10,\n        \"fields\":[\"title\", \"originalUrl\",\"trackingCode\"],\n\t\t\t\t\"filters\":[\"extraDataList.inAssortments:WEB\"]\n    }\n}"
+            },
+            "parameters": [],
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json",
+                    "id": "pair_ac07af9c81614844b84f467027e5ded8"
+                }
+            ],
+            "authentication": {},
+            "metaSortKey": -1724680253107,
+            "isPrivate": false,
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+        {
+            "_id": "req_d9b538a3e01f4bcdabb7e979857fa02a",
+            "parentId": "fld_425188c2a4a142c0b4714fb1ec7dfa9d",
+            "modified": 1724682039647,
+            "created": 1724681716265,
+            "url": "https://core.helloretail.com/serve/search/",
+            "name": "Search: products",
+            "description": "",
+            "method": "POST",
+            "body": {
+                "mimeType": "application/json",
+                "text": "{\n    \"query\": \"*\",\n    \"key\": \"74b19399-447e-4ea7-8550-3fcdba1fb4bd\",\n    \"trackingUserId\":\"\",\n\t\t\"format\": \"json\",\n    \"products\": {\n        \"returnFilters\": false,\n        \"start\":0,\n        \"count\":10,\n        \"fields\":[\"title\",\"originalUrl\",\"trackingCode\",\"price\"],\n\t\t\t\t\"sorting\": [\"price asc\"]\n    }\n}"
+            },
+            "parameters": [],
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json",
+                    "id": "pair_ac07af9c81614844b84f467027e5ded8"
+                }
+            ],
+            "authentication": {},
+            "metaSortKey": -1724680253307,
+            "isPrivate": false,
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+        {
+            "_id": "fld_425188c2a4a142c0b4714fb1ec7dfa9d",
+            "parentId": "fld_e3dcf2518eed408da1b026b072a426c9",
+            "modified": 1724681716263,
+            "created": 1724681716263,
+            "name": "With sorting",
+            "description": "",
+            "environment": {},
+            "environmentPropertyOrder": null,
+            "metaSortKey": -1724676062055.5,
+            "_type": "request_group"
+        },
+        {
+            "_id": "req_fc7ebfdb167c4e739cbb0a1b42d71f67",
+            "parentId": "fld_425188c2a4a142c0b4714fb1ec7dfa9d",
+            "modified": 1724682043651,
+            "created": 1724681716266,
+            "url": "https://core.helloretail.com/serve/search/",
+            "name": "Search: products, categories",
+            "description": "",
+            "method": "POST",
+            "body": {
+                "mimeType": "application/json",
+                "text": "{\n    \"query\": \"*\",\n    \"key\": \"74b19399-447e-4ea7-8550-3fcdba1fb4bd\",\n    \"trackingUserId\":\"\",\n\t\t\"format\": \"json\",\n    \"products\": {\n        \"returnFilters\": false,\n        \"start\":0,\n        \"count\":10,\n        \"fields\":[\"title\",\"originalUrl\",\"trackingCode\"],\n\t\t\t\t\"sorting\": [\"price asc\"]\n    },\n    \"categories\": {\n        \"start\":0,\n        \"count\":10,\n        \"fields\":[\"title\", \"originalUrl\",\"trackingCode\"],\n\t\t\t\t\"sorting\":[\"title desc\"]\n    }\n}"
+            },
+            "parameters": [],
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json",
+                    "id": "pair_ac07af9c81614844b84f467027e5ded8"
+                }
+            ],
+            "authentication": {},
+            "metaSortKey": -1724680253257,
+            "isPrivate": false,
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+        {
+            "_id": "req_12f6407177644a2b8844328981daa9e5",
+            "parentId": "fld_425188c2a4a142c0b4714fb1ec7dfa9d",
+            "modified": 1724682047915,
+            "created": 1724681716267,
+            "url": "https://core.helloretail.com/serve/search/",
+            "name": "Search: products, categories, brands",
+            "description": "",
+            "method": "POST",
+            "body": {
+                "mimeType": "application/json",
+                "text": "{\n    \"query\": \"*\",\n    \"key\": \"74b19399-447e-4ea7-8550-3fcdba1fb4bd\",\n    \"trackingUserId\":\"\",\n\t\t\"format\": \"json\",\n    \"products\": {\n        \"returnFilters\": false,\n        \"start\":0,\n        \"count\":10,\n        \"fields\":[\"title\",\"originalUrl\",\"trackingCode\"],\n\t\t\t\t\"sorting\": [\"price asc\"]\n    },\n    \"categories\": {\n        \"start\":0,\n        \"count\":10,\n        \"fields\":[\"title\", \"originalUrl\",\"trackingCode\"],\n\t\t\t\t\"filters\":[\"extraDataList.inAssortments:WEB\"],\n\t\t\t\t\"sorting\":[\"title desc\"]\n    },\n    \"brands\": {\n        \"start\":0,\n        \"count\":10,\n        \"fields\":[\"title\", \"originalUrl\",\"trackingCode\"],\n\t\t\t\t\"filters\":[\"extraDataList.inAssortments:WEB\"],\n\t\t\t\t\"sorting\":[\"title desc\"]\n    }\n}"
+            },
+            "parameters": [],
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json",
+                    "id": "pair_ac07af9c81614844b84f467027e5ded8"
+                }
+            ],
+            "authentication": {},
+            "metaSortKey": -1724680253207,
+            "isPrivate": false,
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+        {
+            "_id": "req_abcfeb26fed348619fa4469c94caab11",
+            "parentId": "fld_425188c2a4a142c0b4714fb1ec7dfa9d",
+            "modified": 1724682051481,
+            "created": 1724681716268,
+            "url": "https://core.helloretail.com/serve/search/",
+            "name": "Search: products, categories, brands, sitePages",
+            "description": "",
+            "method": "POST",
+            "body": {
+                "mimeType": "application/json",
+                "text": "{\n    \"query\": \"*\",\n    \"key\": \"74b19399-447e-4ea7-8550-3fcdba1fb4bd\",\n    \"trackingUserId\":\"\",\n\t\t\"format\": \"json\",\n    \"products\": {\n        \"returnFilters\": false,\n        \"start\":0,\n        \"count\":10,\n        \"fields\":[\"title\",\"originalUrl\",\"trackingCode\"],\n\t\t\t\t\"sorting\": [\"price asc\"]\n    },\n    \"categories\": {\n        \"start\":0,\n        \"count\":10,\n        \"fields\":[\"title\", \"originalUrl\",\"trackingCode\"],\n\t\t\t\t\"filters\":[\"extraDataList.inAssortments:WEB\"],\n\t\t\t\t\"sorting\":[\"title desc\"]\n    },\n    \"brands\": {\n        \"start\":0,\n        \"count\":10,\n        \"fields\":[\"title\", \"originalUrl\",\"trackingCode\"],\n\t\t\t\t\"filters\":[\"extraDataList.inAssortments:WEB\"],\n\t\t\t\t\"sorting\":[\"title desc\"]\n    },\n    \"sitePages\": {\n        \"start\":0,\n        \"count\":10,\n        \"fields\":[\"title\", \"originalUrl\",\"trackingCode\"],\n\t\t\t\t\"filters\":[\"extraDataList.inAssortments:WEB\"],\n\t\t\t\t\"sorting\":[\"title desc\"]\n    }\n}"
+            },
+            "parameters": [],
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json",
+                    "id": "pair_ac07af9c81614844b84f467027e5ded8"
+                }
+            ],
+            "authentication": {},
+            "metaSortKey": -1724680253157,
+            "isPrivate": false,
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+        {
+            "_id": "req_a1805f1392634fe3bede8f5dee6b62b5",
+            "parentId": "fld_425188c2a4a142c0b4714fb1ec7dfa9d",
+            "modified": 1724682054377,
+            "created": 1724681716270,
+            "url": "https://core.helloretail.com/serve/search/",
+            "name": "Search: products, categories, brands, sitePages, blogPosts",
+            "description": "",
+            "method": "POST",
+            "body": {
+                "mimeType": "application/json",
+                "text": "{\n    \"query\": \"*\",\n    \"key\": \"74b19399-447e-4ea7-8550-3fcdba1fb4bd\",\n    \"trackingUserId\":\"\",\n\t\t\"format\": \"json\",\n    \"products\": {\n        \"returnFilters\": false,\n        \"start\":0,\n        \"count\":10,\n        \"fields\":[\"title\",\"originalUrl\",\"trackingCode\"],\n\t\t\t\t\"sorting\": [\"price asc\"]\n    },\n    \"categories\": {\n        \"start\":0,\n        \"count\":10,\n        \"fields\":[\"title\", \"originalUrl\",\"trackingCode\"],\n\t\t\t\t\"filters\":[\"extraDataList.inAssortments:WEB\"],\n\t\t\t\t\"sorting\":[\"title desc\"]\n    },\n    \"brands\": {\n        \"start\":0,\n        \"count\":10,\n        \"fields\":[\"title\", \"originalUrl\",\"trackingCode\"],\n\t\t\t\t\"filters\":[\"extraDataList.inAssortments:WEB\"],\n\t\t\t\t\"sorting\":[\"title desc\"]\n    },\n    \"sitePages\": {\n        \"start\":0,\n        \"count\":10,\n        \"fields\":[\"title\", \"originalUrl\",\"trackingCode\"],\n\t\t\t\t\"filters\":[\"extraDataList.inAssortments:WEB\"],\n\t\t\t\t\"sorting\":[\"title desc\"]\n    },\n    \"blogPosts\": {\n        \"start\":0,\n        \"count\":10,\n        \"fields\":[\"title\", \"originalUrl\",\"trackingCode\"],\n\t\t\t\t\"filters\":[\"extraDataList.inAssortments:WEB\"],\n\t\t\t\t\"sorting\":[\"title desc\"]\n    }\n}"
+            },
+            "parameters": [],
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json",
+                    "id": "pair_ac07af9c81614844b84f467027e5ded8"
+                }
+            ],
+            "authentication": {},
+            "metaSortKey": -1724680253107,
+            "isPrivate": false,
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+        {
+            "_id": "req_6f172a0924724d5daa7107182e672914",
+            "parentId": "fld_1c2519aaabaa44ec9cf701bc405518c7",
+            "modified": 1724677697790,
+            "created": 1724674749698,
+            "url": "https://core.helloretail.com/serve/recoms",
+            "name": "single recommendation [no context data]",
+            "description": "",
+            "method": "POST",
+            "body": {
+                "mimeType": "application/json",
+                "text": "{\n\t\t\"websiteUuid\":\"446db255-f285-4540-bcf9-699e4725013f\",\n\t\t\"trackingUserId\":\"\",\n\t\t\"requests\":[\n\t\t\t\t{\n\t\t\t\t\t\t\"trackingKey\":\"frontpage-1\",\n\t\t\t\t\t\t\"fields\":[\"title\",\"originalUrl\",\"trackingCode\"],\n\t\t\t\t\t\t\"hideAdditionalVariants\":true,\n\t\t\t\t\t\t\"count\":8,\n\t\t\t\t\t\t\"sources\":[\n\t\t\t\t\t\t\t\t{\n\t\t\t\t\t\t\t\t\t\t\"type\":\"TOP\",\n\t\t\t\t\t\t\t\t\t\t\"limit\":4\n\t\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t\t{\n\t\t\t\t\t\t\t\t\t\t\"type\":\"MOST_BOUGHT\",\n\t\t\t\t\t\t\t\t\t\t\"limit\":3\n\t\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t\t{\n\t\t\t\t\t\t\t\t\t\t\"type\":\"TOP\"\n\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t]\n\t\t\t\t}\n\t\t]\n}"
+            },
+            "parameters": [],
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json",
+                    "id": "pair_f6f905c9d3594110844ede7450fc7d7a"
+                }
+            ],
+            "authentication": {},
+            "metaSortKey": -1724673485427,
+            "isPrivate": false,
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+        {
+            "_id": "fld_1c2519aaabaa44ec9cf701bc405518c7",
+            "parentId": "fld_97b85d04d26742ca98ca9211c9f675d0",
+            "modified": 1724674502275,
+            "created": 1724674502275,
+            "name": "Front page | 404 page",
+            "description": "",
+            "environment": {},
+            "environmentPropertyOrder": null,
+            "metaSortKey": -1724674502275,
+            "_type": "request_group"
+        },
+        {
+            "_id": "fld_97b85d04d26742ca98ca9211c9f675d0",
+            "parentId": "fld_13897c2123384b098215b657526fa3a3",
+            "modified": 1724672341044,
+            "created": 1724672341044,
+            "name": "Unmanaged",
+            "description": "",
+            "environment": {},
+            "environmentPropertyOrder": null,
+            "metaSortKey": -1724672341044,
+            "_type": "request_group"
+        },
+        {
+            "_id": "fld_13897c2123384b098215b657526fa3a3",
+            "parentId": "fld_681a3deed0af4d74aef296622f2903fb",
+            "modified": 1724660832486,
+            "created": 1724660832486,
+            "name": "Recoms",
+            "description": "",
+            "environment": {},
+            "environmentPropertyOrder": null,
+            "metaSortKey": -1724318254367,
+            "_type": "request_group"
+        },
+        {
+            "_id": "req_07098f75da1843dab3162711d1a8957b",
+            "parentId": "fld_1c2519aaabaa44ec9cf701bc405518c7",
+            "modified": 1724675925872,
+            "created": 1724674619703,
+            "url": "https://core.helloretail.com/serve/recoms",
+            "name": "multiple recommendations [no context data]",
+            "description": "",
+            "method": "POST",
+            "body": {
+                "mimeType": "application/json",
+                "text": "{\n\t\t\"websiteUuid\":\"446db255-f285-4540-bcf9-699e4725013f\",\n\t\t\"trackingUserId\":\"\",\n\t\t\"requests\":[\n\t\t\t\t{\n\t\t\t\t\t\t\"trackingKey\":\"frontpage-1\",\n\t\t\t\t\t\t\"fields\":[\"title\",\"originalUrl\",\"trackingCode\"],\n\t\t\t\t\t\t\"hideAdditionalVariants\":true,\n\t\t\t\t\t\t\"count\":8,\n\t\t\t\t\t\t\"sources\":[\n\t\t\t\t\t\t\t\t{\n\t\t\t\t\t\t\t\t\t\t\"type\":\"TOP\",\n\t\t\t\t\t\t\t\t\t\t\"limit\":4\n\t\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t\t{\n\t\t\t\t\t\t\t\t\t\t\"type\":\"MOST_BOUGHT\",\n\t\t\t\t\t\t\t\t\t\t\"limit\":3\n\t\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t\t{\n\t\t\t\t\t\t\t\t\t\t\"type\":\"TOP\"\n\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t]\n\t\t\t\t},\n\t\t\t\t{\n\t\t\t\t\t\t\"trackingKey\":\"frontpage-2\",\n\t\t\t\t\t\t\"fields\":[\"title\",\"originalUrl\",\"trackingCode\"],\n\t\t\t\t\t\t\"hideAdditionalVariants\":true,\n\t\t\t\t\t\t\"count\":8,\n\t\t\t\t\t\t\"sources\":[\n\t\t\t\t\t\t\t\t{\n\t\t\t\t\t\t\t\t\t\t\"type\":\"MOST_BOUGHT\",\n\t\t\t\t\t\t\t\t\t\t\"limit\":4\n\t\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t\t{\n\t\t\t\t\t\t\t\t\t\t\"type\":\"TOP\"\n\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t]\n\t\t\t\t}\n\t\t]\n}"
+            },
+            "parameters": [],
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json",
+                    "id": "pair_f6f905c9d3594110844ede7450fc7d7a"
+                }
+            ],
+            "authentication": {},
+            "metaSortKey": -1724673485377,
+            "isPrivate": false,
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+        {
+            "_id": "req_bcf9a5b3eecc411293b74cbd6998e058",
+            "parentId": "fld_b16419e97f51467098c1e5b867410db1",
+            "modified": 1724677696082,
+            "created": 1724674922375,
+            "url": "https://core.helloretail.com/serve/recoms",
+            "name": "single recommendation [context data required - URLS]",
+            "description": "",
+            "method": "POST",
+            "body": {
+                "mimeType": "application/json",
+                "text": "{\n\t\t\"websiteUuid\":\"446db255-f285-4540-bcf9-699e4725013f\",\n\t\t\"trackingUserId\":\"\",\n\t\t\"requests\":[\n\t\t\t\t{\n\t\t\t\t\t\t\"trackingKey\":\"productpage-1\",\n\t\t\t\t\t\t\"fields\":[\"title\",\"originalUrl\",\"trackingCode\"],\n\t\t\t\t\t\t\"hideAdditionalVariants\":true,\n\t\t\t\t\t\t\"context\": {\n\t\t\t\t\t\t\t \"urls\":[\"https://stillo.dk/products/engineered-baggy-one-denim-jeans-3\"]\n\t\t\t\t\t\t},\n\t\t\t\t\t\t\"count\":8,\n\t\t\t\t\t\t\"sources\":[\n\t\t\t\t\t\t\t\t{\n\t\t\t\t\t\t\t\t\t\t\"type\":\"ALTERNATIVES\"\n\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t]\n\t\t\t\t}\n\t\t]\n}"
+            },
+            "parameters": [],
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json",
+                    "id": "pair_f6f905c9d3594110844ede7450fc7d7a"
+                }
+            ],
+            "authentication": {},
+            "metaSortKey": -1724672918289,
+            "isPrivate": false,
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+        {
+            "_id": "fld_b16419e97f51467098c1e5b867410db1",
+            "parentId": "fld_97b85d04d26742ca98ca9211c9f675d0",
+            "modified": 1724674517354,
+            "created": 1724674513973,
+            "name": "Product page | Cart page | Upsell",
+            "description": "",
+            "environment": {},
+            "environmentPropertyOrder": null,
+            "metaSortKey": -1724674502225,
+            "_type": "request_group"
+        },
+        {
+            "_id": "req_93aa2b00b4ba4576bc69d721f90540b8",
+            "parentId": "fld_b16419e97f51467098c1e5b867410db1",
+            "modified": 1724677694943,
+            "created": 1724675680978,
+            "url": "https://core.helloretail.com/serve/recoms",
+            "name": "single recommendation [context data required - PRODUCTNUMBERS]",
+            "description": "",
+            "method": "POST",
+            "body": {
+                "mimeType": "application/json",
+                "text": "{\n\t\t\"websiteUuid\":\"446db255-f285-4540-bcf9-699e4725013f\",\n\t\t\"trackingUserId\":\"\",\n\t\t\"requests\":[\n\t\t\t\t{\n\t\t\t\t\t\t\"trackingKey\":\"productpage-1\",\n\t\t\t\t\t\t\"fields\":[\"title\",\"originalUrl\",\"trackingCode\"],\n\t\t\t\t\t\t\"hideAdditionalVariants\":true,\n\t\t\t\t\t\t\"context\": {\n\t\t\t\t\t\t\t \"productNumbers\":[\"45005-806-2830\"]\n\t\t\t\t\t\t},\n\t\t\t\t\t\t\"count\":8,\n\t\t\t\t\t\t\"sources\":[\n\t\t\t\t\t\t\t\t{\n\t\t\t\t\t\t\t\t\t\t\"type\":\"ALTERNATIVES\"\n\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t]\n\t\t\t\t}\n\t\t]\n}"
+            },
+            "parameters": [],
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json",
+                    "id": "pair_f6f905c9d3594110844ede7450fc7d7a"
+                }
+            ],
+            "authentication": {},
+            "metaSortKey": -1724672847396.75,
+            "isPrivate": false,
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+        {
+            "_id": "req_f1dd32a7ad6b4bd6be2c03e852d753db",
+            "parentId": "fld_b16419e97f51467098c1e5b867410db1",
+            "modified": 1724677693680,
+            "created": 1724675710098,
+            "url": "https://core.helloretail.com/serve/recoms",
+            "name": "multiple recommendations [context data required - URLS]",
+            "description": "",
+            "method": "POST",
+            "body": {
+                "mimeType": "application/json",
+                "text": "{\n\t\t\"websiteUuid\":\"446db255-f285-4540-bcf9-699e4725013f\",\n\t\t\"trackingUserId\":\"\",\n\t\t\"requests\":[\n\t\t\t\t{\n\t\t\t\t\t\t\"trackingKey\":\"productpage-1\",\n\t\t\t\t\t\t\"fields\":[\"title\",\"originalUrl\",\"trackingCode\"],\n\t\t\t\t\t\t\"hideAdditionalVariants\":true,\n\t\t\t\t\t\t\"context\": {\n\t\t\t\t\t\t\t \"urls\":[\"https://stillo.dk/products/engineered-baggy-one-denim-jeans-3\"]\n\t\t\t\t\t\t},\n\t\t\t\t\t\t\"count\":8,\n\t\t\t\t\t\t\"sources\":[\n\t\t\t\t\t\t\t\t{\n\t\t\t\t\t\t\t\t\t\t\"type\":\"ALTERNATIVES\",\n\t\t\t\t\t\t\t\t\t\t\"limit\":4\n\t\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t\t{\n\t\t\t\t\t\t\t\t\t\t\"type\":\"TOP\"\n\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t]\n\t\t\t\t},\n\t\t\t\t{\n\t\t\t\t\t\t\"trackingKey\":\"productpage-2\",\n\t\t\t\t\t\t\"fields\":[\"title\",\"originalUrl\",\"trackingCode\"],\n\t\t\t\t\t\t\"hideAdditionalVariants\":true,\n\t\t\t\t\t\t\"context\": {\n\t\t\t\t\t\t\t \"urls\":[\"https://stillo.dk/products/engineered-baggy-one-denim-jeans-3\"]\n\t\t\t\t\t\t},\n\t\t\t\t\t\t\"count\":8,\n\t\t\t\t\t\t\"sources\":[\n\t\t\t\t\t\t\t\t{\n\t\t\t\t\t\t\t\t\t\t\"type\":\"BOUGHT_TOGETHER\",\n\t\t\t\t\t\t\t\t\t\t\"limit\":4\n\t\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t\t{\n\t\t\t\t\t\t\t\t\t\t\"type\":\"TOP\"\n\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t]\n\t\t\t\t}\n\t\t]\n}"
+            },
+            "parameters": [],
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json",
+                    "id": "pair_f6f905c9d3594110844ede7450fc7d7a"
+                }
+            ],
+            "authentication": {},
+            "metaSortKey": -1724672776504.5,
+            "isPrivate": false,
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+        {
+            "_id": "req_a6b3ad382c68446ca195f644db5a43dd",
+            "parentId": "fld_b16419e97f51467098c1e5b867410db1",
+            "modified": 1724677691984,
+            "created": 1724676051953,
+            "url": "https://core.helloretail.com/serve/recoms",
+            "name": "multiple recommendations [context data required - PRODUCTNUMBERS]",
+            "description": "",
+            "method": "POST",
+            "body": {
+                "mimeType": "application/json",
+                "text": "{\n\t\t\"websiteUuid\":\"446db255-f285-4540-bcf9-699e4725013f\",\n\t\t\"trackingUserId\":\"\",\n\t\t\"requests\":[\n\t\t\t\t{\n\t\t\t\t\t\t\"trackingKey\":\"productpage-1\",\n\t\t\t\t\t\t\"fields\":[\"title\",\"originalUrl\",\"trackingCode\"],\n\t\t\t\t\t\t\"hideAdditionalVariants\":true,\n\t\t\t\t\t\t\"context\": {\n\t\t\t\t\t\t\t \"productNumbers\":[\"45005-806-2830\"]\n\t\t\t\t\t\t},\n\t\t\t\t\t\t\"count\":8,\n\t\t\t\t\t\t\"sources\":[\n\t\t\t\t\t\t\t\t{\n\t\t\t\t\t\t\t\t\t\t\"type\":\"ALTERNATIVES\",\n\t\t\t\t\t\t\t\t\t\t\"limit\":4\n\t\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t\t{\n\t\t\t\t\t\t\t\t\t\t\"type\":\"TOP\"\n\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t]\n\t\t\t\t},\n\t\t\t\t{\n\t\t\t\t\t\t\"trackingKey\":\"productpage-2\",\n\t\t\t\t\t\t\"fields\":[\"title\",\"originalUrl\",\"trackingCode\"],\n\t\t\t\t\t\t\"hideAdditionalVariants\":true,\n\t\t\t\t\t\t\"context\": {\n\t\t\t\t\t\t\t \"productNumbers\":[\"45005-806-2830\"]\n\t\t\t\t\t\t},\n\t\t\t\t\t\t\"count\":8,\n\t\t\t\t\t\t\"sources\":[\n\t\t\t\t\t\t\t\t{\n\t\t\t\t\t\t\t\t\t\t\"type\":\"BOUGHT_TOGETHER\",\n\t\t\t\t\t\t\t\t\t\t\"limit\":4\n\t\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t\t{\n\t\t\t\t\t\t\t\t\t\t\"type\":\"TOP\"\n\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t]\n\t\t\t\t}\n\t\t]\n}"
+            },
+            "parameters": [],
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json",
+                    "id": "pair_f6f905c9d3594110844ede7450fc7d7a"
+                }
+            ],
+            "authentication": {},
+            "metaSortKey": -1724672563827.75,
+            "isPrivate": false,
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+        {
+            "_id": "req_aeb9bca5e5794b23a70a4b5e99002b45",
+            "parentId": "fld_6440c148ed9648a9a7de346bde46ee05",
+            "modified": 1724677699436,
+            "created": 1724676122740,
+            "url": "https://core.helloretail.com/serve/recoms",
+            "name": "single recommendation [context data required - HIERARCHIES]",
+            "description": "",
+            "method": "POST",
+            "body": {
+                "mimeType": "application/json",
+                "text": "{\n\t\t\"websiteUuid\":\"446db255-f285-4540-bcf9-699e4725013f\",\n\t\t\"trackingUserId\":\"\",\n\t\t\"requests\":[\n\t\t\t\t{\n\t\t\t\t\t\t\"trackingKey\":\"categorypage-1\",\n\t\t\t\t\t\t\"fields\":[\"title\",\"originalUrl\",\"trackingCode\"],\n\t\t\t\t\t\t\"hideAdditionalVariants\":true,\n\t\t\t\t\t\t\"context\": {\n\t\t\t\t\t\t\t \"hierarchies\":[[\"Herre\"],[\"ID Denim\"]]\n\t\t\t\t\t\t},\n\t\t\t\t\t\t\"count\":8,\n\t\t\t\t\t\t\"sources\":[\n\t\t\t\t\t\t\t\t{\n\t\t\t\t\t\t\t\t\t\t\"type\":\"TOP\"\n\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t]\n\t\t\t\t}\n\t\t]\n}"
+            },
+            "parameters": [],
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json",
+                    "id": "pair_f6f905c9d3594110844ede7450fc7d7a"
+                }
+            ],
+            "authentication": {},
+            "metaSortKey": -1724672882842.875,
+            "isPrivate": false,
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+        {
+            "_id": "fld_6440c148ed9648a9a7de346bde46ee05",
+            "parentId": "fld_97b85d04d26742ca98ca9211c9f675d0",
+            "modified": 1724674549301,
+            "created": 1724674530132,
+            "name": "Category page",
+            "description": "",
+            "environment": {},
+            "environmentPropertyOrder": null,
+            "metaSortKey": -1724674502175,
+            "_type": "request_group"
+        },
+        {
+            "_id": "req_a385f334234e4355828d4ca166feaf79",
+            "parentId": "fld_7d9059e69e684c718349a5dc8767cd92",
+            "modified": 1724677637950,
+            "created": 1724676242902,
+            "url": "https://core.helloretail.com/serve/recoms",
+            "name": "single recommendation [context data required - CUSTOM]",
+            "description": "",
+            "method": "POST",
+            "body": {
+                "mimeType": "application/json",
+                "text": "{\n\t\t\"websiteUuid\":\"446db255-f285-4540-bcf9-699e4725013f\",\n\t\t\"trackingUserId\":\"\",\n\t\t\"requests\":[\n\t\t\t\t{\n\t\t\t\t\t\t\"trackingKey\":\"other-1\",\n\t\t\t\t\t\t\"fields\":[\"title\",\"originalUrl\",\"trackingCode\"],\n\t\t\t\t\t\t\"hideAdditionalVariants\":true,\n\t\t\t\t\t\t\"count\":8,\n\t\t\t\t\t\t\"context\": {\n\t\t\t\t\t\t\t\t\"brand\": \"ID Denim\",\n\t\t\t\t\t\t\t\t\"extraData\":{\n\t\t\t\t\t\t\t\t\t\t\"productType\":\"Jeans\"\n\t\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t\t\"extraDataList\":{\n\t\t\t\t\t\t\t\t\t\t\"style\":[\"Streetwear\"]\n\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t},\n\t\t\t\t\t\t\"sources\":[\n\t\t\t\t\t\t\t\t{\n\t\t\t\t\t\t\t\t\t\t\"type\":\"TOP\",\n\t\t\t\t\t\t\t\t\t\t\"limit\":4\n\t\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t\t{\n\t\t\t\t\t\t\t\t\t\t\"type\":\"MOST_BOUGHT\",\n\t\t\t\t\t\t\t\t\t\t\"limit\":3\n\t\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t\t{\n\t\t\t\t\t\t\t\t\t\t\"type\":\"TOP\"\n\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t]\n\t\t\t\t}\n\t\t]\n}"
+            },
+            "parameters": [],
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json",
+                    "id": "pair_f6f905c9d3594110844ede7450fc7d7a"
+                }
+            ],
+            "authentication": {},
+            "metaSortKey": -1724673485402,
+            "isPrivate": false,
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+        {
+            "_id": "fld_7d9059e69e684c718349a5dc8767cd92",
+            "parentId": "fld_97b85d04d26742ca98ca9211c9f675d0",
+            "modified": 1724674560208,
+            "created": 1724674557522,
+            "name": "Other",
+            "description": "",
+            "environment": {},
+            "environmentPropertyOrder": null,
+            "metaSortKey": -1724674502125,
+            "_type": "request_group"
+        },
+        {
+            "_id": "req_299f6af433ef4799891d7e4649ef2ee0",
+            "parentId": "fld_7d9059e69e684c718349a5dc8767cd92",
+            "modified": 1724677637384,
+            "created": 1724676466131,
+            "url": "https://core.helloretail.com/serve/recoms",
+            "name": "multiple recommendations [context data required - CUSTOM]",
+            "description": "",
+            "method": "POST",
+            "body": {
+                "mimeType": "application/json",
+                "text": "{\n\t\t\"websiteUuid\":\"446db255-f285-4540-bcf9-699e4725013f\",\n\t\t\"trackingUserId\":\"\",\n\t\t\"requests\":[\n\t\t\t\t{\n\t\t\t\t\t\t\"trackingKey\":\"other-1\",\n\t\t\t\t\t\t\"fields\":[\"title\",\"originalUrl\",\"trackingCode\"],\n\t\t\t\t\t\t\"hideAdditionalVariants\":true,\n\t\t\t\t\t\t\"count\":8,\n\t\t\t\t\t\t\"context\": {\n\t\t\t\t\t\t\t\t\"brand\": \"ID Denim\",\n\t\t\t\t\t\t\t\t\"extraData\":{\n\t\t\t\t\t\t\t\t\t\t\"productType\":\"Jeans\"\n\t\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t\t\"extraDataList\":{\n\t\t\t\t\t\t\t\t\t\t\"style\":[\"Streetwear\"]\n\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t},\n\t\t\t\t\t\t\"sources\":[\n\t\t\t\t\t\t\t\t{\n\t\t\t\t\t\t\t\t\t\t\"type\":\"TOP\",\n\t\t\t\t\t\t\t\t\t\t\"limit\":4\n\t\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t\t{\n\t\t\t\t\t\t\t\t\t\t\"type\":\"MOST_BOUGHT\",\n\t\t\t\t\t\t\t\t\t\t\"limit\":3\n\t\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t\t{\n\t\t\t\t\t\t\t\t\t\t\"type\":\"TOP\"\n\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t]\n\t\t\t\t},\n\t\t\t\t{\n\t\t\t\t\t\t\"trackingKey\":\"other-2\",\n\t\t\t\t\t\t\"fields\":[\"title\",\"originalUrl\",\"trackingCode\"],\n\t\t\t\t\t\t\"hideAdditionalVariants\":true,\n\t\t\t\t\t\t\"count\":8,\n\t\t\t\t\t\t\"context\": {\n\t\t\t\t\t\t\t\t\"brand\": \"Lacoste\",\n\t\t\t\t\t\t\t\t\"extraData\":{\n\t\t\t\t\t\t\t\t\t\t\"productType\":\"Polo T-Shirt\"\n\t\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t\t\"extraDataList\":{\n\t\t\t\t\t\t\t\t\t\t\"style\":[\"Fashion\"]\n\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t},\n\t\t\t\t\t\t\"sources\":[\n\t\t\t\t\t\t\t\t{\n\t\t\t\t\t\t\t\t\t\t\"type\":\"TOP\",\n\t\t\t\t\t\t\t\t\t\t\"limit\":4\n\t\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t\t{\n\t\t\t\t\t\t\t\t\t\t\"type\":\"MOST_BOUGHT\",\n\t\t\t\t\t\t\t\t\t\t\"limit\":3\n\t\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t\t{\n\t\t\t\t\t\t\t\t\t\t\"type\":\"TOP\"\n\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t]\n\t\t\t\t}\n\t\t]\n}"
+            },
+            "parameters": [],
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json",
+                    "id": "pair_f6f905c9d3594110844ede7450fc7d7a"
+                }
+            ],
+            "authentication": {},
+            "metaSortKey": -1724673485389.5,
+            "isPrivate": false,
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+        {
+            "_id": "req_36c3d01309534ffcb8faacfe0b34800e",
+            "parentId": "fld_c2fc0ca263094b2bb180dae5072b275e",
+            "modified": 1724677704491,
+            "created": 1724672351126,
+            "url": "https://core.helloretail.com/serve/recoms",
+            "name": "single recommendation [no context data]",
+            "description": "",
+            "method": "POST",
+            "body": {
+                "mimeType": "application/json",
+                "text": "{\n\t\t\"trackingUserId\":\"\",\n\t\t\"requests\":[\n\t\t\t\t{\n\t\t\t\t\t\t\"key\": \"k62790b8e28852f4b1d7f5ba1\",\n\t\t\t\t\t\t\"format\":\"json\",\n\t\t\t\t\t\t\"fields\": [\"title\",\"originalUrl\",\"trackingCode\"],\n\t\t\t\t\t\t\"context\": {}\n\t\t\t\t}\n\n\t\t]\n}"
+            },
+            "parameters": [],
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json",
+                    "id": "pair_40a28e64b9f540c68cdd75f5cc77ef5b"
+                }
+            ],
+            "authentication": {},
+            "metaSortKey": -1724672351151,
+            "isPrivate": false,
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+        {
+            "_id": "fld_c2fc0ca263094b2bb180dae5072b275e",
+            "parentId": "fld_c4c59421bb674aefa80c2946f282bdcf",
+            "modified": 1724674217111,
+            "created": 1724673510918,
+            "name": "Front page | 404 page",
+            "description": "",
+            "environment": {},
+            "environmentPropertyOrder": null,
+            "metaSortKey": -1724673510918,
+            "_type": "request_group"
+        },
+        {
+            "_id": "fld_c4c59421bb674aefa80c2946f282bdcf",
+            "parentId": "fld_13897c2123384b098215b657526fa3a3",
+            "modified": 1724672335099,
+            "created": 1724672335099,
+            "name": "Managed",
+            "description": "",
+            "environment": {},
+            "environmentPropertyOrder": null,
+            "metaSortKey": -1724672335099,
+            "_type": "request_group"
+        },
+        {
+            "_id": "req_877d2c5873c240caa205c8e59a31da74",
+            "parentId": "fld_c2fc0ca263094b2bb180dae5072b275e",
+            "modified": 1724677706021,
+            "created": 1724672712218,
+            "url": "https://core.helloretail.com/serve/recoms",
+            "name": "multiple recommendations [no context data]",
+            "description": "",
+            "method": "POST",
+            "body": {
+                "mimeType": "application/json",
+                "text": "{\n\t\t\"trackingUserId\":\"\",\n\t\t\"requests\":[\n\t\t\t\t{\n\t\t\t\t\t\t\"key\": \"k62790b8e28852f4b1d7f5ba1\",\n\t\t\t\t\t\t\"format\":\"json\",\n\t\t\t\t\t\t\"fields\": [\"title\",\"originalUrl\",\"trackingCode\"],\n\t\t\t\t\t\t\"context\": {}\n\t\t\t\t},\n\t\t\t\t{\n\t\t\t\t\t\t\"key\": \"k62790c23f7f10d71cc9fc7a3\",\n\t\t\t\t\t\t\"format\":\"json\",\n\t\t\t\t\t\t\"fields\": [\"title\",\"originalUrl\",\"trackingCode\"],\n\t\t\t\t\t\t\"context\": {}\n\t\t\t\t},\n\t\t\t\t{\n\t\t\t\t\t\t\"key\": \"k5ed3dc6f543f9853e61be829\",\n\t\t\t\t\t\t\"format\":\"json\",\n\t\t\t\t\t\t\"fields\": [\"title\",\"originalUrl\",\"trackingCode\"],\n\t\t\t\t\t\t\"context\": {}\n\t\t\t\t}\n\t\t]\n}"
+            },
+            "parameters": [],
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json",
+                    "id": "pair_40a28e64b9f540c68cdd75f5cc77ef5b"
+                }
+            ],
+            "authentication": {},
+            "metaSortKey": -1724672351101,
+            "isPrivate": false,
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+        {
+            "_id": "req_6aecd2e5724044578790afa62aaf1094",
+            "parentId": "fld_ffefc61e37c042969ef666d791e52578",
+            "modified": 1724677711707,
+            "created": 1724673251264,
+            "url": "https://core.helloretail.com/serve/recoms",
+            "name": "single recommendation [context data required - URLS]",
+            "description": "",
+            "method": "POST",
+            "body": {
+                "mimeType": "application/json",
+                "text": "{\n\t\t\"trackingUserId\":\"\",\n\t\t\"requests\":[\n\t\t\t\t{\n\t\t\t\t\t\t\"key\": \"k645ca7fd18252d00d639352c\",\n\t\t\t\t\t\t\"format\":\"json\",\n\t\t\t\t\t\t\"fields\": [\"title\",\"originalUrl\",\"trackingCode\"],\n\t\t\t\t\t\t\"context\": {\n\t\t\t\t\t\t\t\"urls\":[\"https://stillo.dk/products/engineered-baggy-one-denim-jeans-3\"]\n\t\t\t\t\t\t}\n\t\t\t\t}\n\t\t]\n}"
+            },
+            "parameters": [],
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json",
+                    "id": "pair_40a28e64b9f540c68cdd75f5cc77ef5b"
+                }
+            ],
+            "authentication": {},
+            "metaSortKey": -1724539569540.125,
+            "isPrivate": false,
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+        {
+            "_id": "fld_ffefc61e37c042969ef666d791e52578",
+            "parentId": "fld_c4c59421bb674aefa80c2946f282bdcf",
+            "modified": 1724674211814,
+            "created": 1724673540395,
+            "name": "Product page | Cart page | Upsell",
+            "description": "",
+            "environment": {},
+            "environmentPropertyOrder": null,
+            "metaSortKey": -1724606540229.0625,
+            "_type": "request_group"
+        },
+        {
+            "_id": "req_b7f1d3e4be1544ddac631fc34ca82152",
+            "parentId": "fld_ffefc61e37c042969ef666d791e52578",
+            "modified": 1724677712213,
+            "created": 1724673331291,
+            "url": "https://core.helloretail.com/serve/recoms",
+            "name": "single recommendation [context data required - PRODUCTNUMBERS]",
+            "description": "",
+            "method": "POST",
+            "body": {
+                "mimeType": "application/json",
+                "text": "{\n\t\t\"trackingUserId\":\"\",\n\t\t\"requests\":[\n\t\t\t\t{\n\t\t\t\t\t\t\"key\": \"k645ca7fd18252d00d639352c\",\n\t\t\t\t\t\t\"format\":\"json\",\n\t\t\t\t\t\t\"fields\": [\"title\",\"originalUrl\",\"trackingCode\"],\n\t\t\t\t\t\t\"context\": {\n\t\t\t\t\t\t\t\"productNumbers\":[\"45005-806-2830\"]\n\t\t\t\t\t\t}\n\t\t\t\t}\n\t\t]\n}"
+            },
+            "parameters": [],
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json",
+                    "id": "pair_40a28e64b9f540c68cdd75f5cc77ef5b"
+                }
+            ],
+            "authentication": {},
+            "metaSortKey": -1724539569490.125,
+            "isPrivate": false,
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+        {
+            "_id": "req_a7644883aa624e64b69ea5cef46cca79",
+            "parentId": "fld_ffefc61e37c042969ef666d791e52578",
+            "modified": 1724677605154,
+            "created": 1724673400481,
+            "url": "https://core.helloretail.com/serve/recoms",
+            "name": "multiple recommendations [context data required - URLS]",
+            "description": "",
+            "method": "POST",
+            "body": {
+                "mimeType": "application/json",
+                "text": "{\n\t\t\"trackingUserId\":\"\",\n\t\t\"requests\":[\n\t\t\t\t{\n\t\t\t\t\t\t\"key\": \"k645ca7fd18252d00d639352c\",\n\t\t\t\t\t\t\"format\":\"json\",\n\t\t\t\t\t\t\"fields\": [\"title\",\"originalUrl\",\"trackingCode\"],\n\t\t\t\t\t\t\"context\": {\n\t\t\t\t\t\t\t\"urls\":[\"https://stillo.dk/products/engineered-baggy-one-denim-jeans-3\"]\n\t\t\t\t\t\t}\n\t\t\t\t},\n\t\t\t\t{\n\t\t\t\t\t\t\"key\": \"k5e4a74da1dd5f04954ec80b7\",\n\t\t\t\t\t\t\"format\":\"json\",\n\t\t\t\t\t\t\"fields\": [\"title\",\"originalUrl\",\"trackingCode\"],\n\t\t\t\t\t\t\"context\": {\n\t\t\t\t\t\t\t\"urls\":[\"https://stillo.dk/products/engineered-baggy-one-denim-jeans-3\"]\n\t\t\t\t\t\t}\n\t\t\t\t}\n\t\t]\n}"
+            },
+            "parameters": [],
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json",
+                    "id": "pair_40a28e64b9f540c68cdd75f5cc77ef5b"
+                }
+            ],
+            "authentication": {},
+            "metaSortKey": -1724539569440.125,
+            "isPrivate": false,
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+        {
+            "_id": "req_155d4505dfd348a7a08bf0e058503af6",
+            "parentId": "fld_ffefc61e37c042969ef666d791e52578",
+            "modified": 1724677607793,
+            "created": 1724673628808,
+            "url": "https://core.helloretail.com/serve/recoms",
+            "name": "multiple recommendations [context data required - PRODUCTNUMBERS]",
+            "description": "",
+            "method": "POST",
+            "body": {
+                "mimeType": "application/json",
+                "text": "{\n\t\t\"trackingUserId\":\"\",\n\t\t\"requests\":[\n\t\t\t\t{\n\t\t\t\t\t\t\"key\": \"k645ca7fd18252d00d639352c\",\n\t\t\t\t\t\t\"format\":\"json\",\n\t\t\t\t\t\t\"fields\": [\"title\",\"originalUrl\",\"trackingCode\"],\n\t\t\t\t\t\t\"context\": {\n\t\t\t\t\t\t\t\"productNumbers\":[\"45005-806-2830\"]\n\t\t\t\t\t\t}\n\t\t\t\t},\n\t\t\t\t{\n\t\t\t\t\t\t\"key\": \"k5e4a74da1dd5f04954ec80b7\",\n\t\t\t\t\t\t\"format\":\"json\",\n\t\t\t\t\t\t\"fields\": [\"title\",\"originalUrl\",\"trackingCode\"],\n\t\t\t\t\t\t\"context\": {\n\t\t\t\t\t\t\t\"productNumbers\":[\"45005-806-2830\"]\n\t\t\t\t\t\t}\n\t\t\t\t}\n\t\t]\n}"
+            },
+            "parameters": [],
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json",
+                    "id": "pair_40a28e64b9f540c68cdd75f5cc77ef5b"
+                }
+            ],
+            "authentication": {},
+            "metaSortKey": -1724517439225.8125,
+            "isPrivate": false,
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+        {
+            "_id": "req_13aec8d3c2464ea89ae85c7e2ae477aa",
+            "parentId": "fld_5dfff2ea50d944d0b67b30c7a7c7197b",
+            "modified": 1724677715191,
+            "created": 1724673762278,
+            "url": "https://core.helloretail.com/serve/recoms",
+            "name": "single recommendation [context data required - HIERARCHIES]",
+            "description": "",
+            "method": "POST",
+            "body": {
+                "mimeType": "application/json",
+                "text": "{\n\t\t\"trackingUserId\":\"\",\n\t\t\"requests\":[\n\t\t\t\t{\n\t\t\t\t\t\t\"key\": \"k66aa256ea294ed13ad3cfbac\",\n\t\t\t\t\t\t\"format\":\"json\",\n\t\t\t\t\t\t\"fields\": [\"title\",\"originalUrl\",\"trackingCode\"],\n\t\t\t\t\t\t\"context\": {\n\t\t\t\t\t\t\t\"hierarchies\": [[\"Id Denim\"],[\"Herre\"]]\n\t\t\t\t\t\t}\n\t\t\t\t}\n\t\t]\n}"
+            },
+            "parameters": [],
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json",
+                    "id": "pair_40a28e64b9f540c68cdd75f5cc77ef5b"
+                }
+            ],
+            "authentication": {},
+            "metaSortKey": -1724539569515.125,
+            "isPrivate": false,
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+        {
+            "_id": "fld_5dfff2ea50d944d0b67b30c7a7c7197b",
+            "parentId": "fld_c4c59421bb674aefa80c2946f282bdcf",
+            "modified": 1724673672003,
+            "created": 1724673669712,
+            "name": "Category page",
+            "description": "",
+            "environment": {},
+            "environmentPropertyOrder": null,
+            "metaSortKey": -1724550924620.2812,
+            "_type": "request_group"
+        },
+        {
+            "_id": "req_975c1e134d3143ebbef9be5ceb7984ae",
+            "parentId": "fld_e1db4e9285fd4d159757b36a3b78bc59",
+            "modified": 1724680168095,
+            "created": 1724672675300,
+            "url": "https://core.helloretail.com/serve/recoms",
+            "name": "single recommendation [context data required - CUSTOM]",
+            "description": "",
+            "method": "POST",
+            "body": {
+                "mimeType": "application/json",
+                "text": "{\n\t\t\"trackingUserId\":\"\",\n\t\t\"requests\":[\n\t\t\t\t{\n\t\t\t\t\t\t\"key\": \"k62790b8e28852f4b1d7f5ba1\",\n\t\t\t\t\t\t\"format\":\"json\",\n\t\t\t\t\t\t\"fields\": [\"title\",\"originalUrl\",\"trackingCode\"],\n\t\t\t\t\t\t\"context\": {\n\t\t\t\t\t\t\t\t\"brand\": \"Nike\",\n\t\t\t\t\t\t\t\t\"price\":20,\n\t\t\t\t\t\t\t\t\"extraData\":{\n\t\t\t\t\t\t\t\t\t\t\"color\":\"black\"\n\t\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t\t\"extraDataList\":{\n\t\t\t\t\t\t\t\t\t\t\"size\":[\"42\",\"44\",\"46\"]\n\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t}\n\t\t\t\t}\n\t\t]\n}"
+            },
+            "parameters": [],
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json",
+                    "id": "pair_40a28e64b9f540c68cdd75f5cc77ef5b"
+                }
+            ],
+            "authentication": {},
+            "metaSortKey": -1724495309011.5,
+            "isPrivate": false,
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+        {
+            "_id": "fld_e1db4e9285fd4d159757b36a3b78bc59",
+            "parentId": "fld_c4c59421bb674aefa80c2946f282bdcf",
+            "modified": 1724674332604,
+            "created": 1724674329573,
+            "name": "Other",
+            "description": "",
+            "environment": {},
+            "environmentPropertyOrder": null,
+            "metaSortKey": -1724523116815.8906,
+            "_type": "request_group"
+        },
+        {
+            "_id": "req_2d7a066f62ba456684a54501379d0bb8",
+            "parentId": "fld_e1db4e9285fd4d159757b36a3b78bc59",
+            "modified": 1724677719192,
+            "created": 1724676397051,
+            "url": "https://core.helloretail.com/serve/recoms",
+            "name": "multiple recommendations [context data required - CUSTOM]",
+            "description": "",
+            "method": "POST",
+            "body": {
+                "mimeType": "application/json",
+                "text": "{\n\t\t\"trackingUserId\":\"\",\n\t\t\"requests\":[\n\t\t\t\t{\n\t\t\t\t\t\t\"key\": \"k62790b8e28852f4b1d7f5ba1\",\n\t\t\t\t\t\t\"format\":\"json\",\n\t\t\t\t\t\t\"fields\": [\"title\",\"originalUrl\",\"trackingCode\"],\n\t\t\t\t\t\t\"context\": {\n\t\t\t\t\t\t\t\t\"brand\": \"Nike\",\n\t\t\t\t\t\t\t\t\"price\":20,\n\t\t\t\t\t\t\t\t\"extraData\":{\n\t\t\t\t\t\t\t\t\t\t\"color\":\"black\"\n\t\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t\t\"extraDataList\":{\n\t\t\t\t\t\t\t\t\t\t\"size\":[\"42\",\"44\",\"46\"]\n\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t}\n\t\t\t\t},\n\t\t\t\t{\n\t\t\t\t\t\t\"key\": \"k62790b8e28852f4b1d7f5ba1\",\n\t\t\t\t\t\t\"format\":\"json\",\n\t\t\t\t\t\t\"fields\": [\"title\",\"originalUrl\",\"trackingCode\"],\n\t\t\t\t\t\t\"context\": {\n\t\t\t\t\t\t\t\t\"brand\": \"ID Denim\",\n\t\t\t\t\t\t\t\t\"extraData\":{\n\t\t\t\t\t\t\t\t\t\t\"productType\":\"Jeans\"\n\t\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t\t\"extraDataList\":{\n\t\t\t\t\t\t\t\t\t\t\"color\":[\"black\",\"orange\",\"green\"]\n\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t}\n\t\t\t\t}\n\t\t]\n}"
+            },
+            "parameters": [],
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json",
+                    "id": "pair_40a28e64b9f540c68cdd75f5cc77ef5b"
+                }
+            ],
+            "authentication": {},
+            "metaSortKey": -1724406787954.25,
+            "isPrivate": false,
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
         {
             "_id": "req_e31bd0638a0e4023a1c19318538a2798",
             "parentId": "fld_62d76dab6602436e8c2e7be5efcb8cdb",
@@ -49,28 +1307,6 @@
             "_type": "request_group"
         },
         {
-            "_id": "fld_681a3deed0af4d74aef296622f2903fb",
-            "parentId": "wrk_c12e4273d912476487c814da84b07920",
-            "modified": 1724660832472,
-            "created": 1724660832472,
-            "name": "REST API examples",
-            "description": "",
-            "environment": {},
-            "environmentPropertyOrder": {},
-            "metaSortKey": -1000000000,
-            "_type": "request_group"
-        },
-        {
-            "_id": "wrk_c12e4273d912476487c814da84b07920",
-            "parentId": null,
-            "modified": 1724660780727,
-            "created": 1724660780727,
-            "name": "Hello Retail example endpoints",
-            "description": "",
-            "scope": "collection",
-            "_type": "workspace"
-        },
-        {
             "_id": "req_05cd4ead9ba84ab4a614ab0696caf659",
             "parentId": "fld_62d76dab6602436e8c2e7be5efcb8cdb",
             "modified": 1724660832474,
@@ -105,7 +1341,7 @@
         {
             "_id": "req_81d4fb183c134b04b21e17743939f551",
             "parentId": "fld_62d76dab6602436e8c2e7be5efcb8cdb",
-            "modified": 1724660832479,
+            "modified": 1724672297145,
             "created": 1724660832479,
             "url": "https://core.helloretail.com/serve/pages/621ca508a982d72e607d4505",
             "name": "Params.filters BRAND example [Filters and sorting]",
