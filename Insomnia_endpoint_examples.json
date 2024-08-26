@@ -1,0 +1,298 @@
+{
+    "_type": "export",
+    "__export_format": 4,
+    "__export_date": "2024-08-26T08:35:20.586Z",
+    "__export_source": "insomnia.desktop.app:v2021.7.2",
+    "resources": [
+        {
+            "_id": "req_e31bd0638a0e4023a1c19318538a2798",
+            "parentId": "fld_62d76dab6602436e8c2e7be5efcb8cdb",
+            "modified": 1724660832476,
+            "created": 1724660832476,
+            "url": "https://core.helloretail.com/serve/pages/621ca508a982d72e607d4505",
+            "name": "Params.filters BRAND example [No filters or sorting]",
+            "description": "",
+            "method": "POST",
+            "body": {
+                "mimeType": "application/json",
+                "text": "{\n  \"url\": \"https://www.test.dk/category-path\",\n  \"format\": \"json\",\n  \"firstLoad\": false,\n  \"trackingUserId\": \"\",\n  \"params\": {\n    \"filters\": {\n      \"brand\": \"ID Denim\"\n    }\n  },\n  \"products\": {\n    \"start\": 0,\n    \"count\": 20,\n    \"fields\": [\n      \"productNumber\",\n\t\t\t\"title\",\n\t\t\t\"brand\"\n    ],\n    \"filters\": [],\n    \"sorting\": []\n  }\n}"
+            },
+            "parameters": [],
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json",
+                    "id": "pair_f811ef86933946d7b66695e0973ff30a"
+                }
+            ],
+            "authentication": {},
+            "metaSortKey": -1724318266897,
+            "isPrivate": false,
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+        {
+            "_id": "fld_62d76dab6602436e8c2e7be5efcb8cdb",
+            "parentId": "fld_681a3deed0af4d74aef296622f2903fb",
+            "modified": 1724660832473,
+            "created": 1724660832473,
+            "name": "Pages",
+            "description": "",
+            "environment": {},
+            "environmentPropertyOrder": null,
+            "metaSortKey": -1724318249216,
+            "_type": "request_group"
+        },
+        {
+            "_id": "fld_681a3deed0af4d74aef296622f2903fb",
+            "parentId": "wrk_c12e4273d912476487c814da84b07920",
+            "modified": 1724660832472,
+            "created": 1724660832472,
+            "name": "REST API examples",
+            "description": "",
+            "environment": {},
+            "environmentPropertyOrder": {},
+            "metaSortKey": -1000000000,
+            "_type": "request_group"
+        },
+        {
+            "_id": "wrk_c12e4273d912476487c814da84b07920",
+            "parentId": null,
+            "modified": 1724660780727,
+            "created": 1724660780727,
+            "name": "Hello Retail example endpoints",
+            "description": "",
+            "scope": "collection",
+            "_type": "workspace"
+        },
+        {
+            "_id": "req_05cd4ead9ba84ab4a614ab0696caf659",
+            "parentId": "fld_62d76dab6602436e8c2e7be5efcb8cdb",
+            "modified": 1724660832474,
+            "created": 1724660832474,
+            "url": "https://core.helloretail.com/serve/pages/621ca508a982d72e607d4505",
+            "name": "Params.filters HIERARCHIES example [No filters or sorting]",
+            "description": "",
+            "method": "POST",
+            "body": {
+                "mimeType": "application/json",
+                "text": "{\n  \"url\": \"https://www.test.dk/category-path\",\n  \"format\": \"json\",\n  \"firstLoad\": false,\n  \"trackingUserId\": \"\",\n  \"params\": {\n    \"filters\": {\n      \"hierarchies\": [\"Herre\"]\n    }\n  },\n  \"products\": {\n    \"start\": 0,\n    \"count\": 20,\n    \"fields\": [\n      \"productNumber\",\n\t\t\t\"title\",\n\t\t\t\"hierarchies\"\n    ],\n    \"filters\": [],\n    \"sorting\": []\n  }\n}"
+            },
+            "parameters": [],
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json",
+                    "id": "pair_f811ef86933946d7b66695e0973ff30a"
+                }
+            ],
+            "authentication": {},
+            "metaSortKey": -1724318266847,
+            "isPrivate": false,
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+        {
+            "_id": "req_81d4fb183c134b04b21e17743939f551",
+            "parentId": "fld_62d76dab6602436e8c2e7be5efcb8cdb",
+            "modified": 1724660832479,
+            "created": 1724660832479,
+            "url": "https://core.helloretail.com/serve/pages/621ca508a982d72e607d4505",
+            "name": "Params.filters BRAND example [Filters and sorting]",
+            "description": "",
+            "method": "POST",
+            "body": {
+                "mimeType": "application/json",
+                "text": "{\n  \"url\": \"https://www.test.dk/category-path\",\n  \"format\": \"json\",\n  \"firstLoad\": true,\n  \"trackingUserId\": \"\",\n  \"params\": {\n    \"filters\": {\n      \"brand\": \"ID Denim\"\n    }\n  },\n  \"products\": {\n    \"start\": 0,\n    \"count\": 20,\n    \"fields\": [\n      \"productNumber\",\n\t\t\t\"title\",\n\t\t\t\"brand\",\n\t\t\t\"hierarchies\",\n\t\t\t\"price\"\n    ],\n    \"filters\": [\n\t\t\t\"hierarchies:Herre$\"\n\t\t],\n    \"sorting\": [\n\t\t\t\"title asc\"\n    ]\n  }\n}"
+            },
+            "parameters": [],
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json",
+                    "id": "pair_f811ef86933946d7b66695e0973ff30a"
+                }
+            ],
+            "authentication": {},
+            "metaSortKey": -1724046720320.125,
+            "isPrivate": false,
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+        {
+            "_id": "req_7defa2b812db4b0db6cbfa6440cb7f2b",
+            "parentId": "fld_62d76dab6602436e8c2e7be5efcb8cdb",
+            "modified": 1724660832477,
+            "created": 1724660832477,
+            "url": "https://core.helloretail.com/serve/pages/621ca508a982d72e607d4505",
+            "name": "Params.filters HIERARCHIES example [Filters and sorting]",
+            "description": "",
+            "method": "POST",
+            "body": {
+                "mimeType": "application/json",
+                "text": "{\n  \"url\": \"https://www.test.dk/category-path\",\n  \"format\": \"json\",\n  \"firstLoad\": true,\n  \"trackingUserId\": \"\",\n  \"params\": {\n    \"filters\": {\n      \"hierarchies\": [\"Herre\"]\n    }\n  },\n  \"products\": {\n    \"start\": 0,\n    \"count\": 20,\n    \"fields\": [\n      \"productNumber\",\n\t\t\t\"title\",\n\t\t\t\"hierarchies\",\n\t\t\t\"brand\",\n\t\t\t\"price\"\n    ],\n    \"filters\": [\n\t\t\t\"brand:ID Denim\"\n\t\t],\n    \"sorting\": [\n\t\t\t\"price asc\"\n    ]\n  }\n}"
+            },
+            "parameters": [],
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json",
+                    "id": "pair_f811ef86933946d7b66695e0973ff30a"
+                }
+            ],
+            "authentication": {},
+            "metaSortKey": -1723775173793.25,
+            "isPrivate": false,
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+        {
+            "_id": "req_41db4b66f1d6452197f202ffe9c1810a",
+            "parentId": "fld_62d76dab6602436e8c2e7be5efcb8cdb",
+            "modified": 1724660832481,
+            "created": 1724660832481,
+            "url": "https://core.helloretail.com/serve/pages/621ca508a982d72e607d4505",
+            "name": "Click tracking TRACKINGCODE example [simple]",
+            "description": "",
+            "method": "POST",
+            "body": {
+                "mimeType": "application/json",
+                "text": "{\n  \"url\": \"https://www.test.dk/category-path\",\n  \"format\": \"json\",\n  \"firstLoad\": false,\n  \"trackingUserId\": \"\",\n  \"params\": {\n    \"filters\": {\n    }\n  },\n  \"products\": {\n    \"start\": 0,\n    \"count\": 20,\n    \"fields\": [\n      \"title\",\n\t\t\t\"trackingCode\"\n    ],\n    \"filters\": [],\n    \"sorting\": []\n  }\n}"
+            },
+            "parameters": [],
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json",
+                    "id": "pair_f811ef86933946d7b66695e0973ff30a"
+                }
+            ],
+            "authentication": {},
+            "metaSortKey": -1723666555132.5,
+            "isPrivate": false,
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+        {
+            "_id": "req_124ad543c17a449b995f5880a9c07dbd",
+            "parentId": "fld_62d76dab6602436e8c2e7be5efcb8cdb",
+            "modified": 1724660832482,
+            "created": 1724660832482,
+            "url": "https://core.helloretail.com/serve/pages/621ca508a982d72e607d4505",
+            "name": "Params.filters HIERARCHIES example [No filters or sorting + No fields property]",
+            "description": "",
+            "method": "POST",
+            "body": {
+                "mimeType": "application/json",
+                "text": "{\n  \"url\": \"https://www.test.dk/category-path\",\n  \"format\": \"json\",\n  \"firstLoad\": false,\n  \"trackingUserId\": \"\",\n  \"params\": {\n    \"filters\": {\n      \"hierarchies\": [\"Herre\"]\n    }\n  },\n  \"products\": {\n    \"start\": 0,\n    \"count\": 20,\n    \"filters\": [],\n    \"sorting\": []\n  }\n}"
+            },
+            "parameters": [],
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json",
+                    "id": "pair_f811ef86933946d7b66695e0973ff30a"
+                }
+            ],
+            "authentication": {},
+            "metaSortKey": -1723666555082.5,
+            "isPrivate": false,
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+        {
+            "_id": "req_f6b5a5bd409b4c8ab3cd8205848ac710",
+            "parentId": "fld_62d76dab6602436e8c2e7be5efcb8cdb",
+            "modified": 1724660832484,
+            "created": 1724660832484,
+            "url": "https://core.helloretail.com/serve/pages/621ca508a982d72e607d4505",
+            "name": "Params.filters EXTRADATALIST MATCHES MANY example [No filters or sorting]",
+            "description": "",
+            "method": "POST",
+            "body": {
+                "mimeType": "application/json",
+                "text": "{\n    \"url\": \"https://www.test.dk/category-path\",\n    \"format\": \"json\",\n    \"firstLoad\": false,\n    \"trackingUserId\": \"\",\n    \"params\": {\n        \"filters\": {\n\t\t\t\t\t\"$and\":[\n\t\t\t\t\t\t{\"extraDataList.Style\": \"Streetwear\"},\n\t\t\t\t\t\t{\"extraDataList.Style\": \"Fashion\"}\n\t\t\t\t\t]\n        }\n    },\n    \"products\": {\n        \"start\": 0,\n        \"count\": 20,\n        \"fields\": [\n            \"title\",\"originalUrl\",\"extraDataList.Style\"\n        ],\n        \"filters\": [],\n        \"sorting\": []\n    }\n}"
+            },
+            "parameters": [],
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json",
+                    "id": "pair_0fe7d276ebf747f68104d9472e090f02"
+                }
+            ],
+            "authentication": {},
+            "metaSortKey": -1723666555032.5,
+            "isPrivate": false,
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+        {
+            "_id": "env_a30cd03b1af4d059c1dd1b0f5999e896f49d6011",
+            "parentId": "wrk_c12e4273d912476487c814da84b07920",
+            "modified": 1724660780731,
+            "created": 1724660780731,
+            "name": "Base Environment",
+            "data": {},
+            "dataPropertyOrder": null,
+            "color": null,
+            "isPrivate": false,
+            "metaSortKey": 1724660780731,
+            "_type": "environment"
+        },
+        {
+            "_id": "jar_a30cd03b1af4d059c1dd1b0f5999e896f49d6011",
+            "parentId": "wrk_c12e4273d912476487c814da84b07920",
+            "modified": 1724660780732,
+            "created": 1724660780732,
+            "name": "Default Jar",
+            "cookies": [],
+            "_type": "cookie_jar"
+        },
+        {
+            "_id": "spc_9204c546b9fb4dc1b6e7d82bdcaae064",
+            "parentId": "wrk_c12e4273d912476487c814da84b07920",
+            "modified": 1724660780728,
+            "created": 1724660780728,
+            "fileName": "Hello Retail example endpoints",
+            "contents": "",
+            "contentType": "yaml",
+            "_type": "api_spec"
+        }
+    ]
+}
