@@ -268,8 +268,32 @@ function transform(product: any): TransformationResult {
     };
 }
 ```
+### *How to rename property keys in product feeds before the spread operator parses them*
+```js
+function fixProductAttributes(product) {
+	Object.entries(product).forEach(([key, value]) => {
+		delete product[key];
+		key = key.replace("g:","");
+		key = key.replace(/[^a-zA-Z0-9]+/g, '_');
+		product[key] = value;
 
-### *How to extra extraattributes from a Magento 2 feed through Feed v2*
+	});
+	return product
+}
+
+function transform(product:any): TransformationResult {
+
+	fixProductAttributes(product); // replace special characters with underscore for all values, allowing spread operator to auto assign properties.
+
+	return {
+		...product,
+	};
+}
+```
+
+
+
+### *How to extract extraattributes from a Magento 2 feed through Feed v2*
 - <a href="https://explain.helloretail.com/Wnu8gqjk" target="_blank">Create a temporary XML feed</a>
 - <a href="https://explain.helloretail.com/v1u9pLXJ" target="_blank">Rewrite the request url to fetch extra data, and add authorization header</a>
 - <a href="https://explain.helloretail.com/Qwuom4Oj" target="_blank">Rewrite the selector path and remove all filter options</a>
