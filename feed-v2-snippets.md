@@ -204,21 +204,6 @@ function transform(product:any): TransformationResult {
 }
 ```
 
-### *Rename root level object keys*
-
-```js
-function transform(product: any): TransformationResult {
-
-	const sanitizedKeys = Object.fromEntries(
-		Object.entries(product).map(([k, v]) => [k.replace(/\-/g, "_").replace(/å/g, "aa").replace(/æ/g, "ae").replace(/ø/g, "oe").replace("type","thisIsNowType"), v])
-	);
-
-	return {
-		...sanitizedKeys,
-	};
-}
-```
-
 ### *Select specific key value pairs based on parts of the key name (Used for pattern matching)*
 
 ```js
@@ -291,7 +276,79 @@ function transform(product:any): TransformationResult {
 }
 ```
 
+### Explicit range filter definitions through singular function with dynamic range definition per use case.
+```js
+// Determine whether provided value is an array or not. Invoke correct rangeHelper based on type of value.
+function rangeHelper(value, conditions) {
+	if (!Array.isArray(value)) {
+		return simpleRangeHelper(value, conditions);
+	}
+	else {
+		return arrayRangeHelper(value, conditions);
+	}
+}
 
+// If not an array, check whether provided value meets the criterias of the conditions array.
+function simpleRangeHelper(value, conditions) {
+	let ranges = [];
+	conditions.forEach((condition) => {
+		if (value >= condition.start && value <= condition.end) {
+			ranges.push(`${condition.start}-${condition.end}`);
+		}
+	})
+	return ranges;
+}
+
+// If an array, for each index of value, check whether provided value meets the criterias of the conditions array.
+function arrayRangeHelper(values, conditions) {
+	let ranges = [];
+	values.forEach((value) => {
+		conditions.forEach((condition) => {
+			if (value >= condition.start && value <= condition.end) {
+				ranges.push(`${condition.start}-${condition.end}`);
+			}
+		})
+	})
+	return new Set(ranges);
+}
+
+// Range index where existing ranges can be changed, or new ranges can be defined for use in other filters.
+const rangeIndex = {
+	price: [
+		{ start: 0, end: 25 },
+		{ start: 25, end: 50 },
+		{ start: 50, end: 100 },
+		{ start: 100, end: 200 },
+		{ start: 200, end: 300 },
+		{ start: 300, end: 400 },
+		{ start: 400, end: 500 },
+		{ start: 500, end: 99999999999 }
+	],
+	weight:[
+		{ start: 0, end: 25 },
+		{ start: 25, end: 50 },
+		{ start: 50, end: 100 },
+		{ start: 100, end: 200 },
+		{ start: 200, end: 300 },
+		{ start: 300, end: 400 },
+		{ start: 400, end: 500 },
+		{ start: 500, end: 99999999999 }
+	]
+};
+
+
+function transform(product): TransformationResult {
+	return {
+		...product,
+		extraDataList: {
+            // invoke rangeHelper with an array or string, and provide a desired rangeIndex for conditions that must be met.
+			weightRanges: rangeHelper(product.variantextraattributes ? product.variantextraattributes.weight : product.extraattributes.weight, rangeIndex.weight),
+			priceRanges: rangeHelper(product.price, rangeIndex.price),
+		}
+	};
+}
+
+```
 
 ### *How to extract extraattributes from a Magento 2 feed through Feed v2*
 - <a href="https://explain.helloretail.com/Wnu8gqjk" target="_blank">Create a temporary XML feed</a>
