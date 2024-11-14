@@ -279,40 +279,63 @@ function transform(product:any): TransformationResult {
 ### Explicit range filter definitions through singular function with dynamic range definition per use case.
 ```js
 // Determine whether provided value is an array or not. Invoke correct rangeHelper based on type of value.
-function rangeHelper(value, conditions) {
+function rangeHelper(value, conditions, text) {
 	if (!Array.isArray(value)) {
-		return simpleRangeHelper(value, conditions);
+		return simpleRangeHelper(value, conditions, text);
 	}
 	else {
-		return arrayRangeHelper(value, conditions);
+		return arrayRangeHelper(value, conditions, text);
 	}
 }
 
-// If not an array, check whether provided value meets the criterias of the conditions array.
-function simpleRangeHelper(value, conditions) {
-	let ranges = [];
-	conditions.forEach((condition) => {
-		if (value >= condition.start && value <= condition.end) {
-			ranges.push(`${condition.start}-${condition.end}`);
-		}
-	})
-	return ranges;
+function simpleRangeHelper(value, conditions, text) {
+	return conditions.map((condition) => {
+
+		return conditionHandler(value, condition, text);
+
+	}).filter(Boolean) // filter(Boolean to remove unwanted null return values);
 }
 
-// If an array, for each index of value, check whether provided value meets the criterias of the conditions array.
-function arrayRangeHelper(values, conditions) {
-	let ranges = [];
-	values.forEach((value) => {
-		conditions.forEach((condition) => {
-			if (value >= condition.start && value <= condition.end) {
-				ranges.push(`${condition.start}-${condition.end}`);
-			}
+function arrayRangeHelper(values, conditions, text) {
+	return new Set(values.flatMap((value) => {
+		return conditions.map((condition) => {
+
+			return conditionHandler(value, condition, text);
+
 		})
-	})
-	return new Set(ranges);
+	}).filter(Boolean)) // filter(Boolean to remove unwanted null return values);
 }
 
-// Range index where existing ranges can be changed, or new ranges can be defined for use in other filters.
+function conditionHandler(value, condition, text) {
+	let parsedValue = value;
+
+	if(value && isNaN(value) && typeof value === 'string'){
+		let extractedNumbers = value.match(/\d+/g).map(Number);
+		parsedValue = extractedNumbers ? Number(extractedNumbers[0]) : null;
+	}
+
+	if (parsedValue >= condition.start && (parsedValue <= condition.end || condition.end == 'above')) {
+		if (text.pos == 'prefix') {
+			if (parsedValue >= condition.start && condition.end == 'above') {
+				return `${text.text}${condition.start} - and above`;
+			}
+			return `${text.text}${condition.start} - ${text.text}${condition.end}`;
+		}
+		else if (text.pos == 'suffix') {
+			if (parsedValue >= condition.start && condition.end == 'above') {
+				return `${condition.start}${text.text} - and above`;
+			}
+			return `${condition.start}${text.text} - ${condition.end}${text.text}`;
+		}
+		else if (text.pos == null) {
+			if (parsedValue >= condition.start && condition.end == 'above') {
+				return `${condition.start} - and above`;
+			}
+			return `${condition.start} - ${condition.end}`;
+		}
+	}
+}
+
 const rangeIndex = {
 	price: [
 		{ start: 0, end: 25 },
@@ -322,28 +345,15 @@ const rangeIndex = {
 		{ start: 200, end: 300 },
 		{ start: 300, end: 400 },
 		{ start: 400, end: 500 },
-		{ start: 500, end: 99999999999 }
-	],
-	weight:[
-		{ start: 0, end: 25 },
-		{ start: 25, end: 50 },
-		{ start: 50, end: 100 },
-		{ start: 100, end: 200 },
-		{ start: 200, end: 300 },
-		{ start: 300, end: 400 },
-		{ start: 400, end: 500 },
-		{ start: 500, end: 99999999999 }
+		{ start: 500, end: "above" }
 	]
 };
-
 
 function transform(product): TransformationResult {
 	return {
 		...product,
 		extraDataList: {
-            // invoke rangeHelper with an array or string, and provide a desired rangeIndex for conditions that must be met.
-			weightRanges: rangeHelper(product.variantextraattributes ? product.variantextraattributes.weight : product.extraattributes.weight, rangeIndex.weight),
-			priceRanges: rangeHelper(product.price, rangeIndex.price),
+			priceRanges: rangeHelper(product.price, rangeIndex.price, { pos: "suffix", text: " kr" }),
 		}
 	};
 }
