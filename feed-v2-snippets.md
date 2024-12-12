@@ -360,6 +360,48 @@ function transform(product): TransformationResult {
 
 ```
 
+### Find the cheapest variant object in an array of variants.
+<!-- MDN documentation https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce -->
+```json
+// Example product.variants data.
+{
+  "variants": [
+    {
+      "group": "614",
+      "color": "PATINA GREEN",
+      "price": 600
+    },
+    {
+      "group": "555",
+      "color": "DARK NAVY",
+      "price": 504
+    },
+    {
+      "group": "700",
+      "color": "BLUE SKY",
+      "price": 305
+    }
+  ]
+}
+```
+
+```js
+function transform(product): TransformationResult {
+	return {
+		...product,
+		extraData: {
+            // acc's initial value is the entire object of variants[0].
+            // curr's initial value is the entire object of variants[1].
+            // acc's price and curr's price are compared to find the smallest one. The one that has the smallest price is assigned as the new acc value.
+            // the new acc's price value is then compared to curr's(which is now variants[2]) price value to find the smallest one of these two. The one that has the smallest price is assigned as the new acc value.
+            // when the entire variants array has been looped through, the final acc value will be object of the variants array that has the smallest price. This object is then returned to you.
+            // With the object that has the smallest price returned to you, you can use object notation to select the price property of the returned object.
+            cheapestVariantPrice: product.variants.reduce((acc, curr) => curr.price < acc.price ? curr : acc).price;
+        }
+	};
+}
+```
+
 ### *How to extract extraattributes from a Magento 2 feed through Feed v2*
 - <a href="https://explain.helloretail.com/Wnu8gqjk" target="_blank">Create a temporary XML feed</a>
 - <a href="https://explain.helloretail.com/v1u9pLXJ" target="_blank">Rewrite the request url to fetch extra data, and add authorization header</a>
