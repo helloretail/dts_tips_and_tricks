@@ -402,6 +402,38 @@ function transform(product): TransformationResult {
 }
 ```
 
+### Automatically spread *all* wooCommerce attributes into extraDataList.
+```js
+function transform(product: any): TransformationResult {
+
+	const wooCommerceAttributesObject = {};
+
+	if (Array.isArray(product.attributes?.[0].attribute)) {
+		const attributeNames = product.attributes?.[0].attribute?.map(attribute => attribute._xmlAttributes.name);
+
+		if (Array.isArray(attributeNames)) {
+			attributeNames.forEach((attributeName) => {
+
+				const attribute = new Set(product.attributes?.[0].attribute?.filter(attribute => attribute._xmlAttributes.name === attributeName).map(attribute => attribute.attributeValue));
+
+				wooCommerceAttributesObject[attributeName.replace(/[^a-zA-Z0-9]+/g, '_')] = attribute;
+			});
+		};
+	}
+	else if(typeof(product.attributes?.[0].attribute === "Object")){
+		wooCommerceAttributesObject[product.attributes?.[0].attribute._xmlAttributes.name.replace(/[^a-zA-Z0-9]+/g, '_')] = Array.isArray(product.attributes?.[0].attribute.attributeValue) ? product.attributes?.[0].attribute.attributeValue : [product.attributes?.[0].attribute.attributeValue];
+	}
+
+	return {
+		...product,
+		extraDataList: {
+			...wooCommerceAttributesObject,
+		}
+	}
+}
+
+```
+
 ### *How to extract extraattributes from a Magento 2 feed through Feed v2*
 - <a href="https://explain.helloretail.com/Wnu8gqjk" target="_blank">Create a temporary XML feed</a>
 - <a href="https://explain.helloretail.com/v1u9pLXJ" target="_blank">Rewrite the request url to fetch extra data, and add authorization header</a>
