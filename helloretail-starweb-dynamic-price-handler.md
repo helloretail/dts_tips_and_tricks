@@ -42,11 +42,14 @@ function starwebHelloRetailPriceHandler_{{ key }}(selector){
 ```
 ```js
 on: {
-      slideChange: function (e) {
+        slideChange: function (e) {
         setTimeout(function(){
-          starwebHelloRetailPriceHandler_{{ key }}("#{{ key }} .hr-starweb-prices");
+            starwebHelloRetailPriceHandler_{{ key }}("#{{ key }} .hr-starweb-prices");
         },200);
-      },
+        },
+        afterInit: function() {
+            starwebHelloRetailPriceHandler_{{ key }}("#{{ key }} .hr-starweb-prices");
+        }
     },
 ```
 
