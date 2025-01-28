@@ -280,11 +280,14 @@ function transform(product:any): TransformationResult {
 ```js
 // Determine whether provided value is an array or not. Invoke correct rangeHelper based on type of value.
 function rangeHelper(value, conditions, text) {
-	if (!Array.isArray(value)) {
-		return simpleRangeHelper(value, conditions, text);
+	if (Array.isArray(value)) {
+		return arrayRangeHelper(value, conditions, text);
+	}
+	else if(typeof value === 'object'){
+		return arrayRangeHelper(Object.values(value), conditions, text);
 	}
 	else {
-		return arrayRangeHelper(value, conditions, text);
+		return simpleRangeHelper(value, conditions, text);
 	}
 }
 
