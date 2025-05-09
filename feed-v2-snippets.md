@@ -42,74 +42,10 @@ function transform(item: any): TransformationResult {
     return {
         ...item,
         extraData: {
-            isNewHours: hoursChecker("2023-05-10"),
             isNewDays: daysChecker(item.date, 30),
         }
     };
 };
-```
-
-### *Group values*
-```js
-function coverageChecker(percentage) {
-	percentage = parseInt(percentage);
-	let value = '';
-	if(percentage >= 1 && percentage <= 5) {
-		value = '1-5'
-	} else if(percentage >= 6 && percentage <= 10) {
-		value = '6-10'
-	} else if(percentage >= 11 && percentage <= 15) {
-		value = '11-15'
-	} else if(percentage >= 16 && percentage <= 20) {
-		value = '16-20'
-	} else if(percentage >= 21 && percentage <= 25) {
-		value = '21-25'
-	} else if(percentage >= 26 && percentage <= 30) {
-		value = '26-30'
-	} else if(percentage >= 31 && percentage <= 35) {
-		value = '31-35'
-	} else if(percentage >= 36 && percentage <= 40) {
-		value = '36-40'
-	} else if(percentage >= 41 && percentage <= 45) {
-		value = '41-45'
-	} else if(percentage >= 46 && percentage <= 50) {
-		value = '46-50'
-	} else if(percentage >= 51 && percentage <= 55) {
-		value = '51-55'
-	} else if(percentage >= 56 && percentage <= 60) {
-		value = '56-60'
-	} else if(percentage >= 61 && percentage <= 65) {
-		value = '61-65'
-	} else if(percentage >= 66 && percentage <= 70) {
-		value = '66-70'
-	} else if(percentage >= 71 && percentage <= 75) {
-		value = '71-75'
-	} else if(percentage >= 76 && percentage <= 80) {
-		value = '76-80'
-	} else if(percentage >= 81 && percentage <= 85) {
-		value = '81-85'
-	} else if(percentage >= 86 && percentage <= 90) {
-		value = '86-90'
-	} else if(percentage >= 91 && percentage <= 95) {
-		value = '91-95'
-	} else if(percentage >= 96 && percentage <= 100) {
-		value = '96-100'
-	}
-	return value;
-}
-function transform(product:any): TransformationResult {
-	return {
-		...product,
-		priceExVat: product.price_no_tax,
-		oldPriceExVat: product.previous_price_no_tax,
-		oldPrice: product.previous_price,
-		inStock: product.can_be_ordered > 0 ? true : false,
-		extraData: {
-			coverage: product.variants[0].coverage_percentage,
-			coverageTest: coverageChecker(product.variants[0].coverage_percentage)
-		}
-	};
-}
 ```
 
 ### *Extract specific filter value based on filter name, from array of anonymous filters (WOOCOMMERCE)*
