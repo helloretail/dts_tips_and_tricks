@@ -373,6 +373,59 @@ function transform(product: any): TransformationResult {
 
 ```
 
+### Product feed V2 Shopify transform function configuration.
+```js
+function attributesObjectKeySanitizer(key){
+	// Sanitize keys to remove spaces, dashes, underscores.
+	return key.replace(/\-([a-z]|\s([a-z]|\_([a-z])))/g,function(v) { return v.toUpperCase(); }).replace(/-/g,"")
+}
+
+function transform(product:any): TransformationResult {
+
+	let options = {
+		extraData: {},
+		extraDataNumber: {},
+		extraDataList: {}
+	};
+
+	product.options.forEach((option) => {
+		if(Array.isArray(option.values)){
+			options.extraDataList[attributesObjectKeySanitizer(option.name)] = option.values;
+		}
+		else if(!isNaN(option.values)){
+			options.extraDataNumber[attributesObjectKeySanitizer(option.name)] = option.values;
+		}
+		else{
+			options.extraData[attributesObjectKeySanitizer(option.name)] = option.values;
+		}
+	});
+
+	return {
+		url: `https://www.domain-name.dk/products/${product.handle}`,
+		imgUrl: product.main_image?.src,
+		title: product.title,
+		inStock: product.variants_sellable.length > 0,
+		hierarchies: product.hierarchies,
+		price: product.main_variant.presentment_prices[0].price?.amount,
+		oldPrice: product.main_variant.presentment_prices[0].compare_at_price?.amount,
+		productNumber: product.id,
+		brand: product.vendor,
+		description: product.body_html ? new DOMParser().parseFromString(product.body_html, "text/html").textContent : null,
+		extraData: {
+			...options.extraData,
+			altImage: product.images?.filter(image => image.position == 2)[0]?.src
+		},
+		extraDataNumber: {
+			...options.extraDataNumber
+		},
+		extraDataList: {
+			...options.extraDataList,
+			collectionIds: product.collection_ids
+		}
+	};
+}
+```
+
 ### *How to extract extraattributes from a Magento 2 feed through Feed v2*
 - <a href="https://explain.helloretail.com/Wnu8gqjk" target="_blank">Create a temporary XML feed</a>
 - <a href="https://explain.helloretail.com/v1u9pLXJ" target="_blank">Rewrite the request url to fetch extra data, and add authorization header</a>
