@@ -373,6 +373,33 @@ function transform(product: any): TransformationResult {
 
 ```
 
+### Automatically spread *all* Shopware properties into extraDataList.
+```js
+function transform(product: any): TransformationResult {
+
+    const shopwarePropertiesObject = {};
+
+    if (Array.isArray(product.properties.property)) {
+        const propertyNames = product.properties.property.map(property => property.name);
+        if (Array.isArray(propertyNames)) {
+            propertyNames.forEach((propertyName) => {
+                const property = Array.from(new Set(product.properties.property.filter(property => property.name === propertyName).map(property => property.options.option)));
+                shopwarePropertiesObject[propertyName.replace(/[^a-zA-Z0-9]+/g, '_').toLowerCase()] = property;
+            });
+        }
+    }
+    else if (typeof (product.properties.property === "Object")) {
+        shopwarePropertiesObject[product.properties.property.name.replace(/[^a-zA-Z0-9]+/g, '_')] = Array.isArray(product.properties.property.options.option) ? product.properties.property.options.option : [product.properties.property.options.option];
+    }
+    return {
+        ...product,
+        extraDataList: {
+            ...shopwarePropertiesObject
+        }
+    };
+}
+```
+
 ### Product feed V2 Shopify transform function configuration.
 ```js
 function attributesObjectKeySanitizer(key){
