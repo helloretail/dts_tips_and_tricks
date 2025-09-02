@@ -376,10 +376,11 @@ function transform(product: any): TransformationResult {
 ### Automatically spread *all* Shopware properties into extraDataList.
 ```js
 function transform(product: any): TransformationResult {
+	if(!product.extraData?.displayGroup) return;
 
     const shopwarePropertiesObject = {};
 
-    if (Array.isArray(product.properties.property)) {
+    if (product.properties && Array.isArray(product.properties.property)) {
         const propertyNames = product.properties.property.map(property => property.name);
         if (Array.isArray(propertyNames)) {
             propertyNames.forEach((propertyName) => {
@@ -388,7 +389,7 @@ function transform(product: any): TransformationResult {
             });
         }
     }
-    else if (typeof (product.properties.property === "Object")) {
+    else if (product.properties && typeof (product.properties.property === "Object")) {
         shopwarePropertiesObject[product.properties.property.name.replace(/[^a-zA-Z0-9]+/g, '_')] = Array.isArray(product.properties.property.options.option) ? product.properties.property.options.option : [product.properties.property.options.option];
     }
     return {
