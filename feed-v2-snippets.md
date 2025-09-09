@@ -404,8 +404,12 @@ function transform(product: any): TransformationResult {
 ### Product feed V2 Shopify transform function configuration.
 ```js
 function attributesObjectKeySanitizer(key){
-	// Sanitize keys to remove spaces, dashes, underscores.
-	return key.replace(/\-([a-z]|\s([a-z]|\_([a-z])))/g,function(v) { return v.toUpperCase(); }).replace(/-/g,"")
+	return key
+	.replace(/ø/gi,"oe")
+	.replace(/æ/gi,"ae")
+	.replace(/å/gi,"aa")
+	.replace(/[^a-zA-Z ]/g,"")
+	.replace(/\s/g,"_")
 }
 
 function transform(product:any): TransformationResult {
