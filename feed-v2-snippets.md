@@ -375,29 +375,38 @@ function transform(product: any): TransformationResult {
 
 ### Automatically spread *all* Shopware properties into extraDataList.
 ```js
+function attributesObjectKeySanitizer(key){
+	return key
+	.replace(/ø/gi,"oe")
+	.replace(/æ/gi,"ae")
+	.replace(/å/gi,"aa")
+	.replace(/[^a-zA-Z ]/g,"")
+	.replace(/\s/g,"_")
+}
+
 function transform(product: any): TransformationResult {
-	if(!product.extraData?.displayGroup) return;
+	if (!product.extraData?.displayGroup) return;
 
-    const shopwarePropertiesObject = {};
+	const shopwarePropertiesObject = {};
 
-    if (product.properties && Array.isArray(product.properties.property)) {
-        const propertyNames = product.properties.property.map(property => property.name);
-        if (Array.isArray(propertyNames)) {
-            propertyNames.forEach((propertyName) => {
-                const property = Array.from(new Set(product.properties.property.filter(property => property.name === propertyName).map(property => property.options.option)));
-                shopwarePropertiesObject[propertyName.replace(/[^a-zA-Z0-9]+/g, '_').toLowerCase()] = property;
-            });
-        }
-    }
-    else if (product.properties && typeof (product.properties.property === "Object")) {
-        shopwarePropertiesObject[product.properties.property.name.replace(/[^a-zA-Z0-9]+/g, '_')] = Array.isArray(product.properties.property.options.option) ? product.properties.property.options.option : [product.properties.property.options.option];
-    }
-    return {
-        ...product,
-        extraDataList: {
-            ...shopwarePropertiesObject
-        }
-    };
+	if (product.properties && Array.isArray(product.properties.property)) {
+		const propertyNames = product.properties.property.map(property => property.name);
+		if (Array.isArray(propertyNames)) {
+			propertyNames.forEach((propertyName) => {
+				const property = Array.from(new Set(product.properties.property.filter(property => property.name === propertyName).map(property => property.options.option)));
+				shopwarePropertiesObject[attributesObjectKeySanitizer(propertyName).toLowerCase()] = property;
+			});
+		}
+	}
+	else if (product.properties && typeof (product.properties.property === "Object")) {
+		shopwarePropertiesObject[attributesObjectKeySanitizer(product.properties.property.name).toLowerCase()] = Array.isArray(product.properties.property.options.option) ? product.properties.property.options.option : [product.properties.property.options.option];
+	}
+	return {
+		...product,
+		extraDataList: {
+			...shopwarePropertiesObject
+		}
+	};
 }
 ```
 
