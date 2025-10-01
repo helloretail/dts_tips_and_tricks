@@ -26,6 +26,52 @@ function transform(item: any): TransformationResult {
 };
 ```
 
+### *Remove hierarchies mentioned in Hierarchies_Blacklist*
+```js
+const HIERARCHIES_BLACKLIST = [ // Remove any breadcrumb path that contains one of the words listed in this array (This check happens before HIERARCHIES_STARTSWITH_WHITELIST).
+	"Slider",
+];
+
+return {
+    ...product,
+    hierarchies: product.categoryPaths // hierarchies array
+        ?.map(path => path.split(" > ")) // split on > to get array of nested arrays. (from ["home > cat1", "home > cat1 > cat2"] to [["home","cat1"],["home","cat1","cat2"],[...]]).
+        ?.filter(item => !HIERARCHIES_BLACKLIST // remove nested array if it contains word in blacklist.
+            .some(disallowed => Array.isArray(item)
+                ? item.join(",").toLowerCase().includes(disallowed.toLowerCase())
+                : item.toLowerCase().includes(disallowed.toLowerCase()))),
+};
+```
+
+### *Remove hierarchies mentioned in Hierarchies_Blacklist, and remove any Hierarchy afterwards that don't start with a word mentioned in Hierarchies_Startswith_whitelist*
+```js
+const HIERARCHIES_BLACKLIST = [ // Remove any breadcrumb path that contains one of the words listed in this array (This check happens before HIERARCHIES_STARTSWITH_WHITELIST).
+	"Slider",
+];
+
+const HIERARCHIES_STARTSWITH_WHITELIST = [ // Remove any breadcrumb path that does not start with one of these words (This check happens after HIERARCHIES_BLACKLIST).
+	"Herr",
+	"Dam",
+	"Junior",
+	"Segling",
+	"Golf"
+];
+
+return {
+    ...product,
+    hierarchies: product.categoryPaths // hierarchies array
+        ?.map(path => path.split(" > ")) // split on > to get array of nested arrays. (from ["home > cat1", "home > cat1 > cat2"] to [["home","cat1"],["home","cat1","cat2"],[...]]).
+        ?.filter(item => !HIERARCHIES_BLACKLIST // remove nested array if it contains word in blacklist.
+            .some(disallowed => Array.isArray(item)
+                ? item.join(",").toLowerCase().includes(disallowed.toLowerCase())
+                : item.toLowerCase().includes(disallowed.toLowerCase())))
+        .filter(item => HIERARCHIES_STARTSWITH_WHITELIST // remove nested array if it does not start with word defined in whitelist.
+            .some(allowed => Array.isArray(item)
+                ? item.join(",").toLowerCase().startsWith(allowed.toLowerCase())
+                : item.toLowerCase().startsWith(allowed.toLowerCase()))),
+};
+```
+
 ### *isNew based on days elapsed from when we saw the product / date provided by customer in feed*
 
 ```js
