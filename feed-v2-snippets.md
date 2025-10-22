@@ -515,6 +515,12 @@ function transform(product:any): TransformationResult {
 
 ### Product feed V2 Shopify-V2 transform function configuration.
 ```js
+let autoMap = {
+	shopifyOptions: false,
+	shopifyProductLevelMetafields: false,
+	shopifyVariantLevelMetafields: false
+}
+
 function attributesObjectKeySanitizer(key){
 	return key
 	.replace(/ø/gi,"oe")
@@ -538,27 +544,54 @@ function transform(product:any): TransformationResult {
 		extraDataList: {}
 	};
 
-	(typeof product.options === 'object' ? Object.values(product.options) : product.options).forEach((option) => { // determine whether options property is an array or Object. If an object, convert to array.
-		if(Array.isArray(option.values)){
-			shopifyOptionsObject.extraDataList[attributesObjectKeySanitizer(option.name)] = option.values;
-		}
-		else if(!isNaN(option.values)){
-			shopifyOptionsObject.extraDataNumber[attributesObjectKeySanitizer(option.name)] = option.values;
-		}
-		else{
-			shopifyOptionsObject.extraData[attributesObjectKeySanitizer(option.name)] = option.values;
-		}
-	});
+	if(autoMap.shopifyOptions){
+		(typeof product.options === 'object' ? Object.values(product.options) : product.options).forEach((option) => { // determine whether options property is an array or Object. If an object, convert to array.
+			if(Array.isArray(option.values)){
+				shopifyOptionsObject.extraDataList[attributesObjectKeySanitizer(option.name)] = option.values;
+			}
+			else if(!isNaN(option.values)){
+				shopifyOptionsObject.extraDataNumber[attributesObjectKeySanitizer(option.name)] = option.values;
+			}
+			else{
+				shopifyOptionsObject.extraData[attributesObjectKeySanitizer(option.name)] = option.values;
+			}
+		});
+	};
+
+	if(autoMap.shopifyProductLevelMetafields){
+		if(!product.metafields) return;
+		Object.values(product.metafields).forEach((metafield) => { // product metafields are stored as whatever the value of the data type assigned it as.
+			if(Array.isArray(metafield.value)){
+				shopifyOptionsObject.extraDataList[`P_${attributesObjectKeySanitizer(metafield.key)}`] = metafield.value;
+			}
+			else if(!isNaN(metafield.value)){
+				shopifyOptionsObject.extraDataNumber[`P_${attributesObjectKeySanitizer(metafield.key)}`] = metafield.value;
+			}
+			else{
+				shopifyOptionsObject.extraData[`P_${attributesObjectKeySanitizer(metafield.key)}`] = metafield.value;
+			}
+		});
+	};
+
+	if(autoMap.shopifyVariantLevelMetafields){
+		product.productvariants.forEach((variant) => { // variant metafields are *ALWAYS* stored as an array value, in order to push additional values of the same name, as opposed to overwriting them.
+			if(!variant.metafields) return;
+			Object.values(variant.metafields).forEach((metafield) => {
+				(shopifyOptionsObject.extraDataList[`V_${attributesObjectKeySanitizer(metafield.key)}`] = shopifyOptionsObject.extraDataList[`V_${attributesObjectKeySanitizer(metafield.key)}`] || []).push(metafield.value);
+
+			});
+		});
+	};
 
 	return {
-		url: `https://www.domain-name.dk/products/${product.handle}`,
+		url: `https://shopify-v2-hr-feed-v2.com/products/${product.handle}`,
 		imgUrl: product.featured_image?.url?.replace(/(\.[a-z]{3,4}\?)/i, "_600x$1"),
 		title: product.title,
 		price: product.contextual_pricing.min_variant_pricing.price.amount,
 		oldPrice: product.contextual_pricing.min_variant_pricing.compare_at_price?.amount ?? product.contextual_pricing.min_variant_pricing.price.amount,
 		productNumber: product.legacy_resource_id,
 		variantProductNumbers: product.productvariants?.map(variant => variant.legacy_resource_id),
-		inStock: product.inventory_quantity > 0 || product.productvariants?.some(variant => variant.inventory_quantity > 0),
+		inStock: product.variants_sellable?.some(v => v.inventory_policy === "continue" || v.inventory_quantity > 0),
 		hierarchies: product.hierarchies
         ?.filter(item => !HIERARCHIES_BLACKLIST // remove nested array if it contains word in blacklist.
             .some(disallowed => Array.isArray(item)
@@ -574,7 +607,7 @@ function transform(product:any): TransformationResult {
 			...shopifyOptionsObject.extraDataNumber
 		},
 		extraDataList: {
-			...shopifyOptionsObject.extraDataList,
+			...Object.fromEntries(Object.entries(shopifyOptionsObject.extraDataList).map(([key, value]) => [key, [...new Set(value)]])), // loops through shopifyOptionsObject.extraDataList and ensures that nested arrays has no duplicate values. 
 			collectionIds: product.collection_ids,
 		}
 	};
