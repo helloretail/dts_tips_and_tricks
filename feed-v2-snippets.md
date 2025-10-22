@@ -584,7 +584,7 @@ function transform(product:any): TransformationResult {
 	};
 
 	return {
-		url: `https://shopify-v2-hr-feed-v2.com/products/${product.handle}`,
+		url: `hhttps://www.domain-name.dk/products/${product.handle}`,
 		imgUrl: product.featured_image?.url?.replace(/(\.[a-z]{3,4}\?)/i, "_600x$1"),
 		title: product.title,
 		price: product.contextual_pricing.min_variant_pricing.price.amount,
