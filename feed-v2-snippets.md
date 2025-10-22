@@ -456,7 +456,7 @@ function transform(product: any): TransformationResult {
 }
 ```
 
-### Product feed V2 Shopify transform function configuration.
+### Product feed V2 Shopify-V1 transform function configuration.
 ```js
 function attributesObjectKeySanitizer(key){
 	return key
@@ -494,7 +494,7 @@ function transform(product:any): TransformationResult {
 		inStock: product.variants_sellable.length > 0,
 		hierarchies: product.hierarchies,
 		price: product.main_variant.presentment_prices[0].price?.amount,
-		oldPrice: product.main_variant.presentment_prices[0].compare_at_price?.amount,
+		oldPrice: product.main_variant.presentment_prices[0].compare_at_price?.amount ?? product.main_variant.presentment_prices[0].price?.amount,
 		productNumber: product.id,
 		brand: product.vendor,
 		description: product.body_html ? new DOMParser().parseFromString(product.body_html, "text/html").textContent : null,
@@ -513,6 +513,73 @@ function transform(product:any): TransformationResult {
 }
 ```
 
+### Product feed V2 Shopify-V2 transform function configuration.
+```js
+function attributesObjectKeySanitizer(key){
+	return key
+	.replace(/ø/gi,"oe")
+	.replace(/æ/gi,"ae")
+	.replace(/å/gi,"aa")
+	.replace(/[^a-zA-Z ]/g,"")
+	.replace(/\s/g,"_")
+}
+
+const HIERARCHIES_BLACKLIST = [ // Remove any breadcrumb path that contains one of the words listed in this array.
+	"Hierarchy to be removed 1",
+	"Hierarchy to be removed 2",
+	"Hierarchy to be removed 3",
+];
+
+function transform(product:any): TransformationResult {
+
+	let shopifyOptionsObject = {
+		extraData: {},
+		extraDataNumber: {},
+		extraDataList: {}
+	};
+
+	(typeof product.options === 'object' ? Object.values(product.options) : product.options).forEach((option) => { // determine whether options property is an array or Object. If an object, convert to array.
+		if(Array.isArray(option.values)){
+			shopifyOptionsObject.extraDataList[attributesObjectKeySanitizer(option.name)] = option.values;
+		}
+		else if(!isNaN(option.values)){
+			shopifyOptionsObject.extraDataNumber[attributesObjectKeySanitizer(option.name)] = option.values;
+		}
+		else{
+			shopifyOptionsObject.extraData[attributesObjectKeySanitizer(option.name)] = option.values;
+		}
+	});
+
+	return {
+		url: `https://www.domain-name.dk/products/${product.handle}`,
+		imgUrl: product.featured_image?.url?.replace(/(\.[a-z]{3,4}\?)/i, "_600x$1"),
+		title: product.title,
+		price: product.contextual_pricing.min_variant_pricing.price.amount,
+		oldPrice: product.contextual_pricing.min_variant_pricing.compare_at_price?.amount ?? product.contextual_pricing.min_variant_pricing.price.amount,
+		productNumber: product.legacy_resource_id,
+		variantProductNumbers: product.productvariants?.map(variant => variant.legacy_resource_id),
+		inStock: product.inventory_quantity > 0 || product.productvariants?.some(variant => variant.inventory_quantity > 0),
+		hierarchies: product.hierarchies
+        ?.filter(item => !HIERARCHIES_BLACKLIST // remove nested array if it contains word in blacklist.
+            .some(disallowed => Array.isArray(item)
+                ? item.join(",").toLowerCase().includes(disallowed.toLowerCase())
+                : item.toLowerCase().includes(disallowed.toLowerCase()))),
+		brand: product.vendor,
+		description: product.description_html ? new DOMParser().parseFromString(product.description_html, "text/html").textContent : null,
+		extraData: {
+			...shopifyOptionsObject.extraData,
+			altImage: product.productimages?.filter(image => image.url != product.featured_image.url)[0]?.url, // find all images that aren't the same as the featured image, and use the first of the images found as the altImage.
+		},
+		extraDataNumber: {
+			...shopifyOptionsObject.extraDataNumber
+		},
+		extraDataList: {
+			...shopifyOptionsObject.extraDataList,
+			collectionIds: product.collection_ids,
+		}
+	};
+}
+```
 ### *How to extract extraattributes from a Magento 2 feed through Feed v2*
 - <a href="https://explain.helloretail.com/Wnu8gqjk" target="_blank">Create a temporary XML feed</a>
 - <a href="https://explain.helloretail.com/v1u9pLXJ" target="_blank">Rewrite the request url to fetch extra data, and add authorization header</a>
