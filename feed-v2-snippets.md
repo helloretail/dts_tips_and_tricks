@@ -526,8 +526,16 @@ function attributesObjectKeySanitizer(key){
 	.replace(/ø/gi,"oe")
 	.replace(/æ/gi,"ae")
 	.replace(/å/gi,"aa")
-	.replace(/[^a-zA-Z ]/g,"")
+	.replace(/[^a-zA-Z\_\s ]/g,"")
 	.replace(/\s/g,"_")
+}
+
+function parseIfJson(property) {
+    try {
+        return JSON.parse(property);
+    } catch (error) {
+        return property;
+    }
 }
 
 const HIERARCHIES_BLACKLIST = [ // Remove any breadcrumb path that contains one of the words listed in this array.
@@ -561,14 +569,20 @@ function transform(product:any): TransformationResult {
 	if(autoMap.shopifyProductLevelMetafields){
 		if(!product.metafields) return;
 		Object.values(product.metafields).forEach((metafield) => { // product metafields are stored as whatever the value of the data type assigned it as.
-			if(Array.isArray(metafield.value)){
-				shopifyOptionsObject.extraDataList[`P_${attributesObjectKeySanitizer(metafield.key)}`] = metafield.value;
+
+			const metafieldValue = parseIfJson(metafield.value);
+
+			if(Array.isArray(metafieldValue)){
+				shopifyOptionsObject.extraDataList[`P_${attributesObjectKeySanitizer(metafield.key)}`] = metafieldValue;
 			}
-			else if(!isNaN(metafield.value)){
-				shopifyOptionsObject.extraDataNumber[`P_${attributesObjectKeySanitizer(metafield.key)}`] = metafield.value;
+			else if(!isNaN(metafieldValue)){
+				shopifyOptionsObject.extraDataNumber[`P_${attributesObjectKeySanitizer(metafield.key)}`] = metafieldValue;
+			}
+			else if(typeof metafieldValue === 'object'){
+				shopifyOptionsObject.extraData[`P_${attributesObjectKeySanitizer(metafield.key)}`] = metafieldValue.value;
 			}
 			else{
-				shopifyOptionsObject.extraData[`P_${attributesObjectKeySanitizer(metafield.key)}`] = metafield.value;
+				shopifyOptionsObject.extraData[`P_${attributesObjectKeySanitizer(metafield.key)}`] = metafieldValue;
 			}
 		});
 	};
@@ -577,14 +591,17 @@ function transform(product:any): TransformationResult {
 		product.productvariants.forEach((variant) => { // variant metafields are *ALWAYS* stored as an array value, in order to push additional values of the same name, as opposed to overwriting them.
 			if(!variant.metafields) return;
 			Object.values(variant.metafields).forEach((metafield) => {
-				(shopifyOptionsObject.extraDataList[`V_${attributesObjectKeySanitizer(metafield.key)}`] = shopifyOptionsObject.extraDataList[`V_${attributesObjectKeySanitizer(metafield.key)}`] || []).push(metafield.value);
 
+				const metafieldValue = parseIfJson(metafield.value);
+
+				(shopifyOptionsObject.extraDataList[`V_${attributesObjectKeySanitizer(metafield.key)}`] = shopifyOptionsObject.extraDataList[`V_${attributesObjectKeySanitizer(metafield.key)}`] || []).push(metafieldValue);
+				shopifyOptionsObject.extraDataList[`V_${attributesObjectKeySanitizer(metafield.key)}`] = shopifyOptionsObject.extraDataList[`V_${attributesObjectKeySanitizer(metafield.key)}`].flatMap(item => item); // flatMap to flatten array of strings and arrays, into one single array of the values.
 			});
 		});
 	};
 
 	return {
-		url: `hhttps://www.domain-name.dk/products/${product.handle}`,
+		url: `https://domain-name.com/products/${product.handle}`,
 		imgUrl: product.featured_image?.url?.replace(/(\.[a-z]{3,4}\?)/i, "_600x$1"),
 		title: product.title,
 		price: product.contextual_pricing.min_variant_pricing.price.amount,
@@ -602,13 +619,14 @@ function transform(product:any): TransformationResult {
 		extraData: {
 			...shopifyOptionsObject.extraData,
 			altImage: product.productimages?.filter(image => image.url != product.featured_image.url)[0]?.url, // find all images that aren't the same as the featured image, and use the first of the images found as the altImage.
+			sortByTitle: product.title,
 		},
 		extraDataNumber: {
 			...shopifyOptionsObject.extraDataNumber
 		},
 		extraDataList: {
 			...Object.fromEntries(Object.entries(shopifyOptionsObject.extraDataList).map(([key, value]) => [key, [...new Set(value)]])), // loops through shopifyOptionsObject.extraDataList and ensures that nested arrays has no duplicate values. 
-			collectionIds: product.collection_ids,
+			collectionIds: product.collection_ids
 		}
 	};
 }
