@@ -274,16 +274,20 @@ function rangeHelper(value, conditions, text) {
 }
 
 function simpleRangeHelper(value, conditions, text) {
-	return conditions.map((condition) => {
+	return new Set<string>(conditions.map((condition) => {
+
+		if(!/\d/.test(value)) return; // return value here if you want non numerical entries added to the output.
 
 		return conditionHandler(value, condition, text);
 
-	}).filter(Boolean) // filter(Boolean to remove unwanted null return values);
+	}).filter(Boolean)) // filter(Boolean to remove unwanted null return values);
 }
 
 function arrayRangeHelper(values, conditions, text) {
-	return new Set(values.flatMap((value) => {
+	return new Set<string>(values.flatMap((value) => {
 		return conditions.map((condition) => {
+			
+			if(!/\d/.test(value)) return; // return value here if you want non numerical entries added to the output.
 
 			return conditionHandler(value, condition, text);
 
@@ -331,6 +335,14 @@ const rangeIndex = {
 		{ start: 300, end: 400 },
 		{ start: 400, end: 500 },
 		{ start: 500, end: "above" }
+	],
+	age: [
+		{ start: 0, end: 5 },
+		{ start: 5, end: 10 },
+		{ start: 10, end: 15 },
+		{ start: 15, end: 20 },
+		{ start: 20, end: 25 },
+		{ start: 25, end: "above" }
 	]
 };
 
@@ -339,6 +351,7 @@ function transform(product): TransformationResult {
 		...product,
 		extraDataList: {
 			priceRanges: rangeHelper(product.price, rangeIndex.price, { pos: "suffix", text: " kr" }),
+			ageRanges: rangeHelper(product.variantextraattributes?.alder ?? product.extraattributes?.alder, rangeIndex.age, { pos: "suffix", text: " år" }),
 		}
 	};
 }
