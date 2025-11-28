@@ -298,8 +298,12 @@ function arrayRangeHelper(values, conditions, text) {
 function conditionHandler(value, condition, text) {
 	let parsedValue = value;
 
-	if(value && isNaN(value) && typeof value === 'string'){
-		let extractedNumbers = value.match(/\d+/g).map(Number);
+	if(parsedValue.includes("mdr.")){ // convert ages specified in months, to years.
+		parsedValue = parseInt(parsedValue) / 12;
+	}
+
+	if(parsedValue && isNaN(parsedValue) && typeof parsedValue === 'string'){
+		let extractedNumbers = parsedValue.match(/\d+/g).map(Number);
 		parsedValue = extractedNumbers ? Number(extractedNumbers[0]) : null;
 	}
 
