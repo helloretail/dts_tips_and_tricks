@@ -1,4 +1,4 @@
-# Starweb documentation of dynamicPriceHandler
+# Starweb documentation of dynamicPriceHandler25
 
 <a href="https://starwebab.notion.site/DynamicPriceHandler-98c6dbd5b444448c926f771ff9bf8a93#c607116d2d2842d183b50f768aeee231" target="_blank">Link to Starweb produced documentation</a>
 
@@ -22,17 +22,17 @@
 function starwebHelloRetailPriceHandler_{{ key }}(selector){
 		let priceList = document.querySelectorAll(selector);
 		if(priceList.length > 0){
-			if(typeof dynamicPriceHandler === 'object'){
+			if(typeof dynamicPriceHandler25 === 'object'){
 				console.log("starwebSearchPriceHandler invoked");
-				dynamicPriceHandler.setSeparators(" ",",");
-				dynamicPriceHandler.render(priceList,false).then(()=>{
+				dynamicPriceHandler25.setSeparators(" ",",");
+				dynamicPriceHandler25.render(priceList,false).then(()=>{
 					console.log("successfully injected Starweb prices");
 				}).catch((err)=>{
 					console.log("something went wrong: ",err);
 				});
 			}
 			else{
-				console.log("dynamicPriceHandler is not defined.");
+				console.log("dynamicPriceHandler25 is not defined.");
 			}
 		}
 		else{
@@ -59,10 +59,10 @@ on: {
 function starwebHelloRetailPriceHandler_search(selector){
 	let priceList = document.querySelectorAll(selector);
 	if(priceList.length > 0){
-		if(typeof dynamicPriceHandler === 'object'){
+		if(typeof dynamicPriceHandler25 === 'object'){
 			console.log("starwebHelloRetailPriceHandler_search invoked");
-			dynamicPriceHandler.setSeparators(" ",",");
-			dynamicPriceHandler.render(priceList,false).then(()=>{
+			dynamicPriceHandler25.setSeparators(" ",",");
+			dynamicPriceHandler25.render(priceList,false).then(()=>{
 				priceList.forEach((starwebSelector)=>{
 					starwebSelector.classList.remove("hr-starweb-prices"); // remove hr-starweb-prices selector from elements that have already had their prices adjusted by the starweb endpoint. This is done in order to spare the starweb endpoint, as more and more products are lazyloaded into the search.
 				});
@@ -71,7 +71,7 @@ function starwebHelloRetailPriceHandler_search(selector){
 			});
 		}
 		else{
-			console.log("dynamicPriceHandler is not defined.");
+			console.log("dynamicPriceHandler25 is not defined.");
 		}
 	}
 	else{
@@ -103,7 +103,7 @@ starwebHelloRetailPriceHandler_search(".hr-overlay-search .hr-search-overlay-pro
 starwebHelloRetailPriceHandler_search(".hr-overlay-search .hr-search-overlay-product .hr-starweb-prices");
 ```
 
-## How to configure price formatting and handling through the dynamicPriceHandler method;
+## How to configure price formatting and handling through the dynamicPriceHandler25 method;
 The parent elements (first mutual container of both hr-starweb-oldPrice and hr-starweb-currentPrice) should **always** have the class hr-starweb-prices.
 
 The parent element should always have the data-attribute called sku, containing the products sku. The SKU value is sometimes stored as productNumber in our system. If this is the case, you can simply add {{ product.productNumber }} in the data attribute on the product HTML shown in the very beginning of this documentation.
@@ -123,11 +123,11 @@ The direct elements containing the oldPrice and currentPrice should always have 
 
 The priceList variable should **always** select all of the hr-starweb-prices elements (The mutual parent element of current and old price).
 
-The dynamicPriceHandler.**setSeparators** accepts two arguments;
+The dynamicPriceHandler25.**setSeparators** accepts two arguments;
 - The first argument determines which thousand separator you want the price to have.
 - The second argument determines which decimal separator you want the price to have.
 
-The dynamicPriceHandler.**render** accepts two arguments;
+The dynamicPriceHandler25.**render** accepts two arguments;
 - The first argument is the priceList variable, as this is where you provide Starweb with the list of product tiles you want them to dynamically adjust the price of.
 - The second argument is called the leaveDefaultPrice argument, and works as follows;
 The leaveDefaultPrice allows Hello Retail to inform Starweb of how Starweb should handle the prices if Starweb could not recognize the product and find the correct price to show.
