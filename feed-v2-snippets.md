@@ -587,16 +587,17 @@ function transform(product:any): TransformationResult {
 		if(!product.metafields) return;
 		Object.values(product.metafields).forEach((metafield) => { // product metafields are stored as whatever the value of the data type assigned it as.
 
-			const metafieldValue = parseIfJson(metafield.value);
+			let metafieldValue = parseIfJson(metafield.value);
 
 			if(Array.isArray(metafieldValue)){
+				metafieldValue = metafieldValue.map(value => typeof value === "object" ? JSON.stringify(value) : value); // if content of parsed array is object, stringify objects to allow them in our system.
 				shopifyOptionsObject.extraDataList[`P_${attributesObjectKeySanitizer(metafield.key)}`] = metafieldValue;
 			}
 			else if(!isNaN(metafieldValue)){
 				shopifyOptionsObject.extraDataNumber[`P_${attributesObjectKeySanitizer(metafield.key)}`] = metafieldValue;
 			}
 			else if(typeof metafieldValue === 'object'){
-				shopifyOptionsObject.extraData[`P_${attributesObjectKeySanitizer(metafield.key)}`] = metafieldValue.value;
+				shopifyOptionsObject.extraData[`P_${attributesObjectKeySanitizer(metafield.key)}`] = JSON.stringify(metafieldValue);
 			}
 			else{
 				shopifyOptionsObject.extraData[`P_${attributesObjectKeySanitizer(metafield.key)}`] = metafieldValue;
@@ -608,8 +609,12 @@ function transform(product:any): TransformationResult {
 		product.productvariants.forEach((variant) => { // variant metafields are *ALWAYS* stored as an array value, in order to push additional values of the same name, as opposed to overwriting them.
 			if(!variant.metafields) return;
 			Object.values(variant.metafields).forEach((metafield) => {
-
-				const metafieldValue = parseIfJson(metafield.value);
+				
+				let metafieldValue = parseIfJson(metafield.value);
+				
+				if(Array.isArray(metafieldValue)){
+					metafieldValue = metafieldValue.map(value => typeof value === "object" ? JSON.stringify(value) : value); // if content of parsed array is object, stringify objects to allow them in our system.
+				}
 
 				(shopifyOptionsObject.extraDataList[`V_${attributesObjectKeySanitizer(metafield.key)}`] = shopifyOptionsObject.extraDataList[`V_${attributesObjectKeySanitizer(metafield.key)}`] || []).push(metafieldValue);
 				shopifyOptionsObject.extraDataList[`V_${attributesObjectKeySanitizer(metafield.key)}`] = shopifyOptionsObject.extraDataList[`V_${attributesObjectKeySanitizer(metafield.key)}`].flatMap(item => item); // flatMap to flatten array of strings and arrays, into one single array of the values.
@@ -617,8 +622,12 @@ function transform(product:any): TransformationResult {
 		});
 	};
 
+	if(autoMap.shopifyVariantLevelMetafields || autoMap.shopifyProductLevelMetafields || autoMap.shopifyOptions){
+		shopifyOptionsObject.extraDataList = Object.fromEntries(Object.entries(shopifyOptionsObject.extraDataList).map(([key, value]) => [key, [...new Set(value)]]));
+	}
+
 	return {
-		url: `https://domain-name.com/products/${product.handle}`,
+		url: `https://shopify-v2-hr-feed-v2.com/products/${product.handle}`,
 		imgUrl: product.featured_image?.url?.replace(/(\.[a-z]{3,4}\?)/i, "_600x$1"),
 		title: product.title,
 		price: product.contextual_pricing.min_variant_pricing.price.amount,
@@ -642,7 +651,7 @@ function transform(product:any): TransformationResult {
 			...shopifyOptionsObject.extraDataNumber
 		},
 		extraDataList: {
-			...Object.fromEntries(Object.entries(shopifyOptionsObject.extraDataList).map(([key, value]) => [key, [...new Set(value)]])), // loops through shopifyOptionsObject.extraDataList and ensures that nested arrays has no duplicate values. 
+			...shopifyOptionsObject.extraDataList,
 			collectionIds: product.collection_ids
 		}
 	};
