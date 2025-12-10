@@ -298,7 +298,7 @@ function arrayRangeHelper(values, conditions, text) {
 function conditionHandler(value, condition, text) {
 	let parsedValue = value;
 
-	if(parsedValue.includes("mdr.")){ // convert ages specified in months, to years.
+	if(typeof parsedValue == "string" && parsedValue.includes("mdr.")){ // convert ages specified in months, to years.
 		parsedValue = parseInt(parsedValue) / 12;
 	}
 
@@ -538,6 +538,12 @@ let autoMap = {
 	shopifyVariantLevelMetafields: false
 }
 
+const HIERARCHIES_BLACKLIST = [ // Remove any breadcrumb path that contains one of the words listed in this array.
+	"Hierarchy to be removed 1",
+	"Hierarchy to be removed 2",
+	"Hierarchy to be removed 3",
+];
+
 function attributesObjectKeySanitizer(key){
 	return key
 	.replace(/ø/gi,"oe")
@@ -555,12 +561,6 @@ function parseIfJson(property) {
     }
 }
 
-const HIERARCHIES_BLACKLIST = [ // Remove any breadcrumb path that contains one of the words listed in this array.
-	"Hierarchy to be removed 1",
-	"Hierarchy to be removed 2",
-	"Hierarchy to be removed 3",
-];
-
 function transform(product:any): TransformationResult {
 
 	let shopifyOptionsObject = {
@@ -570,6 +570,7 @@ function transform(product:any): TransformationResult {
 	};
 
 	if(autoMap.shopifyOptions){
+		if(!product.options) return;
 		(typeof product.options === 'object' ? Object.values(product.options) : product.options).forEach((option) => { // determine whether options property is an array or Object. If an object, convert to array.
 			if(Array.isArray(option.values)){
 				shopifyOptionsObject.extraDataList[attributesObjectKeySanitizer(option.name)] = option.values;
@@ -606,6 +607,7 @@ function transform(product:any): TransformationResult {
 	};
 
 	if(autoMap.shopifyVariantLevelMetafields){
+		if(!product.productvariants) return;
 		product.productvariants.forEach((variant) => { // variant metafields are *ALWAYS* stored as an array value, in order to push additional values of the same name, as opposed to overwriting them.
 			if(!variant.metafields) return;
 			Object.values(variant.metafields).forEach((metafield) => {
@@ -615,6 +617,9 @@ function transform(product:any): TransformationResult {
 				if(Array.isArray(metafieldValue)){
 					metafieldValue = metafieldValue.map(value => typeof value === "object" ? JSON.stringify(value) : value); // if content of parsed array is object, stringify objects to allow them in our system.
 				}
+				else if(typeof metafieldValue === "object"){
+					metafieldValue = JSON.stringify(metafieldValue); // if content of parsed string is object, stringify objects to allow it in our system.
+				}
 
 				(shopifyOptionsObject.extraDataList[`V_${attributesObjectKeySanitizer(metafield.key)}`] = shopifyOptionsObject.extraDataList[`V_${attributesObjectKeySanitizer(metafield.key)}`] || []).push(metafieldValue);
 				shopifyOptionsObject.extraDataList[`V_${attributesObjectKeySanitizer(metafield.key)}`] = shopifyOptionsObject.extraDataList[`V_${attributesObjectKeySanitizer(metafield.key)}`].flatMap(item => item); // flatMap to flatten array of strings and arrays, into one single array of the values.
@@ -623,7 +628,7 @@ function transform(product:any): TransformationResult {
 	};
 
 	if(autoMap.shopifyVariantLevelMetafields || autoMap.shopifyProductLevelMetafields || autoMap.shopifyOptions){
-		shopifyOptionsObject.extraDataList = Object.fromEntries(Object.entries(shopifyOptionsObject.extraDataList).map(([key, value]) => [key, [...new Set(value)]]));
+		shopifyOptionsObject.extraDataList = Object.fromEntries(Object.entries(shopifyOptionsObject.extraDataList).map(([key, value]) => [key, [...new Set(value)]])); // loops through shopifyOptionsObject.extraDataList and ensures that nested arrays has no duplicate values.
 	}
 
 	return {
