@@ -639,6 +639,8 @@ function transform(product:any): TransformationResult {
 		productNumber: product.legacy_resource_id,
 		variantProductNumbers: product.productvariants?.map(variant => variant.legacy_resource_id),
 		inStock: product.variants_sellable?.some(v => v.inventory_policy === "continue" || v.inventory_quantity > 0),
+		created: new Date(product.published_at),
+		keywords: product.tags?.join(" "),
 		hierarchies: product.hierarchies
         ?.filter(item => !HIERARCHIES_BLACKLIST // remove nested array if it contains word in blacklist.
             .some(disallowed => Array.isArray(item)
