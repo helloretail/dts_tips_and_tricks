@@ -563,6 +563,8 @@ function parseIfJson(property) {
 
 function transform(product:any): TransformationResult {
 
+	HIERARCHIES_BLACKLIST.push(product.vendor); // add the products brand to the list of words being removed from hierarchies (remove brand from hierarchies).
+
 	let shopifyOptionsObject = {
 		extraData: {},
 		extraDataNumber: {},
@@ -618,7 +620,7 @@ function transform(product:any): TransformationResult {
 					metafieldValue = metafieldValue.map(value => typeof value === "object" ? JSON.stringify(value) : value); // if content of parsed array is object, stringify objects to allow them in our system.
 				}
 				else if(typeof metafieldValue === "object"){
-					metafieldValue = JSON.stringify(metafieldValue); // if content of parsed string is object, stringify objects to allow it in our system.
+					metafieldValue = JSON.stringify(metafieldValue);
 				}
 
 				(shopifyOptionsObject.extraDataList[`V_${attributesObjectKeySanitizer(metafield.key)}`] = shopifyOptionsObject.extraDataList[`V_${attributesObjectKeySanitizer(metafield.key)}`] || []).push(metafieldValue);
@@ -627,7 +629,7 @@ function transform(product:any): TransformationResult {
 		});
 	};
 
-	if(autoMap.shopifyVariantLevelMetafields || autoMap.shopifyProductLevelMetafields || autoMap.shopifyOptions){
+	if(Object.keys(shopifyOptionsObject.extraDataList).length){
 		shopifyOptionsObject.extraDataList = Object.fromEntries(Object.entries(shopifyOptionsObject.extraDataList).map(([key, value]) => [key, [...new Set(value)]])); // loops through shopifyOptionsObject.extraDataList and ensures that nested arrays has no duplicate values.
 	}
 
