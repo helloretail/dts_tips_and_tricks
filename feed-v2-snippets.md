@@ -571,8 +571,7 @@ function transform(product:any): TransformationResult {
 		extraDataList: {}
 	};
 
-	if(autoMap.shopifyOptions){
-		if(!product.options) return;
+	if(autoMap.shopifyOptions && product.options){
 		(typeof product.options === 'object' ? Object.values(product.options) : product.options).forEach((option) => { // determine whether options property is an array or Object. If an object, convert to array.
 			if(Array.isArray(option.values)){
 				shopifyOptionsObject.extraDataList[attributesObjectKeySanitizer(option.name)] = option.values;
@@ -586,8 +585,7 @@ function transform(product:any): TransformationResult {
 		});
 	};
 
-	if(autoMap.shopifyProductLevelMetafields){
-		if(!product.metafields) return;
+	if(autoMap.shopifyProductLevelMetafields && product.metafields){
 		Object.values(product.metafields).forEach((metafield) => { // product metafields are stored as whatever the value of the data type assigned it as.
 
 			let metafieldValue = parseIfJson(metafield.value);
@@ -608,8 +606,7 @@ function transform(product:any): TransformationResult {
 		});
 	};
 
-	if(autoMap.shopifyVariantLevelMetafields){
-		if(!product.productvariants) return;
+	if(autoMap.shopifyVariantLevelMetafields && product.productvariants){
 		product.productvariants.forEach((variant) => { // variant metafields are *ALWAYS* stored as an array value, in order to push additional values of the same name, as opposed to overwriting them.
 			if(!variant.metafields) return;
 			Object.values(variant.metafields).forEach((metafield) => {
