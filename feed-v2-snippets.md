@@ -262,11 +262,12 @@ function transform(product:any): TransformationResult {
 ```js
 // Determine whether provided value is an array or not. Invoke correct rangeHelper based on type of value.
 function rangeHelper(value, conditions, text) {
+	if(!value) return;
 	if (Array.isArray(value)) {
 		return arrayRangeHelper(value, conditions, text);
 	}
 	else if(typeof value === 'object'){
-		return arrayRangeHelper(Object.values(value), conditions, text);
+		return arrayRangeHelper(Object.values(value).flatMap(item => item), conditions, text);
 	}
 	else {
 		return simpleRangeHelper(value, conditions, text);
@@ -274,7 +275,7 @@ function rangeHelper(value, conditions, text) {
 }
 
 function simpleRangeHelper(value, conditions, text) {
-	return new Set<string>(conditions.map((condition) => {
+	return new Set<string>(conditions.flatMap((condition) => {
 
 		if(!/\d/.test(value)) return; // return value here if you want non numerical entries added to the output.
 
@@ -285,7 +286,7 @@ function simpleRangeHelper(value, conditions, text) {
 
 function arrayRangeHelper(values, conditions, text) {
 	return new Set<string>(values.flatMap((value) => {
-		return conditions.map((condition) => {
+		return conditions.flatMap((condition) => {
 			
 			if(!/\d/.test(value)) return; // return value here if you want non numerical entries added to the output.
 
@@ -296,10 +297,11 @@ function arrayRangeHelper(values, conditions, text) {
 }
 
 function conditionHandler(value, condition, text) {
+	let originalValue:any = false; // set to true if you want unaltered values that still contain numerical content matching the "includes" defined below, included in ranges.
 	let parsedValue = value;
 
-	if(typeof parsedValue == "string" && parsedValue.includes("mdr.")){ // convert ages specified in months, to years.
-		parsedValue = parseInt(parsedValue) / 12;
+	if(originalValue && typeof value === 'string' && value.includes("")){ // use pattern in value to additionally include it unaltered, along with the condition ranges.
+		originalValue = value;
 	}
 
 	if(parsedValue && isNaN(parsedValue) && typeof parsedValue === 'string'){
@@ -310,21 +312,21 @@ function conditionHandler(value, condition, text) {
 	if (parsedValue >= condition.start && (parsedValue <= condition.end || condition.end == 'above')) {
 		if (text.pos == 'prefix') {
 			if (parsedValue >= condition.start && condition.end == 'above') {
-				return `${text.text}${condition.start} - and above`;
+				return originalValue ? [originalValue, `${text.text}${condition.start} - and above`] : `${text.text}${condition.start} - and above`;
 			}
-			return `${text.text}${condition.start} - ${text.text}${condition.end}`;
+			return originalValue ? [originalValue,`${text.text}${condition.start} - ${text.text}${condition.end}`] : `${text.text}${condition.start} - ${text.text}${condition.end}`;
 		}
 		else if (text.pos == 'suffix') {
 			if (parsedValue >= condition.start && condition.end == 'above') {
-				return `${condition.start}${text.text} - and above`;
+				return originalValue ? [originalValue,`${condition.start}${text.text} - and above`] : `${condition.start}${text.text} - and above`;
 			}
-			return `${condition.start}${text.text} - ${condition.end}${text.text}`;
+			return originalValue ? [originalValue,`${condition.start}${text.text} - ${condition.end}${text.text}`] : `${condition.start}${text.text} - ${condition.end}${text.text}`;
 		}
 		else if (text.pos == null) {
 			if (parsedValue >= condition.start && condition.end == 'above') {
-				return `${condition.start} - and above`;
+				return originalValue ? [originalValue,`${condition.start} - and above`] : `${condition.start} - and above`;
 			}
-			return `${condition.start} - ${condition.end}`;
+			return originalValue ? [originalValue,`${condition.start} - ${condition.end}`] : `${condition.start} - ${condition.end}`;
 		}
 	}
 }
