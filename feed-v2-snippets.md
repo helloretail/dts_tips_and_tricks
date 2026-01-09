@@ -264,10 +264,10 @@ function transform(product:any): TransformationResult {
 function rangeHelper(value, conditions, text) {
 	if(!value) return;
 	if (Array.isArray(value)) {
-		return arrayRangeHelper(value, conditions, text);
+		return arrayRangeHelper(value.flat(Infinity), conditions, text);
 	}
 	else if(typeof value === 'object'){
-		return arrayRangeHelper(Object.values(value).flatMap(item => item), conditions, text);
+		return arrayRangeHelper(Object.values(value).flat(Infinity), conditions, text);
 	}
 	else {
 		return simpleRangeHelper(value, conditions, text);
@@ -275,25 +275,25 @@ function rangeHelper(value, conditions, text) {
 }
 
 function simpleRangeHelper(value, conditions, text) {
-	return new Set<string>(conditions.flatMap((condition) => {
+	return new Set<string>(conditions.map((condition) => {
 
 		if(!/\d/.test(value)) return; // return value here if you want non numerical entries added to the output.
 
 		return conditionHandler(value, condition, text);
 
-	}).filter(Boolean)) // filter(Boolean to remove unwanted null return values);
+	}).flat(Infinity).filter(Boolean)) // filter(Boolean to remove unwanted null return values);
 }
 
 function arrayRangeHelper(values, conditions, text) {
-	return new Set<string>(values.flatMap((value) => {
-		return conditions.flatMap((condition) => {
+	return new Set<string>(values.map((value) => {
+		return conditions.map((condition) => {
 			
 			if(!/\d/.test(value)) return; // return value here if you want non numerical entries added to the output.
 
 			return conditionHandler(value, condition, text);
 
 		})
-	}).filter(Boolean)) // filter(Boolean to remove unwanted null return values);
+	}).flat(Infinity).filter(Boolean)) // filter(Boolean to remove unwanted null return values);
 }
 
 function conditionHandler(value, condition, text) {
