@@ -579,7 +579,7 @@ function transform(product:any): TransformationResult {
 				shopifyOptionsObject.extraDataList[attributesObjectKeySanitizer(option.name)] = option.values;
 			}
 			else if(!isNaN(option.values)){
-				shopifyOptionsObject.extraDataNumber[attributesObjectKeySanitizer(option.name)] = option.values;
+				shopifyOptionsObject.extraDataNumber[attributesObjectKeySanitizer(option.name)] = Number(option.values);
 			}
 			else{
 				shopifyOptionsObject.extraData[attributesObjectKeySanitizer(option.name)] = option.values;
@@ -597,7 +597,7 @@ function transform(product:any): TransformationResult {
 				shopifyOptionsObject.extraDataList[`P_${attributesObjectKeySanitizer(metafield.key)}`] = metafieldValue;
 			}
 			else if(!isNaN(metafieldValue)){
-				shopifyOptionsObject.extraDataNumber[`P_${attributesObjectKeySanitizer(metafield.key)}`] = metafieldValue;
+				shopifyOptionsObject.extraDataNumber[`P_${attributesObjectKeySanitizer(metafield.key)}`] = Number(metafieldValue);
 			}
 			else if(typeof metafieldValue === 'object'){
 				shopifyOptionsObject.extraData[`P_${attributesObjectKeySanitizer(metafield.key)}`] = JSON.stringify(metafieldValue);
