@@ -622,8 +622,13 @@ function transform(product:any): TransformationResult {
 					metafieldValue = JSON.stringify(metafieldValue);
 				}
 
-				(shopifyOptionsObject.extraDataList[`V_${attributesObjectKeySanitizer(metafield.key)}`] = shopifyOptionsObject.extraDataList[`V_${attributesObjectKeySanitizer(metafield.key)}`] || []).push(metafieldValue);
-				shopifyOptionsObject.extraDataList[`V_${attributesObjectKeySanitizer(metafield.key)}`] = shopifyOptionsObject.extraDataList[`V_${attributesObjectKeySanitizer(metafield.key)}`].flatMap(item => item); // flatMap to flatten array of strings and arrays, into one single array of the values.
+				const list = (shopifyOptionsObject.extraDataList[`V_${attributesObjectKeySanitizer(metafield.key)}`] = shopifyOptionsObject.extraDataList[`V_${attributesObjectKeySanitizer(metafield.key)}`] || []);
+				if (Array.isArray(metafieldValue)){
+					list.push(...metafieldValue);
+				} 
+				else{
+					list.push(metafieldValue);
+				}
 			});
 		});
 	};
