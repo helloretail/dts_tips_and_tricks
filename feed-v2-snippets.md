@@ -538,7 +538,7 @@ let autoMap = {
 	shopifyOptions: false,
 	shopifyProductLevelMetafields: false,
 	shopifyVariantLevelMetafields: false,
-	metafieldKey: "label"
+	metafieldKey: "label",
 }
 
 const HIERARCHIES_BLACKLIST = [ // Remove any breadcrumb path that contains one of the words listed in this array.
@@ -597,14 +597,14 @@ function transform(product:any): TransformationResult {
 
 			if(metafield["type"] === "list.metaobject_reference"){ // if metafield is a metaobject reference of the array type.
 				if(Array.isArray(metafield.references) && metafield.references.length){
-					metafieldValue = metafield.references.map(reference => reference.fields[autoMap.metafieldKey]?.value);
+					metafieldValue = metafield.references.map(reference => (reference.translations && Object.values(reference.translations).length) ? Object.values(reference.translations)[0]?.value : reference.fields[autoMap.metafieldKey]?.value)
 				}
 			}
 			else if(metafield["type"] === "metaobject_reference"){
-				metafieldValue = metafield.reference.fields[autoMap.metafieldKey]?.value;
+				metafieldValue = (metafield.reference.translations && Object.values(metafield.reference.translations).length) ? Object.values(metafield.reference.translations)[0]?.value : metafield.reference.fields[autoMap.metafieldKey]?.value;
 			}
 			else{
-				metafieldValue = parseIfJson(metafield.value);
+				metafieldValue = parseIfJson((metafield.translations && Object.values(metafield.translations).length) ? Object.values(metafield.translations)[0]?.value : metafield.value);
 			}
 
 			if(Array.isArray(metafieldValue)){
@@ -632,14 +632,14 @@ function transform(product:any): TransformationResult {
 
 				if(metafield["type"] === "list.metaobject_reference"){ // if metafield is a metaobject reference of the array type.
 					if(Array.isArray(metafield.references) && metafield.references.length){
-						metafieldValue = metafield.references.map(reference => reference.fields[autoMap.metafieldKey]?.value);
+						metafieldValue = metafield.references.map(reference => (reference.translations && Object.values(reference.translations).length) ? Object.values(reference.translations)[0]?.value : reference.fields[autoMap.metafieldKey]?.value)
 					}
 				}
 				else if(metafield["type"] === "metaobject_reference"){
-					metafieldValue = metafield.reference.fields[autoMap.metafieldKey]?.value;
+					metafieldValue = (metafield.reference.translations && Object.values(metafield.reference.translations).length) ? Object.values(metafield.reference.translations)[0]?.value : metafield.reference.fields[autoMap.metafieldKey]?.value;
 				}
 				else{
-					metafieldValue = parseIfJson(metafield.value);
+					metafieldValue = parseIfJson((metafield.translations && Object.values(metafield.translations).length) ? `translated-${Object.values(metafield.translations)[0]?.value}` : metafield.value);
 				}
 				
 				if(Array.isArray(metafieldValue)){
@@ -665,7 +665,7 @@ function transform(product:any): TransformationResult {
 	}
 
 	return {
-		url: `https://www.domain-name.dk/products/${product.handle}`,
+		url: `https://shopify-v2-hr-feed-v2.com/products/${product.handle}`,
 		imgUrl: product.featured_image?.url?.replace(/(\.[a-z]{3,4}\?)/i, "_600x$1"),
 		title: product.title,
 		price: product.contextual_pricing?.min_variant_pricing.price.amount,
