@@ -537,7 +537,8 @@ function transform(product:any): TransformationResult {
 let autoMap = {
 	shopifyOptions: false,
 	shopifyProductLevelMetafields: false,
-	shopifyVariantLevelMetafields: false
+	shopifyVariantLevelMetafields: false,
+	metafieldKey: "label"
 }
 
 const HIERARCHIES_BLACKLIST = [ // Remove any breadcrumb path that contains one of the words listed in this array.
@@ -565,7 +566,9 @@ function parseIfJson(property) {
 
 function transform(product:any): TransformationResult {
 
-	HIERARCHIES_BLACKLIST.push(product.vendor); // add the products brand to the list of words being removed from hierarchies (remove brand from hierarchies).
+	if(product.vendor){
+		HIERARCHIES_BLACKLIST.push(product.vendor); // add the products brand to the list of words being removed from hierarchies (remove brand from hierarchies).
+	}
 
 	let shopifyOptionsObject = {
 		extraData: {},
@@ -590,7 +593,19 @@ function transform(product:any): TransformationResult {
 	if(autoMap.shopifyProductLevelMetafields && product.metafields){
 		Object.values(product.metafields).forEach((metafield) => { // product metafields are stored as whatever the value of the data type assigned it as.
 
-			let metafieldValue = parseIfJson(metafield.value);
+			let metafieldValue;
+
+			if(metafield["type"] === "list.metaobject_reference"){ // if metafield is a metaobject reference of the array type.
+				if(Array.isArray(metafield.references) && metafield.references.length){
+					metafieldValue = metafield.references.map(reference => reference.fields[autoMap.metafieldKey]?.value);
+				}
+			}
+			else if(metafield["type"] === "metaobject_reference"){
+				metafieldValue = metafield.reference.fields[autoMap.metafieldKey]?.value;
+			}
+			else{
+				metafieldValue = parseIfJson(metafield.value);
+			}
 
 			if(Array.isArray(metafieldValue)){
 				metafieldValue = metafieldValue.map(value => typeof value === "object" ? JSON.stringify(value) : value); // if content of parsed array is object, stringify objects to allow them in our system.
@@ -602,7 +617,7 @@ function transform(product:any): TransformationResult {
 			else if(typeof metafieldValue === 'object'){
 				shopifyOptionsObject.extraData[`P_${attributesObjectKeySanitizer(metafield.key)}`] = JSON.stringify(metafieldValue);
 			}
-			else{
+			else if(metafieldValue){
 				shopifyOptionsObject.extraData[`P_${attributesObjectKeySanitizer(metafield.key)}`] = metafieldValue;
 			}
 		});
@@ -613,7 +628,19 @@ function transform(product:any): TransformationResult {
 			if(!variant.metafields) return;
 			Object.values(variant.metafields).forEach((metafield) => {
 				
-				let metafieldValue = parseIfJson(metafield.value);
+				let metafieldValue;
+
+				if(metafield["type"] === "list.metaobject_reference"){ // if metafield is a metaobject reference of the array type.
+					if(Array.isArray(metafield.references) && metafield.references.length){
+						metafieldValue = metafield.references.map(reference => reference.fields[autoMap.metafieldKey]?.value);
+					}
+				}
+				else if(metafield["type"] === "metaobject_reference"){
+					metafieldValue = metafield.reference.fields[autoMap.metafieldKey]?.value;
+				}
+				else{
+					metafieldValue = parseIfJson(metafield.value);
+				}
 				
 				if(Array.isArray(metafieldValue)){
 					metafieldValue = metafieldValue.map(value => typeof value === "object" ? JSON.stringify(value) : value); // if content of parsed array is object, stringify objects to allow them in our system.
@@ -626,7 +653,7 @@ function transform(product:any): TransformationResult {
 				if (Array.isArray(metafieldValue)){
 					list.push(...metafieldValue);
 				} 
-				else{
+				else if(metafieldValue){
 					list.push(metafieldValue);
 				}
 			});
@@ -641,11 +668,11 @@ function transform(product:any): TransformationResult {
 		url: `https://www.domain-name.dk/products/${product.handle}`,
 		imgUrl: product.featured_image?.url?.replace(/(\.[a-z]{3,4}\?)/i, "_600x$1"),
 		title: product.title,
-		price: product.contextual_pricing.min_variant_pricing.price.amount,
-		oldPrice: product.contextual_pricing.min_variant_pricing.compare_at_price?.amount ?? product.contextual_pricing.min_variant_pricing.price.amount,
+		price: product.contextual_pricing?.min_variant_pricing.price.amount,
+		oldPrice: product.contextual_pricing?.min_variant_pricing.compare_at_price?.amount ?? product.contextual_pricing?.min_variant_pricing.price.amount,
 		productNumber: product.legacy_resource_id,
 		variantProductNumbers: product.productvariants?.map(variant => variant.legacy_resource_id),
-		inStock: product.variants_sellable?.some(v => v.inventory_policy === "continue" || v.inventory_quantity > 0),
+		inStock: (product.variants_sellable?.some(v => v.inventory_policy === "continue" || v.inventory_quantity > 0) ?? product.productvariants?.some(v => v.inventory_policy === "continue" || v.inventory_quantity > 0)) ?? (product.main_variant.inventory_policy === "continue" || product.main_variant.inventory_quantity > 0),
 		created: new Date(product.published_at),
 		keywords: product.tags?.join(" "),
 		hierarchies: product.hierarchies
