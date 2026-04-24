@@ -639,7 +639,7 @@ function transform(product:any): TransformationResult {
 					metafieldValue = (metafield.reference.translations && Object.values(metafield.reference.translations).length) ? Object.values(metafield.reference.translations)[0]?.value : metafield.reference.fields[autoMap.metafieldKey]?.value;
 				}
 				else{
-					metafieldValue = parseIfJson((metafield.translations && Object.values(metafield.translations).length) ? `translated-${Object.values(metafield.translations)[0]?.value}` : metafield.value);
+					metafieldValue = parseIfJson((metafield.translations && Object.values(metafield.translations).length) ? Object.values(metafield.translations)[0]?.value : metafield.value);
 				}
 				
 				if(Array.isArray(metafieldValue)){
