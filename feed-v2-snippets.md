@@ -672,7 +672,7 @@ function transform(product:any): TransformationResult {
 		oldPrice: product.contextual_pricing?.min_variant_pricing.compare_at_price?.amount ?? product.contextual_pricing?.min_variant_pricing.price.amount,
 		productNumber: product.legacy_resource_id,
 		variantProductNumbers: product.productvariants?.map(variant => variant.legacy_resource_id),
-		inStock: (product.variants_sellable?.some(v => v.inventory_policy === "continue" || v.inventory_quantity > 0) ?? product.productvariants?.some(v => v.inventory_policy === "continue" || v.inventory_quantity > 0)) ?? (product.main_variant.inventory_policy === "continue" || product.main_variant.inventory_quantity > 0),
+		inStock: (product.variants_sellable?.some(v => /^continue$/gi.test(v.inventory_policy) || v.inventory_quantity > 0) ?? product.productvariants?.some(v => /^continue$/gi.test(v.inventory_policy) || v.inventory_quantity > 0)) ?? (/^continue$/gi.test(product.main_variant?.inventory_policy) || product.main_variant?.inventory_quantity > 0),
 		created: new Date(product.published_at),
 		keywords: product.tags?.join(" "),
 		hierarchies: product.hierarchies
