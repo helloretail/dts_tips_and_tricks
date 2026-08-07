@@ -538,7 +538,9 @@ let autoMap = {
 	shopifyOptions: false,
 	shopifyProductLevelMetafields: false,
 	shopifyVariantLevelMetafields: false,
-	metafieldKey: "label",
+	metafieldKey: "label", // How to determine the value of metafieldKey: https://explain.helloretail.com/8LuAYywy
+	useTranslations: true,
+	locale: "it",
 }
 
 const HIERARCHIES_BLACKLIST = [ // Remove any breadcrumb path that contains one of the words listed in this array.
@@ -557,6 +559,7 @@ function attributesObjectKeySanitizer(key){
 }
 
 function parseIfJson(property) {
+	if(/^false$|^true$/.test(property)) return property; // if property is simply true or false in a string, we don't want to parse it, as it then becomes 0 or 1.
     try {
         return JSON.parse(property);
     } catch (error) {
@@ -579,13 +582,13 @@ function transform(product:any): TransformationResult {
 	if(autoMap.shopifyOptions && product.options){
 		(typeof product.options === 'object' ? Object.values(product.options) : product.options).forEach((option) => { // determine whether options property is an array or Object. If an object, convert to array.
 			if(Array.isArray(option.values)){
-				shopifyOptionsObject.extraDataList[attributesObjectKeySanitizer(option.name)] = option.values;
+				shopifyOptionsObject.extraDataList[`PO_${attributesObjectKeySanitizer(option.name)}`] = option.values;
 			}
 			else if(!isNaN(option.values)){
-				shopifyOptionsObject.extraDataNumber[attributesObjectKeySanitizer(option.name)] = Number(option.values);
+				shopifyOptionsObject.extraDataNumber[`PO_${attributesObjectKeySanitizer(option.name)}`] = Number(option.values);
 			}
 			else{
-				shopifyOptionsObject.extraData[attributesObjectKeySanitizer(option.name)] = option.values;
+				shopifyOptionsObject.extraData[`PO_${attributesObjectKeySanitizer(option.name)}`] = option.values;
 			}
 		});
 	};
@@ -597,28 +600,28 @@ function transform(product:any): TransformationResult {
 
 			if(metafield["type"] === "list.metaobject_reference"){ // if metafield is a metaobject reference of the array type.
 				if(Array.isArray(metafield.references) && metafield.references.length){
-					metafieldValue = metafield.references.map(reference => (reference.translations && Object.values(reference.translations).length) ? Object.values(reference.translations)[0]?.value : reference.fields[autoMap.metafieldKey]?.value)
+					metafieldValue = metafield.references.map(reference => (autoMap.useTranslations && reference.translations && Object.values(reference.translations).length) ? Object.values(reference.translations)[0]?.value : reference.fields[autoMap.metafieldKey]?.value)
 				}
 			}
 			else if(metafield["type"] === "metaobject_reference"){
-				metafieldValue = (metafield.reference.translations && Object.values(metafield.reference.translations).length) ? Object.values(metafield.reference.translations)[0]?.value : metafield.reference.fields[autoMap.metafieldKey]?.value;
+				metafieldValue = (autoMap.useTranslations && metafield.reference.translations && Object.values(metafield.reference.translations).length) ? Object.values(metafield.reference.translations)[0]?.value : metafield.reference.fields[autoMap.metafieldKey]?.value;
 			}
 			else{
-				metafieldValue = parseIfJson((metafield.translations && Object.values(metafield.translations).length) ? Object.values(metafield.translations)[0]?.value : metafield.value);
+				metafieldValue = parseIfJson((autoMap.useTranslations && metafield.translations && Object.values(metafield.translations).length) ? Object.values(metafield.translations)[0]?.value : metafield.value);
 			}
 
 			if(Array.isArray(metafieldValue)){
 				metafieldValue = metafieldValue.map(value => typeof value === "object" ? JSON.stringify(value) : value); // if content of parsed array is object, stringify objects to allow them in our system.
-				shopifyOptionsObject.extraDataList[`P_${attributesObjectKeySanitizer(metafield.key)}`] = metafieldValue;
+				shopifyOptionsObject.extraDataList[`PM_${attributesObjectKeySanitizer(metafield.key)}`] = metafieldValue;
 			}
 			else if(!isNaN(metafieldValue)){
-				shopifyOptionsObject.extraDataNumber[`P_${attributesObjectKeySanitizer(metafield.key)}`] = Number(metafieldValue);
+				shopifyOptionsObject.extraDataNumber[`PM_${attributesObjectKeySanitizer(metafield.key)}`] = Number(metafieldValue);
 			}
 			else if(typeof metafieldValue === 'object'){
-				shopifyOptionsObject.extraData[`P_${attributesObjectKeySanitizer(metafield.key)}`] = JSON.stringify(metafieldValue);
+				shopifyOptionsObject.extraData[`PM_${attributesObjectKeySanitizer(metafield.key)}`] = JSON.stringify(metafieldValue);
 			}
 			else if(metafieldValue){
-				shopifyOptionsObject.extraData[`P_${attributesObjectKeySanitizer(metafield.key)}`] = metafieldValue;
+				shopifyOptionsObject.extraData[`PM_${attributesObjectKeySanitizer(metafield.key)}`] = metafieldValue;
 			}
 		});
 	};
@@ -632,14 +635,14 @@ function transform(product:any): TransformationResult {
 
 				if(metafield["type"] === "list.metaobject_reference"){ // if metafield is a metaobject reference of the array type.
 					if(Array.isArray(metafield.references) && metafield.references.length){
-						metafieldValue = metafield.references.map(reference => (reference.translations && Object.values(reference.translations).length) ? Object.values(reference.translations)[0]?.value : reference.fields[autoMap.metafieldKey]?.value)
+						metafieldValue = metafield.references.map(reference => (autoMap.useTranslations && reference.translations && Object.values(reference.translations).length) ? Object.values(reference.translations)[0]?.value : reference.fields[autoMap.metafieldKey]?.value)
 					}
 				}
 				else if(metafield["type"] === "metaobject_reference"){
-					metafieldValue = (metafield.reference.translations && Object.values(metafield.reference.translations).length) ? Object.values(metafield.reference.translations)[0]?.value : metafield.reference.fields[autoMap.metafieldKey]?.value;
+					metafieldValue = (autoMap.useTranslations && metafield.reference.translations && Object.values(metafield.reference.translations).length) ? Object.values(metafield.reference.translations)[0]?.value : metafield.reference.fields[autoMap.metafieldKey]?.value;
 				}
 				else{
-					metafieldValue = parseIfJson((metafield.translations && Object.values(metafield.translations).length) ? Object.values(metafield.translations)[0]?.value : metafield.value);
+					metafieldValue = parseIfJson((autoMap.useTranslations && metafield.translations && Object.values(metafield.translations).length) ? Object.values(metafield.translations)[0]?.value : metafield.value);
 				}
 				
 				if(Array.isArray(metafieldValue)){
@@ -649,7 +652,7 @@ function transform(product:any): TransformationResult {
 					metafieldValue = JSON.stringify(metafieldValue);
 				}
 
-				const list = (shopifyOptionsObject.extraDataList[`V_${attributesObjectKeySanitizer(metafield.key)}`] = shopifyOptionsObject.extraDataList[`V_${attributesObjectKeySanitizer(metafield.key)}`] || []);
+				const list = (shopifyOptionsObject.extraDataList[`VM_${attributesObjectKeySanitizer(metafield.key)}`] = shopifyOptionsObject.extraDataList[`VM_${attributesObjectKeySanitizer(metafield.key)}`] || []);
 				if (Array.isArray(metafieldValue)){
 					list.push(...metafieldValue);
 				} 
@@ -665,7 +668,7 @@ function transform(product:any): TransformationResult {
 	}
 
 	return {
-		url: `https://www.domain-name.dk/products/${product.handle}`,
+		url: `https://shopify-v2-hr-feed-v2.com/products/${product.handle}`,
 		imgUrl: product.featured_image?.url?.replace(/(\.[a-z]{3,4}\?)/i, "_600x$1"),
 		title: product.title,
 		price: product.contextual_pricing?.min_variant_pricing.price.amount,
@@ -678,10 +681,16 @@ function transform(product:any): TransformationResult {
 		hierarchies: product.hierarchies
         ?.filter(item => !HIERARCHIES_BLACKLIST // remove nested array if it contains word in blacklist.
             .some(disallowed => Array.isArray(item)
-                ? item.join(",").toLowerCase().includes(disallowed.toLowerCase())
-                : item.toLowerCase().includes(disallowed.toLowerCase()))),
+                // ? item.join(",").toLowerCase().includes(disallowed.toLowerCase()) // default matching using "includes", because in scenarios where the array entry has many different words joined on comma, you still want the entire entry removed.
+				// : item.toLowerCase().includes(disallowed.toLowerCase()))), // default matching using "includes". Entries here can only be strings, so technically no need to use includes, but was decided upon for the sake of consistency.
+				? item.join(",").toLowerCase() === disallowed.toLowerCase() // custom matching using "===", because an entry in the HIERARCHIES_BLACKLIST on "All" inadverdently removed "Alle Accessoires" as it matched part of the phrase.
+				: item.toLowerCase() === disallowed.toLowerCase())), // custom matching using "===", just for the sake of consistency. It makes no difference here.
 		brand: product.vendor,
-		description: product.description_html ? new DOMParser().parseFromString(product.description_html, "text/html").textContent : null,
+		description: (autoMap.useTranslations && product.translations?.[`body_html_${autoMap.locale}`]) 
+		? new DOMParser().parseFromString(product.translations[`body_html_${autoMap.locale}`].value, "text/html").textContent 
+		: product.description_html 
+		? new DOMParser().parseFromString(product.description_html, "text/html").textContent 
+		: null,
 		extraData: {
 			...shopifyOptionsObject.extraData,
 			altImage: product.productimages?.filter(image => image.url != product.featured_image.url)[0]?.url, // find all images that aren't the same as the featured image, and use the first of the images found as the altImage.
@@ -692,7 +701,7 @@ function transform(product:any): TransformationResult {
 		},
 		extraDataList: {
 			...shopifyOptionsObject.extraDataList,
-			collectionIds: product.collection_ids
+			categoryIds: product.collection_ids
 		}
 	};
 }
