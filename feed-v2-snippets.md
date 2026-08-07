@@ -559,7 +559,6 @@ function attributesObjectKeySanitizer(key){
 }
 
 function parseIfJson(property) {
-	if(/^false$|^true$/.test(property)) return property; // if property is simply true or false in a string, we don't want to parse it, as it then becomes 0 or 1.
     try {
         return JSON.parse(property);
     } catch (error) {
@@ -614,7 +613,7 @@ function transform(product:any): TransformationResult {
 				metafieldValue = metafieldValue.map(value => typeof value === "object" ? JSON.stringify(value) : value); // if content of parsed array is object, stringify objects to allow them in our system.
 				shopifyOptionsObject.extraDataList[`PM_${attributesObjectKeySanitizer(metafield.key)}`] = metafieldValue;
 			}
-			else if(!isNaN(metafieldValue)){
+			else if(typeof metafieldValue != 'boolean' && !isNaN(metafieldValue)){
 				shopifyOptionsObject.extraDataNumber[`PM_${attributesObjectKeySanitizer(metafield.key)}`] = Number(metafieldValue);
 			}
 			else if(typeof metafieldValue === 'object'){
