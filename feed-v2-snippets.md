@@ -538,9 +538,9 @@ let autoMap = {
 	shopifyOptions: false,
 	shopifyProductLevelMetafields: false,
 	shopifyVariantLevelMetafields: false,
-	metafieldKey: "label", // How to determine the value of metafieldKey: https://explain.helloretail.com/8LuAYywy
+	metafieldKey: ["label"], // How to determine the value of metafieldKey: https://explain.helloretail.com/019ffb3c-814e-7164-ae66-d040b2e2794d (metafieldKey array will only be considered if the useTranslations property is configured as false, or if, despite useTranslations being true, no translation values existed for a given metafield value. values will be prioritized in the order of the metafieldKey array.)
 	useTranslations: true,
-	locale: "it",
+	locale: "en",
 }
 
 const HIERARCHIES_BLACKLIST = [ // Remove any breadcrumb path that contains one of the words listed in this array.
@@ -556,6 +556,10 @@ function attributesObjectKeySanitizer(key){
 	.replace(/å/gi,"aa")
 	.replace(/[^a-zA-Z\_\s ]/g,"")
 	.replace(/\s/g,"_")
+}
+
+function metafieldValueSelector(metafield){
+	return metafield[autoMap.metafieldKey.find(key => metafield[key]?.value)]?.value;
 }
 
 function parseIfJson(property) {
@@ -599,11 +603,11 @@ function transform(product:any): TransformationResult {
 
 			if(metafield["type"] === "list.metaobject_reference"){ // if metafield is a metaobject reference of the array type.
 				if(Array.isArray(metafield.references) && metafield.references.length){
-					metafieldValue = metafield.references.map(reference => (autoMap.useTranslations && reference.translations && Object.values(reference.translations).length) ? Object.values(reference.translations)[0]?.value : reference.fields[autoMap.metafieldKey]?.value)
+					metafieldValue = metafield.references.map(reference => (autoMap.useTranslations && reference.translations && Object.values(reference.translations).length) ? Object.values(reference.translations)[0]?.value : metafieldValueSelector(reference.fields))
 				}
 			}
 			else if(metafield["type"] === "metaobject_reference"){
-				metafieldValue = (autoMap.useTranslations && metafield.reference.translations && Object.values(metafield.reference.translations).length) ? Object.values(metafield.reference.translations)[0]?.value : metafield.reference.fields[autoMap.metafieldKey]?.value;
+				metafieldValue = (autoMap.useTranslations && metafield.reference.translations && Object.values(metafield.reference.translations).length) ? Object.values(metafield.reference.translations)[0]?.value : metafieldValueSelector(metafield.reference.fields);
 			}
 			else{
 				metafieldValue = parseIfJson((autoMap.useTranslations && metafield.translations && Object.values(metafield.translations).length) ? Object.values(metafield.translations)[0]?.value : metafield.value);
@@ -634,11 +638,11 @@ function transform(product:any): TransformationResult {
 
 				if(metafield["type"] === "list.metaobject_reference"){ // if metafield is a metaobject reference of the array type.
 					if(Array.isArray(metafield.references) && metafield.references.length){
-						metafieldValue = metafield.references.map(reference => (autoMap.useTranslations && reference.translations && Object.values(reference.translations).length) ? Object.values(reference.translations)[0]?.value : reference.fields[autoMap.metafieldKey]?.value)
+						metafieldValue = metafield.references.map(reference => (autoMap.useTranslations && reference.translations && Object.values(reference.translations).length) ? Object.values(reference.translations)[0]?.value : metafieldValueSelector(reference.fields))
 					}
 				}
 				else if(metafield["type"] === "metaobject_reference"){
-					metafieldValue = (autoMap.useTranslations && metafield.reference.translations && Object.values(metafield.reference.translations).length) ? Object.values(metafield.reference.translations)[0]?.value : metafield.reference.fields[autoMap.metafieldKey]?.value;
+					metafieldValue = (autoMap.useTranslations && metafield.reference.translations && Object.values(metafield.reference.translations).length) ? Object.values(metafield.reference.translations)[0]?.value : metafieldValueSelector(metafield.reference.fields);
 				}
 				else{
 					metafieldValue = parseIfJson((autoMap.useTranslations && metafield.translations && Object.values(metafield.translations).length) ? Object.values(metafield.translations)[0]?.value : metafield.value);
@@ -688,8 +692,8 @@ function transform(product:any): TransformationResult {
 		description: (autoMap.useTranslations && product.translations?.[`body_html_${autoMap.locale}`]) 
 		? new DOMParser().parseFromString(product.translations[`body_html_${autoMap.locale}`].value, "text/html").textContent 
 		: product.description_html 
-		? new DOMParser().parseFromString(product.description_html, "text/html").textContent 
-		: null,
+			? new DOMParser().parseFromString(product.description_html, "text/html").textContent 
+			: null,
 		extraData: {
 			...shopifyOptionsObject.extraData,
 			altImage: product.productimages?.filter(image => image.url != product.featured_image.url)[0]?.url, // find all images that aren't the same as the featured image, and use the first of the images found as the altImage.
