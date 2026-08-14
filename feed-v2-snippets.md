@@ -553,13 +553,46 @@ const HIERARCHIES_BLACKLIST = [ // Remove any breadcrumb path that contains one 
 	"Hierarchy to be removed 3",
 ];
 
+const KEY_TRANSLITERATIONS = {
+	'æ': 'ae', 'Æ': 'Ae',
+	'ø': 'oe', 'Ø': 'Oe',
+	'å': 'aa', 'Å': 'Aa',
+	'ä': 'ae', 'Ä': 'Ae',
+	'ö': 'oe', 'Ö': 'Oe',
+	'ü': 'ue', 'Ü': 'Ue',
+	'ß': 'ss',
+	'é': 'e', 'è': 'e', 'ê': 'e', 'ë': 'e',
+	'á': 'a', 'à': 'a', 'â': 'a',
+	'í': 'i', 'ì': 'i', 'î': 'i',
+	'ó': 'o', 'ò': 'o', 'ô': 'o',
+	'ú': 'u', 'ù': 'u', 'û': 'u',
+	'ñ': 'n', 'ç': 'c',
+};
+
 function attributesObjectKeySanitizer(key){
-	return key
-	.replace(/ø/gi,"oe")
-	.replace(/æ/gi,"ae")
-	.replace(/å/gi,"aa")
-	.replace(/[^a-zA-Z\_\s ]/g,"")
-	.replace(/\s/g,"_")
+	// 1. Transliterate known special characters so meaning is retained.
+	let result = key.replace(/[æØøåÆÅäÄöÖüÜßéèêëáàâíìîóòôúùûñç]/g,
+		(ch) => KEY_TRANSLITERATIONS[ch] ?? ch
+	);
+
+	// 2. Normalize remaining accented characters via Unicode decomposition,
+	//    then strip the combining marks left behind (e.g. "š" -> "s").
+	result = result.normalize('NFKD').replace(/[\u0300-\u036f]/g, '');
+
+	// 3. Replace anything still illegal in an identifier with '_'.
+	result = result.replace(/[^A-Za-z0-9_$]/g, '_');
+
+	// 4. Identifiers can't start with a digit.
+	if (/^[0-9]/.test(result)) {
+		result = '_' + result;
+	}
+
+	// 5. Guard against an empty result (input was entirely illegal chars).
+	if (result === '') {
+		result = '_';
+	}
+
+	return result;
 }
 
 function metafieldValueSelector(metafield, fields) {
@@ -625,7 +658,9 @@ function transform(product:any): TransformationResult {
 				}
 			}
 			else if(metafield["type"] === "metaobject_reference"){
-				metafieldValue = (autoMap.useTranslations && metafield.reference.translations && Object.values(metafield.reference.translations).length) ? Object.values(metafield.reference.translations)[0]?.value : metafieldValueSelector(metafield.key,metafield.reference.fields);
+				if(metafield.reference){
+					metafieldValue = (autoMap.useTranslations && metafield.reference.translations && Object.values(metafield.reference.translations).length) ? Object.values(metafield.reference.translations)[0]?.value : metafieldValueSelector(metafield.key,metafield.reference.fields);
+				}
 			}
 			else{
 				metafieldValue = parseIfJson((autoMap.useTranslations && metafield.translations && Object.values(metafield.translations).length) ? Object.values(metafield.translations)[0]?.value : metafield.value);
@@ -660,7 +695,9 @@ function transform(product:any): TransformationResult {
 					}
 				}
 				else if(metafield["type"] === "metaobject_reference"){
-					metafieldValue = (autoMap.useTranslations && metafield.reference.translations && Object.values(metafield.reference.translations).length) ? Object.values(metafield.reference.translations)[0]?.value : metafieldValueSelector(metafield.key,metafield.reference.fields);
+					if(metafield.reference){
+						metafieldValue = (autoMap.useTranslations && metafield.reference.translations && Object.values(metafield.reference.translations).length) ? Object.values(metafield.reference.translations)[0]?.value : metafieldValueSelector(metafield.key,metafield.reference.fields);
+					}
 				}
 				else{
 					metafieldValue = parseIfJson((autoMap.useTranslations && metafield.translations && Object.values(metafield.translations).length) ? Object.values(metafield.translations)[0]?.value : metafield.value);
