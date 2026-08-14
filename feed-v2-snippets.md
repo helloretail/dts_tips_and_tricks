@@ -538,8 +538,12 @@ let autoMap = {
 	shopifyOptions: false,
 	shopifyProductLevelMetafields: false,
 	shopifyVariantLevelMetafields: false,
-	metafieldKey: ["label"], // How to determine the value of metafieldKey: https://explain.helloretail.com/019ffb3c-814e-7164-ae66-d040b2e2794d (metafieldKey array will only be considered if the useTranslations property is configured as false, or if, despite useTranslations being true, no translation values existed for a given metafield value. values will be prioritized in the order of the metafieldKey array.)
-	useTranslations: true,
+	metafieldValueFrom: ["color-pattern:color","label"], // Any metafield by the name of "color-pattern" will use the "color" object of the fields object to derive the value, because "color-pattern:color" exists before "label". Any metafield not named "color-pattern" will use "label" to derive the value.
+	// How to determine the value of metafieldValueFrom: https://explain.helloretail.com/019ffb3c-814e-7164-ae66-d040b2e2794d 
+	// metafieldValueFrom array will only be considered if the useTranslations property is configured as false, or if, despite useTranslations being true, no translation values existed for a given metafield value. 
+	// metafieldValueFrom values will be considered in the order of the metafieldValueFrom array.
+	// metafieldValueFrom values are by default used globally across all metafields, but can be specified for specific metafields through the colon syntax: metafield.key:metafieldValueFrom.
+	useTranslations: false,
 	locale: "en",
 }
 
@@ -558,8 +562,22 @@ function attributesObjectKeySanitizer(key){
 	.replace(/\s/g,"_")
 }
 
-function metafieldValueSelector(metafield){
-	return metafield[autoMap.metafieldKey.find(key => metafield[key]?.value)]?.value;
+function metafieldValueSelector(metafield, fields) {
+  const matchedKey = autoMap.metafieldValueFrom.find((key) => {
+    if (key.includes(":")) {
+      const [target, source] = key.split(":");
+      return target === metafield && fields[source]?.value !== undefined;
+    }
+    return fields[key]?.value !== undefined;
+  });
+
+  if (!matchedKey) return undefined;
+
+  const lookupKey = matchedKey.includes(":") 
+    ? matchedKey.split(":")[1] 
+    : matchedKey;
+
+  return fields[lookupKey]?.value;
 }
 
 function parseIfJson(property) {
@@ -603,11 +621,11 @@ function transform(product:any): TransformationResult {
 
 			if(metafield["type"] === "list.metaobject_reference"){ // if metafield is a metaobject reference of the array type.
 				if(Array.isArray(metafield.references) && metafield.references.length){
-					metafieldValue = metafield.references.map(reference => (autoMap.useTranslations && reference.translations && Object.values(reference.translations).length) ? Object.values(reference.translations)[0]?.value : metafieldValueSelector(reference.fields))
+					metafieldValue = metafield.references.map(reference => (autoMap.useTranslations && reference.translations && Object.values(reference.translations).length) ? Object.values(reference.translations)[0]?.value : metafieldValueSelector(metafield.key,reference.fields))
 				}
 			}
 			else if(metafield["type"] === "metaobject_reference"){
-				metafieldValue = (autoMap.useTranslations && metafield.reference.translations && Object.values(metafield.reference.translations).length) ? Object.values(metafield.reference.translations)[0]?.value : metafieldValueSelector(metafield.reference.fields);
+				metafieldValue = (autoMap.useTranslations && metafield.reference.translations && Object.values(metafield.reference.translations).length) ? Object.values(metafield.reference.translations)[0]?.value : metafieldValueSelector(metafield.key,metafield.reference.fields);
 			}
 			else{
 				metafieldValue = parseIfJson((autoMap.useTranslations && metafield.translations && Object.values(metafield.translations).length) ? Object.values(metafield.translations)[0]?.value : metafield.value);
@@ -638,11 +656,11 @@ function transform(product:any): TransformationResult {
 
 				if(metafield["type"] === "list.metaobject_reference"){ // if metafield is a metaobject reference of the array type.
 					if(Array.isArray(metafield.references) && metafield.references.length){
-						metafieldValue = metafield.references.map(reference => (autoMap.useTranslations && reference.translations && Object.values(reference.translations).length) ? Object.values(reference.translations)[0]?.value : metafieldValueSelector(reference.fields))
+						metafieldValue = metafield.references.map(reference => (autoMap.useTranslations && reference.translations && Object.values(reference.translations).length) ? Object.values(reference.translations)[0]?.value : metafieldValueSelector(metafield.key,reference.fields))
 					}
 				}
 				else if(metafield["type"] === "metaobject_reference"){
-					metafieldValue = (autoMap.useTranslations && metafield.reference.translations && Object.values(metafield.reference.translations).length) ? Object.values(metafield.reference.translations)[0]?.value : metafieldValueSelector(metafield.reference.fields);
+					metafieldValue = (autoMap.useTranslations && metafield.reference.translations && Object.values(metafield.reference.translations).length) ? Object.values(metafield.reference.translations)[0]?.value : metafieldValueSelector(metafield.key,metafield.reference.fields);
 				}
 				else{
 					metafieldValue = parseIfJson((autoMap.useTranslations && metafield.translations && Object.values(metafield.translations).length) ? Object.values(metafield.translations)[0]?.value : metafield.value);
