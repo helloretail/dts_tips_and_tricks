@@ -728,7 +728,11 @@ function transform(product:any): TransformationResult {
 	return {
 		url: `https://shopify-v2-hr-feed-v2.com/products/${product.handle}`,
 		imgUrl: product.featured_image?.url?.replace(/(\.[a-z]{3,4}\?)/i, "_600x$1"),
-		title: product.title,
+		title: (autoMap.useTranslations && product.translations?.[`title_${autoMap.locale}`]) 
+		? new DOMParser().parseFromString(product.translations[`title_${autoMap.locale}`].value, "text/html").textContent 
+		: product.title
+			? new DOMParser().parseFromString(product.title, "text/html").textContent 
+			: null,
 		price: product.contextual_pricing?.min_variant_pricing.price.amount,
 		oldPrice: product.contextual_pricing?.min_variant_pricing.compare_at_price?.amount ?? product.contextual_pricing?.min_variant_pricing.price.amount,
 		productNumber: product.legacy_resource_id,
